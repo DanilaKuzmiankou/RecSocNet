@@ -5,7 +5,7 @@ import {useAuth0} from "@auth0/auth0-react";
 
 export const HomePage = () => {
     const navigate = useNavigate()
-    const {user, isAuthenticated} = useAuth0()
+    const {user, isAuthenticated, loginWithRedirect, logout} = useAuth0()
 
     const routeChange = () => {
         let path = `/profile`;
@@ -18,6 +18,14 @@ export const HomePage = () => {
             console.log(user)
         }
     }
+    const login = () => {
+        if(!isAuthenticated) {
+            loginWithRedirect()
+        }
+        else{
+            logout()
+        }
+    }
 
     return (
 
@@ -27,6 +35,7 @@ export const HomePage = () => {
                     <h1 > Welcome to the Rec Soc Net Site Home Page! </h1>
                     <Button variant="danger"  onClick={routeChange}>Get Started!</Button>
                     <Button variant="danger"  onClick={getInfo}>Get Info</Button>
+                    <Button variant="danger"  onClick={login}>Login or logout</Button>
                 </div>
             </Container>
 
