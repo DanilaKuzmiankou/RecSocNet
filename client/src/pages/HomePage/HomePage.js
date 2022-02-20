@@ -19,12 +19,9 @@ export const HomePage = () => {
         }
     }
     const login = () => {
-        if(!isAuthenticated) {
+
             loginWithRedirect()
-        }
-        else{
-            logout()
-        }
+
     }
 
     return (
