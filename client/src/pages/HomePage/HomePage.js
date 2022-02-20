@@ -26,7 +26,7 @@ export const HomePage = () => {
                 <div>
                     <h1 > Welcome to the Rec Soc Net Site Home Page! </h1>
                     <Button variant="danger"  onClick={routeChange}>Get Started!</Button>
-                    <Button variant="danger"  onClick={routeChange}>Get Started!</Button>
+                    <Button variant="danger"  onClick={getInfo}>Get Info</Button>
                 </div>
             </Container>
 
