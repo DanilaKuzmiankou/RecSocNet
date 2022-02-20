@@ -32,22 +32,28 @@ export const ProfilePage = (props) => {
 
 
         const checkPrivileges = async () => {
+            console.log('step 1')
             if (!isAuthenticated) {
+                console.log("step 2")
                 if (!routerParams.id) {
+                    console.log("step 3")
                     /*let path = `/`;
                     navigate(path);*/
                     loginWithRedirect()
                 } else {
+                    console.log("step 5")
                     let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
                     setIsMainUserAdmin(false)
                 }
             } else {
+                console.log("step 6")
                 let token = await getAccessTokenSilently()
                 await registerNewUser(token, user.sub, user.name)
                 let mainUserSearched = await getUserByAuthId(token, user.sub)
                 setMainUser(mainUserSearched)
                 if (routerParams.id) {
+                    console.log("step 7")
                     let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
                     if (userBrowsedProfile.authId === mainUser.authId || mainUserSearched.role === "admin") {
@@ -56,6 +62,7 @@ export const ProfilePage = (props) => {
                         setIsMainUserAdmin(false)
                     }
                 } else {
+                    console.log("step 8")
                     setOwner(mainUserSearched)
                     setIsMainUserAdmin(true)
                 }
