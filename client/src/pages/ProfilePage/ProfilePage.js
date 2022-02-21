@@ -20,7 +20,7 @@ export const ProfilePage = (props) => {
         const navigate = useNavigate()
 
         useEffect(async () => {
-            while (isLoading){
+            while (!isAuthenticated){
                 console.log('loading')
             }
             await checkPrivileges()
