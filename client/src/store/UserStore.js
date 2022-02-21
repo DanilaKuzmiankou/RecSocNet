@@ -13,7 +13,9 @@ export async function registerNewUser(token: string, authId: string, name: strin
 }
 
 export async function getUserById(id: number) {
+    console.log('id: ', id)
     let url = '/api/user/profile/' + id
+    console.log('url: ', url)
     return await getRequest(url)
 }
 
