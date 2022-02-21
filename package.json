@@ -4,7 +4,7 @@
   "description": "Social network based on users recommendations",
   "main": "index.js",
   "scripts": {
-    "heroku-prebuild": "cd client && npm install && npm run build",
+    "heroku-prebuild": "cd client && npm install -legacy-peer-deps && npm run build",
     "dev": "nodemon index.js",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

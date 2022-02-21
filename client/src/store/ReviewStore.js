@@ -1,4 +1,5 @@
-import {getRequest, getSecretRequest, postRequest, postSecretRequest} from "../api/index.network";
+import {postRequest} from "../api/index.network";
+
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone" // dependent on utc plugin
@@ -7,19 +8,10 @@ import moment from "moment-timezone"
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
-export async function registerNewUser(token: string, authId: string, name: string) {
-    let body = JSON.stringify({authId: authId, name: name})
-    return await postSecretRequest(token, '/api/user/registration', body)
-}
 
-export async function getUserById(id: number) {
-    let body = JSON.stringify({id: id})
-    return await postRequest('/api/user/getUserById', body)
-}
-
-export async function getUserByAuthId(token: string, authId: string) {
+export async function getUserReviews(authId: string) {
     let body = JSON.stringify({authId: authId})
-    return await postSecretRequest(token, '/api/user/getUser', body)
+    return await postRequest('/api/review/getAuthorReviews', body)
 }
 
 
