@@ -1,38 +1,83 @@
-.App {
-  text-align: center;
+.log_in_button {
+  white-space: nowrap;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar_brand {
+  float: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.custom_spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.navbar_home_button_container {
+  padding-left: 20px;
+}
+
+.navbar_home_button {
+  white-space: nowrap;
+  user-select: none;
+  font-size: 25px;
   color: white;
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+
+.navbar_users_data_button {
+  white-space: nowrap;
+  padding-right: 15px;
+  user-select: none;
+  font-size: 25px;
+  color: white;
+  text-decoration: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.users_data_page_button_group {
+  padding-left: 10px;
+}
+
+.navbar_auth_button {
+  padding-right: 45px;
+}
+
+.users_data_page_container {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.fonts {
+  font: italic small-caps bold 16px/2 cursive;
+  color: white;
+  font-size: 55px;
+}
+
+.home_container {
+  height: 100vh;
+  display: flex;
+  position: relative;
+  align-items: center;
+  user-select: none;
+  justify-content: center;
+}
+
+.home_background {
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.home_button {
+  font: italic small-caps bold 16px/2 cursive;
+  border-radius: 15px;
+  height: 100px;
+  width: 240px;
+  font-size: 30px;
+  user-select: none;
+  margin: 0 auto;
+  display: block;
 }

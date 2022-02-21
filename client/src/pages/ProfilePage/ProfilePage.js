@@ -20,7 +20,7 @@ export const ProfilePage = (props) => {
 
 
         useEffect(async () => {
-
+            console.log('gg')
             await checkPrivileges()
 
             setTimeout(async () => {
@@ -32,46 +32,46 @@ export const ProfilePage = (props) => {
 
 
         const checkPrivileges = async () => {
-            console.log('step 1')
-            console.log('isau1', isAuthenticated)
+            //console.log('step 1')
+            //console.log('isau1', isAuthenticated)
             if (!isAuthenticated) {
-                console.log("step 2")
+                //console.log("step 2")
                 if (!routerParams.id) {
-                    console.log("step 3")
+                    //console.log("step 3")
                     /*let path = `/`;
                     navigate(path);*/
                     loginWithRedirect()
                 } else {
-                    console.log("step 5")
+                    //console.log("step 5")
                     let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
-                    console.log("browsed", userBrowsedProfile)
+                    //console.log("browsed", userBrowsedProfile)
                     setIsMainUserAdmin(false)
                 }
             } else {
-                console.log("step 6")
+                //console.log("step 6")
                 let token = await getAccessTokenSilently()
                 await registerNewUser(token, user.sub, user.name)
                 let mainUserSearched = await getUserByAuthId(token, user.sub)
                 setMainUser(mainUserSearched)
                 if (routerParams.id) {
-                    console.log("step 7")
+                    //console.log("step 7")
                     let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
-                    console.log('userBrowsedProfile.authId!', userBrowsedProfile.authId, 'mainUser.authId', mainUserSearched.authId)
+                    //console.log('userBrowsedProfile.authId!', userBrowsedProfile.authId, 'mainUser.authId', mainUserSearched.authId)
                     if (userBrowsedProfile.authId === mainUserSearched.authId || mainUserSearched.role === "admin") {
-                        console.log('ADMIN!')
+                        //console.log('ADMIN!')
                         setIsMainUserAdmin(true)
                     } else {
                         setIsMainUserAdmin(false)
                     }
                 } else {
-                    console.log("step 8")
+                    //console.log("step 8")
                     setOwner(mainUserSearched)
                     setIsMainUserAdmin(true)
                 }
             }
-            console.log('isau2', isAuthenticated)
+            //console.log('isau2', isAuthenticated)
         }
 
         const lol = async () => {
@@ -102,6 +102,10 @@ export const ProfilePage = (props) => {
         return (
 
             <Container fluid>
+
+
+
+
                     <h1> Profile Page! </h1>
                     <h1>
                     User name: {owner.name}
