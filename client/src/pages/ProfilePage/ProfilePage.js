@@ -77,6 +77,14 @@ export const ProfilePage = (props) => {
             console.log('rev: ', reviews)
 
         }
+    const lol2 = async () => {
+        console.log("auth or not: ", isAuthenticated)
+        console.log("user: ", user)
+        console.log('token: ', getAccessTokenSilently)
+        //let reviews = await getUserReviews(owner.authId)
+        //console.log('rev: ', reviews)
+
+    }
 
         const routeChange = () => {
             logout()
@@ -94,6 +102,7 @@ export const ProfilePage = (props) => {
                 </h1>
                 <Button variant="danger"  onClick={routeChange}>Log out</Button>
                 <Button variant="danger"  onClick={lol}>get info</Button>
+                <Button variant="danger"  onClick={lol2}>get auth info</Button>
             </Container>
         )
     }
