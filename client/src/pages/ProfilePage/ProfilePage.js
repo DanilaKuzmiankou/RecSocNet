@@ -46,6 +46,7 @@ export const ProfilePage = (props) => {
                     console.log("step 5")
                     let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
+                    console.log("browsed", userBrowsedProfile)
                     setIsMainUserAdmin(false)
                 }
             } else {
