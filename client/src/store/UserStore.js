@@ -19,6 +19,11 @@ export async function getUserById(id: number) {
     return await getRequest(url)
 }
 
+export async function getUserById2(id: number) {
+    let body = JSON.stringify({id: id})
+    return await postSecretRequest('/api/user/getUserById2', body)
+}
+
 export async function getUserByAuthId(token: string, authId: string) {
     let body = JSON.stringify({authId: authId})
     return await postSecretRequest(token, '/api/user/getUser', body)
