@@ -81,6 +81,7 @@ export const ProfilePage = (props) => {
     const lol2 = async () => {
         console.log("auth or not: ", isAuthenticated)
         console.log("user: ", user)
+        setOwner(user)
         console.log('token: ', getAccessTokenSilently)
         //let reviews = await getUserReviews(owner.authId)
         //console.log('rev: ', reviews)
@@ -98,16 +99,13 @@ export const ProfilePage = (props) => {
         return (
 
             <Container fluid>
-
-                {isAuthenticated &&
-                    <h1> Profile Page! </h1> &&
+                    <h1> Profile Page! </h1>
                     <h1>
                     User name: {owner.name}
-                    </h1> &&
-                    <Button variant="danger"  onClick={routeChange}>Log out</Button> &&
-                    <Button variant="danger"  onClick={lol}>get info</Button>  &&
+                    </h1>
+                    <Button variant="danger"  onClick={routeChange}>Log out</Button>
+                    <Button variant="danger"  onClick={lol}>get info</Button>
                     <Button variant="danger"  onClick={lol2}>get auth info</Button>
-                }
             </Container>
 
         )
