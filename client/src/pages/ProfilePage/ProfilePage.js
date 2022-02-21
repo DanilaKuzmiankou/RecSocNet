@@ -20,7 +20,9 @@ export const ProfilePage = (props) => {
         const navigate = useNavigate()
 
         useEffect(async () => {
-            while (isLoading){}
+            while (isLoading){
+                console.log('loading')
+            }
             await checkPrivileges()
             console.log("owner: ", owner)
 
