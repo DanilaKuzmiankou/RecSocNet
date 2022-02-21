@@ -11,6 +11,10 @@ export const HomePage = () => {
         let path = `/profile`;
         navigate(path);
     }
+    const routeChange2 = () => {
+        let path = `/profile/2`;
+        navigate(path);
+    }
     const getInfo = () => {
         console.log("checking...")
         if(isAuthenticated)
@@ -21,6 +25,7 @@ export const HomePage = () => {
     const login = () => {
         if(!isAuthenticated) {
             loginWithRedirect()
+            console.log('sad')
         }
         else{
             logout()
@@ -34,6 +39,7 @@ export const HomePage = () => {
                 <div>
                     <h1 > Welcome to the Rec Soc Net Site Home Page! </h1>
                     <Button variant="danger"  onClick={routeChange}>Get Started!</Button>
+                    <Button variant="danger"  onClick={routeChange2}>Get Started2!</Button>
                     <Button variant="danger"  onClick={getInfo}>Get Info</Button>
                     <Button variant="danger"  onClick={login}>Login or logout</Button>
                 </div>
