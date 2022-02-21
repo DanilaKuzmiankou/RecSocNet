@@ -22,9 +22,6 @@ export class CustomBootstrapTable extends React.Component {
             dataField: 'title',
             text: 'Title'
         }, {
-            dataField: 'text',
-            text: 'Text'
-        }, {
             dataField: 'category',
             text: 'Category'
         }, {
@@ -48,6 +45,17 @@ export class CustomBootstrapTable extends React.Component {
             throw Error('reviews not found')
         }
 
+        const expandRow = {
+            onlyOneExpanding: true,
+            //parentClassName: 'parent-expand-foo',
+            renderer: row => (
+                <div>
+                    <h1>Review Text</h1>
+                    {this.state.reviews[(row.id-1)].text}
+                </div>
+            )
+        };
+
         return (
             <Container fluid>
                 <BootstrapTable
@@ -56,7 +64,7 @@ export class CustomBootstrapTable extends React.Component {
                     keyField='id'
                     data={this.state.reviews}
                     columns={columns}
-
+                    expandRow={ expandRow }
                 />
             </Container>
         )
