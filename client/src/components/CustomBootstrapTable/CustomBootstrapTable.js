@@ -39,6 +39,9 @@ export class CustomBootstrapTable extends React.Component {
         }, {
             dataField: 'usersReviewScore',
             text: 'Likes'
+        }, {
+            dataField: 'createdAt',
+            text: 'Created'
         }];
 
         if (!this.state.reviews) {
