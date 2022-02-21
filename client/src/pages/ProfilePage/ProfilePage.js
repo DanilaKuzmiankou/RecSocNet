@@ -8,33 +8,32 @@ import {useNavigate, useParams} from "react-router-dom";
 export const ProfilePage = (props) => {
 
         //const usersTable = useRef(null);
-        const {user, isAuthenticated, isLoading} = useAuth0()
-        const {getAccessTokenSilently, loginWithRedirect, logout} = useAuth0()
+        const {user, isAuthenticated, getAccessTokenSilently, loginWithRedirect, logout} = useAuth0()
         const [reviews, setReviews] = useState([]);
         const [loading, setLoading] = useState(true);
         const [mainUser, setMainUser] = useState({});  //main user - is the user who is currently performing actions in the application
         const [owner, setOwner] = useState({})    //owner - is the user, which profile we're browsing now
         const [isMainUserAdmin, setIsMainUserAdmin] = useState(false)
-
         const routerParams = useParams();
         const navigate = useNavigate()
+
+
 
         useEffect(async () => {
 
             await checkPrivileges()
-            console.log("owner: ", owner)
 
             setTimeout(async () => {
                 setLoading(false);
             }, 200);
 
-
-        }, [])
+        }, [isAuthenticated])
 
 
 
         const checkPrivileges = async () => {
             console.log('step 1')
+            console.log('isau1', isAuthenticated)
             if (!isAuthenticated) {
                 console.log("step 2")
                 if (!routerParams.id) {
@@ -70,20 +69,20 @@ export const ProfilePage = (props) => {
                     setIsMainUserAdmin(true)
                 }
             }
+            console.log('isau2', isAuthenticated)
         }
 
         const lol = async () => {
             console.log("owner: ", owner)
             console.log("main user: ", mainUser)
             console.log('is main user admin: ', isMainUserAdmin)
-            let reviews = await getUserReviews(owner.authId)
-            console.log('rev: ', reviews)
+            //let reviews = await getUserReviews(owner.authId)
+            //console.log('rev: ', reviews)
 
         }
     const lol2 = async () => {
         console.log("auth or not: ", isAuthenticated)
         console.log("user: ", user)
-        setOwner(user)
         console.log('token: ', getAccessTokenSilently)
         //let reviews = await getUserReviews(owner.authId)
         //console.log('rev: ', reviews)
