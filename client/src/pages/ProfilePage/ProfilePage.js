@@ -58,8 +58,8 @@ export const ProfilePage = (props) => {
                     console.log("step 7")
                     let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
-                    console.log('userBrowsedProfile.authId!', userBrowsedProfile.authId, 'mainUser.authId', mainUser.authId)
-                    if (userBrowsedProfile.authId === mainUser.authId || mainUserSearched.role === "admin") {
+                    console.log('userBrowsedProfile.authId!', userBrowsedProfile.authId, 'mainUser.authId', mainUserSearched.authId)
+                    if (userBrowsedProfile.authId === mainUserSearched.authId || mainUserSearched.role === "admin") {
                         console.log('ADMIN!')
                         setIsMainUserAdmin(true)
                     } else {
