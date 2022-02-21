@@ -20,13 +20,7 @@ export const ProfilePage = (props) => {
         const navigate = useNavigate()
 
         useEffect(async () => {
-            let x = isAuthenticated
-            while (!isAuthenticated || !x){
-                console.log('isAuth', isAuthenticated)
-                console.log('x1', x)
-                x = isAuthenticated
-                console.log('x2', x)
-            }
+
             await checkPrivileges()
             console.log("owner: ", owner)
 
@@ -102,14 +96,19 @@ export const ProfilePage = (props) => {
         }
 
         return (
+
             <Container fluid>
-            <h1 > Profile Page! </h1>
-                <h1>
-                   User name: {owner.name}
-                </h1>
-                <Button variant="danger"  onClick={routeChange}>Log out</Button>
-                <Button variant="danger"  onClick={lol}>get info</Button>
-                <Button variant="danger"  onClick={lol2}>get auth info</Button>
+
+                {isMainUserAdmin &&
+                    <h1> Profile Page! </h1> &&
+                    <h1>
+                    User name: {owner.name}
+                    </h1> &&
+                    <Button variant="danger"  onClick={routeChange}>Log out</Button> &&
+                    <Button variant="danger"  onClick={lol}>get info</Button>  &&
+                    <Button variant="danger"  onClick={lol2}>get auth info</Button>
+                }
             </Container>
+
         )
     }
