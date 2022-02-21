@@ -3,6 +3,8 @@ import {HomePage, ProfilePage} from '../pages/index.pages'
 import React from "react";
 
 
+
+
 export const AppRoutes = () => (
 
     <Routes>
@@ -10,7 +12,7 @@ export const AppRoutes = () => (
         <Route path='/' element={<HomePage/>}/>
         <Route path="*" element={<HomePage />} />
         <Route path='/profile' element={<ProfilePage/>}/>>
-        <Route path='/profile/:id' element={<ProfilePage/>}/>>
+        <Route path='/profile/:id' element={<ProfilePage /> }/>>
     </Routes>
 
 )

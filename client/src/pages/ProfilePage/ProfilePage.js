@@ -20,18 +20,15 @@ export const ProfilePage = (props) => {
         const navigate = useNavigate()
 
         useEffect(async () => {
-            //
-            // await checkPrivileges()
-            // console.log("owner: ", owner)
+
+            await checkPrivileges()
+            console.log("owner: ", owner)
 
             setTimeout(async () => {
                 setLoading(false);
-                await checkPrivileges()
-            }, 1000);
+            }, 200);
 
-            setTimeout(async () => {
-                await lol2()
-            }, 2000);
+
         }, [])
 
 
