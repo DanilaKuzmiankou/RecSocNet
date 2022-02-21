@@ -2,7 +2,7 @@ import {useAuth0, withAuthenticationRequired} from '@auth0/auth0-react'
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Button, Container} from "react-bootstrap";
 import {CustomSpinner} from "../../components/index.components";
-import {getUserByAuthId, getUserById, getUserById2, getUserReviews, registerNewUser} from "../../store/UserStore";
+import {getUserByAuthId, getUserById, getUserReviews, registerNewUser} from "../../store/UserStore";
 import {useNavigate, useParams} from "react-router-dom";
 
 export const ProfilePage = (props) => {
@@ -44,7 +44,7 @@ export const ProfilePage = (props) => {
                     loginWithRedirect()
                 } else {
                     console.log("step 5")
-                    let userBrowsedProfile = await getUserById2(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
+                    let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
                     console.log("browsed", userBrowsedProfile)
                     setIsMainUserAdmin(false)
@@ -57,7 +57,7 @@ export const ProfilePage = (props) => {
                 setMainUser(mainUserSearched)
                 if (routerParams.id) {
                     console.log("step 7")
-                    let userBrowsedProfile = await getUserById2(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
+                    let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
                     if (userBrowsedProfile.authId === mainUser.authId || mainUserSearched.role === "admin") {
                         setIsMainUserAdmin(true)

@@ -13,15 +13,8 @@ export async function registerNewUser(token: string, authId: string, name: strin
 }
 
 export async function getUserById(id: number) {
-    console.log('id: ', id)
-    let url = '/api/user/getUserById/' + id
-    console.log('url: ', url)
-    return await getRequest(url)
-}
-
-export async function getUserById2(id: number) {
     let body = JSON.stringify({id: id})
-    return await postRequest('/api/user/getUserById2', body)
+    return await postRequest('/api/user/getUserById', body)
 }
 
 export async function getUserByAuthId(token: string, authId: string) {

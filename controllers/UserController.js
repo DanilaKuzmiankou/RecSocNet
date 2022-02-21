@@ -18,16 +18,13 @@ class UserController {
     }
 
 
-    async getUsers(req, res, next) {
 
-        return res.status(200).json({message: 'gg'})
-    }
+    // async getUser(req, res, next) {
+    //     const user = await User.findOne({where: {id: req.params.id}})
+    //     return res.json(user)
+    // }
 
     async getUser(req, res, next) {
-        const user = await User.findOne({where: {id: req.params.id}})
-        return res.json(user)
-    }
-    async getUser2(req, res, next) {
         const {id} = req.body
         const user = await User.findOne({where: {id: id}})
         return res.json(user)
