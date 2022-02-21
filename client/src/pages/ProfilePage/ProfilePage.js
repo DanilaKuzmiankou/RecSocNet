@@ -44,7 +44,7 @@ export const ProfilePage = (props) => {
                     loginWithRedirect()
                 } else {
                     console.log("step 5")
-                    let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
+                    let userBrowsedProfile = await getUserById2(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                     setOwner(userBrowsedProfile)
                     console.log("browsed", userBrowsedProfile)
                     setIsMainUserAdmin(false)
