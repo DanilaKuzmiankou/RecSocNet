@@ -8,7 +8,7 @@ import {useNavigate, useParams} from "react-router-dom";
 export const ProfilePage = (props) => {
 
         //const usersTable = useRef(null);
-        const {user, isAuthenticated} = useAuth0()
+        const {user, isAuthenticated, isLoading} = useAuth0()
         const {getAccessTokenSilently, loginWithRedirect, logout} = useAuth0()
         const [reviews, setReviews] = useState([]);
         const [loading, setLoading] = useState(true);
@@ -20,6 +20,7 @@ export const ProfilePage = (props) => {
         const navigate = useNavigate()
 
         useEffect(async () => {
+            while (isLoading){}
             await checkPrivileges()
             console.log("owner: ", owner)
 
