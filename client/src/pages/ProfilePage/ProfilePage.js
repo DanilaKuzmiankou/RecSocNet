@@ -1,5 +1,5 @@
 import {useAuth0, withAuthenticationRequired} from '@auth0/auth0-react'
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Button, Container} from "react-bootstrap";
 import {CustomSpinner} from "../../components/index.components";
 import {getUserByAuthId, getUserById, getUserReviews, registerNewUser} from "../../store/UserStore";
@@ -30,6 +30,9 @@ export const ProfilePage = (props) => {
 
         }, [])
 
+    useLayoutEffect(async () => {
+        await lol2()
+    }, [])
 
 
         const checkPrivileges = async () => {
