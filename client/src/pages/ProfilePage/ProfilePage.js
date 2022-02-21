@@ -4,6 +4,7 @@ import {Button, Container} from "react-bootstrap";
 import {CustomSpinner} from "../../components/index.components";
 import {getUserByAuthId, getUserById, getUserReviews, registerNewUser} from "../../store/UserStore";
 import {useNavigate, useParams} from "react-router-dom";
+import {render} from "react-dom";
 
 export const ProfilePage = (props) => {
 
@@ -30,9 +31,6 @@ export const ProfilePage = (props) => {
 
         }, [])
 
-    useLayoutEffect(async () => {
-        await lol2()
-    }, [])
 
 
         const checkPrivileges = async () => {
@@ -99,17 +97,22 @@ export const ProfilePage = (props) => {
             return <CustomSpinner/>
         }
 
+        render()
+    {
+        console.log("working")
+        console.log(isAuthenticated)
         return (
 
             <Container fluid>
-                    <h1> Profile Page! </h1>
-                    <h1>
+                <h1> Profile Page! </h1>
+                <h1>
                     User name: {owner.name}
-                    </h1>
-                    <Button variant="danger"  onClick={routeChange}>Log out</Button>
-                    <Button variant="danger"  onClick={lol}>get info</Button>
-                    <Button variant="danger"  onClick={lol2}>get auth info</Button>
+                </h1>
+                <Button variant="danger" onClick={routeChange}>Log out</Button>
+                <Button variant="danger" onClick={lol}>get info</Button>
+                <Button variant="danger" onClick={lol2}>get auth info</Button>
             </Container>
 
         )
+    }
     }
