@@ -29,6 +29,9 @@ export const ProfilePage = (props) => {
                 await checkPrivileges()
             }, 1000);
 
+            setTimeout(async () => {
+                await lol2()
+            }, 2000);
         }, [])
 
 
