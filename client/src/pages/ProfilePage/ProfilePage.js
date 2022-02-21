@@ -99,12 +99,14 @@ export const ProfilePage = (props) => {
 
             <Container fluid>
 
-                if (isAuthenticated) {
-
+                {isAuthenticated &&
+                    <h1> Profile Page! </h1> &&
                     <h1>
                     User name: {owner.name}
-                    </h1>
-
+                    </h1> &&
+                    <Button variant="danger"  onClick={routeChange}>Log out</Button> &&
+                    <Button variant="danger"  onClick={lol}>get info</Button>  &&
+                    <Button variant="danger"  onClick={lol2}>get auth info</Button>
                 }
             </Container>
 
