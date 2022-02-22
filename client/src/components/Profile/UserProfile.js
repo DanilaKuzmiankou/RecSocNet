@@ -15,7 +15,6 @@ export class UserProfile extends React.Component {
     }
 
     render() {
-        console.log(this.state.owner.likes)
         return (
             <div>
                 <h1 >

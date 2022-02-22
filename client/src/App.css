@@ -1,3 +1,22 @@
+
+.review_modal_headers {
+  font-size: 20px;
+}
+
+.reviews_table_button {
+  white-space: nowrap;
+  user-select: none;
+  color: white;
+  text-decoration: none;
+
+}
+.reviews_table_button_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
 .log_in_button {
   white-space: nowrap;
 }

@@ -3,7 +3,7 @@ const {Review, User, ReviewImage} = require("../models/Models");
 
 class ReviewController {
 
-    async addNewReview (req, res, next) {
+    async addNewReview(req, res, next) {
         const {authId, category, tags, authorScore, title, text, imageLink} = req.body
         if (!authId || !authorScore || !tags || !category || !title || !text) {
             return next(ApiError.badRequest('Enter all required fields'))
@@ -11,7 +11,7 @@ class ReviewController {
         let user = await User.findOne({where: {authId}})
         const review = await Review.create({category, tags, authorScore, title, text, userId: user.id})
         let reviewId = review.id
-        if (imageLink && imageLink.length>0){
+        if (imageLink && imageLink.length > 0) {
             for (const link of imageLink) {
                 await ReviewImage.create({imageLink: link, reviewId})
             }
@@ -21,8 +21,7 @@ class ReviewController {
 
     async getAllAuthorReviews(req, res, next) {
         const {authId} = req.body
-        if(!authId)
-        {
+        if (!authId) {
             return next(ApiError.badRequest('There is no authId!'))
         }
         const user = await User.findOne({where: {authId}})
@@ -38,8 +37,18 @@ class ReviewController {
         // console.log(images)
         return res.json(reviews)
     }
+
+
+    async saveReview(req, res, next) {
+        const {authId, review} = req.body
+        if (!authId) {
+            return next(ApiError.badRequest('There is no authId!'))
+        }
+        const user = await User.findOne({where: {authId}})
+        const oldReview = await Review.findOne({where: {id: review.id}})
+        await oldReview.update({ title:review.title, text:review.text, tags:review.tags, category:review.category, authorScore:review.authorScore })
+    }
+
 }
-
-
 
 module.exports = new ReviewController()

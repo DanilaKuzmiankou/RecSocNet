@@ -1,11 +1,16 @@
 import BootstrapTable from 'react-bootstrap-table-next';
 import React from 'react';
-import {Container} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
+import ReactMarkdown from 'react-markdown'
+import "../../App.css"
 
 export class CustomBootstrapTable extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {reviews: this.props.reviews};
+        this.state = {
+            reviews: this.props.reviews,
+            changedReviews: []
+        };
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -16,12 +21,31 @@ export class CustomBootstrapTable extends React.Component {
     }
 
 
+
     render() {
+
+        const formatString = (str) => {
+            str = str.substring(0, process.env.REACT_APP_MAX_TABLE_TEXT_LENGTH)
+            if(str.length >= process.env.REACT_APP_MAX_TABLE_TEXT_LENGTH){
+                return (str + "...")
+            }
+            else{
+                return str
+            }
+        }
 
         const columns = [{
             dataField: 'title',
-            text: 'Title'
+            text: 'Title',
         }, {
+            dataField: 'text',
+            text: 'Text',
+            formatter: (cell, row, rowIndex, extraData) => (
+                <div>
+                    <ReactMarkdown children={formatString(row.text)}/>
+                </div>
+            ),
+            }, {
             dataField: 'category',
             text: 'Category'
         }, {
@@ -45,26 +69,25 @@ export class CustomBootstrapTable extends React.Component {
             throw Error('reviews not found')
         }
 
-        const expandRow = {
-            onlyOneExpanding: true,
-            //parentClassName: 'parent-expand-foo',
-            renderer: row => (
-                <div>
-                    <h1>Review Text</h1>
-                    {this.state.reviews[(row.id-1)].text}
-                </div>
-            )
-        };
+
+
+
 
         return (
+
             <Container fluid>
+
                 <BootstrapTable
                     bordered={false}
                     ref={n => this.node = n}
                     keyField='id'
                     data={this.state.reviews}
                     columns={columns}
-                    expandRow={ expandRow }
+                    selectRow={{
+                        mode: 'radio',
+                        clickToSelect: true,
+                        style: {backgroundColor: '#c8e6c9'}
+                    }}
                 />
             </Container>
         )
