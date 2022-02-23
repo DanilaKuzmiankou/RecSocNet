@@ -20,10 +20,15 @@ export const ProfilePage = (props) => {
     const reviewsTable = useRef(null);
     const reviewsModal = useRef(null);
     const [selectedReview, setSelectedReview] = useState({})
-
+    const [modalParams, setModalParams] = useState(
+        {
+            title: "",
+            editable: "false",
+            displayBtns: "none",
+            displayScore: ""
+        })
 
     useEffect(async () => {
-        console.log('gg')
         await checkPrivileges()
 
         setTimeout(async () => {
@@ -45,7 +50,6 @@ export const ProfilePage = (props) => {
                 setOwner(userBrowsedProfile)
                 setIsMainUserAdmin(false)
                 let reviews = await getUserReviews(userBrowsedProfile.authId)
-                console.log("reviews: ", reviews)
                 setReviews(reviews)
             }
         } else {
@@ -57,7 +61,6 @@ export const ProfilePage = (props) => {
                 let userBrowsedProfile = await getUserById(routerParams.id)
                 setOwner(userBrowsedProfile)
                 let reviews = await getUserReviews(userBrowsedProfile.authId)
-                console.log("reviews: ", reviews)
                 setReviews(reviews)
                 if (userBrowsedProfile.authId === mainUserSearched.authId || mainUserSearched.role === "admin") {
                     setIsMainUserAdmin(true)
@@ -66,7 +69,6 @@ export const ProfilePage = (props) => {
                 }
             } else {
                 let reviews = await getUserReviews(mainUserSearched.authId)
-                console.log("reviews: ", reviews)
                 setReviews(reviews)
                 setOwner(mainUserSearched)
                 setIsMainUserAdmin(true)
@@ -84,16 +86,38 @@ export const ProfilePage = (props) => {
         let selectedReview = reviews.filter(review => {
             return review.id === selectedId
         })
+        let params = modalParams
+        params.title = "Review view"
+        params.editable="false"
+        params.displayBtns="none"
+        params.displayScore=""
+        setModalParams(params)
         setSelectedReview(selectedReview)
         setTimeout(async () => {
             reviewsModal.current?.handleModalShowHide()
         }, 100);
-
     }
+
 
     const editReview = () => {
 
+        let selectedId = reviewsTable.current.node.selectionContext.selected[0]
+        let selectedReview = reviews.filter(review => {
+            return review.id === selectedId
+        })
+        let params = modalParams
+        params.title = "Review Editing"
+        params.editable="true"
+        params.displayBtns=""
+        params.displayScore="none"
+        setModalParams(params)
+        setSelectedReview(selectedReview)
+        setTimeout(async () => {
+            reviewsModal.current?.handleModalShowHide()
+        }, 100);
     }
+
+
     const deleteReview = () => {
 
     }
@@ -128,7 +152,9 @@ export const ProfilePage = (props) => {
                 <Button className="reviews_table_button" onClick={deleteReview}>Delete</Button>
                 <span> &nbsp; </span>
             </div>
-            {selectedReview.length>0 && <MydModalWithGrid ref={reviewsModal} review={selectedReview[0]} handleToUpdate = {handleToUpdate} />}
+            {selectedReview.length>0 &&
+                <MydModalWithGrid ref={reviewsModal} review={selectedReview[0]} params={modalParams} handleToUpdate = {handleToUpdate} />
+            }
 
             <CustomBootstrapTable reviews={reviews} ref={reviewsTable}/>
         </Container>
