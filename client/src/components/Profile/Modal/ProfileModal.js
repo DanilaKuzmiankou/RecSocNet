@@ -59,7 +59,7 @@ export class MydModalWithGrid extends React.Component {
     validateFields(redactedReview){
 
         let score = parseInt(redactedReview.authorScore)
-        return Number.isInteger(score) && score > 0 && score <= 5;
+        return Number.isInteger(score) && score >= 0 && score <= 5;
     }
 
 
