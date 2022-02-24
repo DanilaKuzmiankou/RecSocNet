@@ -17,7 +17,7 @@ export const ReviewBody = (props) =>
         redactedReview.title = e.currentTarget.textContent
         updateRedactedReview()
     }}>
-        <ReactMarkdown children={props.review.title} />
+        <ReactMarkdown children={props.review?.title} />
     </div>
 
     <h1 className="review_modal_headers">Category:</h1>
@@ -25,7 +25,7 @@ export const ReviewBody = (props) =>
         redactedReview.category = e.currentTarget.textContent
         updateRedactedReview()
     }}>
-        <ReactMarkdown children={props.review.category} />
+        <ReactMarkdown children={props.review?.category} />
     </div>
 
     <h1 className="review_modal_headers">Tags:</h1>
@@ -33,7 +33,7 @@ export const ReviewBody = (props) =>
         redactedReview.tags = e.currentTarget.textContent
         updateRedactedReview()
     }}>
-        <ReactMarkdown children={props.review.tags} />
+        <ReactMarkdown children={props.review?.tags} />
     </div>
 
     <h1 className="review_modal_headers">Score:</h1>
@@ -41,17 +41,17 @@ export const ReviewBody = (props) =>
         redactedReview.authorScore = e.currentTarget.textContent
         updateRedactedReview()
     }}>
-        <h1 className="review_modal_headers">{redactedReview.authorScore}</h1>
+        <h1 className="review_modal_headers">{redactedReview?.authorScore}</h1>
     </div>
 
             <div style={{display:props.params.displayScore}}>
             <h1 className="review_modal_headers">User review score:</h1>
-            <h1 className="review_modal_headers">{redactedReview.usersReviewScore}</h1>
+            <h1 className="review_modal_headers">{redactedReview?.usersReviewScore}</h1>
             </div>
 
             <div style={{display:props.params.displayScore}}>
                 <h1 className="review_modal_headers">User content score:</h1>
-                <h1 className="review_modal_headers">{redactedReview.usersContentScore}</h1>
+                <h1 className="review_modal_headers">{redactedReview?.usersContentScore}</h1>
             </div>
 
     <h1 className="review_modal_headers">Text:</h1>
@@ -59,7 +59,7 @@ export const ReviewBody = (props) =>
         redactedReview.text = e.currentTarget.textContent
         updateRedactedReview()
     }}>
-        <ReactMarkdown children={props.review.text} />
+        <ReactMarkdown children={props.review?.text} />
     </div>
         </div>
     )

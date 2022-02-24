@@ -25,7 +25,9 @@ export const ProfilePage = (props) => {
             title: "",
             editable: "false",
             displayBtns: "none",
-            displayScore: ""
+            displayScore: "",
+            displayCreateReviewForm: "none",
+            displayEditAndViewForm: ""
         })
 
     useEffect(async () => {
@@ -78,7 +80,17 @@ export const ProfilePage = (props) => {
 
 
     const createReview = () => {
-
+        let params = modalParams
+        params.title = "Review Creation"
+        params.editable="true"
+        params.displayBtns="true"
+        params.displayScore="none"
+        params.displayCreateReviewForm="true"
+        params.displayEditAndViewForm="none"
+        setModalParams(params)
+        setTimeout(async () => {
+            reviewsModal.current?.handleModalShowHide()
+        }, 100);
 
     }
     const viewReview = () => {
@@ -86,16 +98,20 @@ export const ProfilePage = (props) => {
         let selectedReview = reviews.filter(review => {
             return review.id === selectedId
         })
-        let params = modalParams
-        params.title = "Review view"
-        params.editable="false"
-        params.displayBtns="none"
-        params.displayScore=""
-        setModalParams(params)
-        setSelectedReview(selectedReview)
-        setTimeout(async () => {
-            reviewsModal.current?.handleModalShowHide()
-        }, 100);
+        if(selectedReview.length>0) {
+            let params = modalParams
+            params.title = "Review view"
+            params.editable = "false"
+            params.displayBtns = "none"
+            params.displayScore = "true"
+            params.displayCreateReviewForm = "none"
+            params.displayEditAndViewForm = "true"
+            setModalParams(params)
+            setSelectedReview(selectedReview)
+            setTimeout(async () => {
+                reviewsModal.current?.handleModalShowHide()
+            }, 100);
+        }
     }
 
 
@@ -105,21 +121,27 @@ export const ProfilePage = (props) => {
         let selectedReview = reviews.filter(review => {
             return review.id === selectedId
         })
-        let params = modalParams
-        params.title = "Review Editing"
-        params.editable="true"
-        params.displayBtns=""
-        params.displayScore="none"
-        setModalParams(params)
-        setSelectedReview(selectedReview)
-        setTimeout(async () => {
-            reviewsModal.current?.handleModalShowHide()
-        }, 100);
+        if(selectedReview.length>0) {
+            let params = modalParams
+            params.title = "Review Editing"
+            params.editable = "true"
+            params.displayBtns = "true"
+            params.displayScore = "none"
+            params.displayCreateReviewForm = "none"
+            params.displayEditAndViewForm = "true"
+            setModalParams(params)
+            setSelectedReview(selectedReview)
+            setTimeout(async () => {
+                reviewsModal.current?.handleModalShowHide()
+            }, 100);
+        }
     }
 
 
     const deleteReview = () => {
+        if(selectedReview.length>0) {
 
+        }
     }
 
     if (loading) {
@@ -152,9 +174,9 @@ export const ProfilePage = (props) => {
                 <Button className="reviews_table_button" onClick={deleteReview}>Delete</Button>
                 <span> &nbsp; </span>
             </div>
-            {selectedReview.length>0 &&
+
                 <MydModalWithGrid ref={reviewsModal} review={selectedReview[0]} params={modalParams} handleToUpdate = {handleToUpdate} />
-            }
+
 
             <CustomBootstrapTable reviews={reviews} ref={reviewsTable}/>
         </Container>

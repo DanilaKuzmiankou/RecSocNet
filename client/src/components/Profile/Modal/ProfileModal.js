@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import React from "react";
 import "../../../App.css"
 import {ReviewBody} from "../../Review/ReviewBody";
+import {ReviewCreateBody} from "../../Review/ReviewCreateBody";
 
 export class MydModalWithGrid extends React.Component {
     constructor(props) {
@@ -36,7 +37,6 @@ export class MydModalWithGrid extends React.Component {
     }
 
     handleModalSaveChanges() {
-        console.log(this.state.params)
 
         if(this.validateFields(this.state.redactedReview)) {
             this.setState({review: this.state.redactedReview})
@@ -59,7 +59,7 @@ export class MydModalWithGrid extends React.Component {
     validateFields(redactedReview){
 
         let score = parseInt(redactedReview.authorScore)
-        return Number.isInteger(score) && score >= 0 && score <= 5;
+        return Number.isInteger(score) && score > 0 && score <= 5;
     }
 
 
@@ -83,8 +83,17 @@ export class MydModalWithGrid extends React.Component {
 
                     <Container>
 
-                       <ReviewBody review={this.state.review} params={this.state.params} updateRedactedReview={this.updateReview}/>
+                        <div style={{display:this.state.params.displayEditAndViewForm}}>
+                       <ReviewBody review={this.state.review}
+                                   params={this.state.params}
+                                   updateRedactedReview={this.updateReview}
 
+                       />
+
+                        </div>
+                        <div style={{display:this.state.params.displayCreateReviewForm}}>
+                        <ReviewCreateBody />
+                        </div>
                     </Container>
 
                 </Modal.Body>
