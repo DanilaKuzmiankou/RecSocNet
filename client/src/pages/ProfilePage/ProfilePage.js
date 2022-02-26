@@ -3,8 +3,8 @@ import React, {useEffect, useRef, useState} from "react";
 import {Button, Container} from "react-bootstrap";
 import {CustomBootstrapTable, CustomSpinner, UserProfile} from "../../components/index.components";
 import {getUserByAuthId, getUserById, registerNewUser} from "../../store/UserStore";
-import {useNavigate, useParams} from "react-router-dom";
-import {getUserReviews, saveEditedReview} from "../../store/ReviewStore";
+import {useParams} from "react-router-dom";
+import {getUserReviews, saveEditedReview, saveNewReview} from "../../store/ReviewStore";
 import {MydModalWithGrid} from "../../components/Profile/Modal/ProfileModal";
 
 export const ProfilePage = (props) => {
@@ -39,15 +39,16 @@ export const ProfilePage = (props) => {
 
     }, [isAuthenticated, selectedReview])
 
-
     const checkPrivileges = async () => {
 
         if (!isAuthenticated) {
             if (!routerParams.id) {
+                console.log('1')
                 /*let path = `/`;
                 navigate(path);*/
                 //loginWithRedirect()
             } else {
+                console.log('2')
                 let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                 setOwner(userBrowsedProfile)
                 setIsMainUserAdmin(false)
@@ -55,11 +56,13 @@ export const ProfilePage = (props) => {
                 setReviews(reviews)
             }
         } else {
+            console.log('3')
             let token = await getAccessTokenSilently()
             await registerNewUser(token, user.sub, user.name)
             let mainUserSearched = await getUserByAuthId(token, user.sub)
             setMainUser(mainUserSearched)
             if (routerParams.id) {
+                console.log('4')
                 let userBrowsedProfile = await getUserById(routerParams.id)
                 setOwner(userBrowsedProfile)
                 let reviews = await getUserReviews(userBrowsedProfile.authId)
@@ -70,8 +73,11 @@ export const ProfilePage = (props) => {
                     setIsMainUserAdmin(false)
                 }
             } else {
-                let reviews = await getUserReviews(mainUserSearched.authId)
-                setReviews(reviews)
+                console.log('5')
+                let newReviews = await getUserReviews(mainUserSearched.authId)
+
+                setReviews(newReviews)
+                console.log('user: ', mainUserSearched)
                 setOwner(mainUserSearched)
                 setIsMainUserAdmin(true)
             }
@@ -142,11 +148,10 @@ export const ProfilePage = (props) => {
         if(selectedReview.length>0) {
 
         }
+
     }
 
-    if (loading) {
-        return <CustomSpinner/>
-    }
+
 
     const handleToUpdate = async (newReview) => {
         console.log('rev1: ', reviews)
@@ -157,6 +162,17 @@ export const ProfilePage = (props) => {
                     : item
             ))
         await saveEditedReview(owner.authId, newReview)
+    }
+
+    const handleToCreate = async (newReview) => {
+        const createdReview = await saveNewReview(owner.authId, newReview)
+        const newReviews = [...reviews]
+        newReviews.push(createdReview[0])
+        setReviews(newReviews)
+    }
+
+    if (loading) {
+        return <CustomSpinner/>
     }
 
     return (
@@ -175,7 +191,12 @@ export const ProfilePage = (props) => {
                 <span> &nbsp; </span>
             </div>
 
-                <MydModalWithGrid ref={reviewsModal} review={selectedReview[0]} params={modalParams} handleToUpdate = {handleToUpdate} />
+                <MydModalWithGrid ref={reviewsModal}
+                                  review={selectedReview[0]}
+                                  params={modalParams}
+                                  handleToUpdate = {handleToUpdate}
+                                  handleToCreate = {handleToCreate}
+                />
 
 
             <CustomBootstrapTable reviews={reviews} ref={reviewsTable}/>

@@ -3,10 +3,11 @@ const router = new Router()
 const JWTCheck = require("../utils/JWTCheck");
 const reviewController = require('../controllers/ReviewController')
 
-router.post('/addNewReview', reviewController.addNewReview)
+
 router.post('/getAuthorReviews', reviewController.getAllAuthorReviews)
 //router.get('/userReview', userController.getUsers)
-router.post('/edited', reviewController.saveReview)
+router.post('/edit', reviewController.saveReview)
+router.post('/create', reviewController.addNewReview)
 
 
 module.exports = router

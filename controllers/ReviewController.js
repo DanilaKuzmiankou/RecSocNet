@@ -4,19 +4,27 @@ const {Review, User, ReviewImage} = require("../models/Models");
 class ReviewController {
 
     async addNewReview(req, res, next) {
-        const {authId, category, tags, authorScore, title, text, imageLink} = req.body
-        if (!authId || !authorScore || !tags || !category || !title || !text) {
+        const {authId, review} = req.body
+        console.log('review: ', req.body)
+        if (!authId || !review.authorScore || !review.tags || !review.category || !review.title || !review.text) {
             return next(ApiError.badRequest('Enter all required fields'))
         }
         let user = await User.findOne({where: {authId}})
-        const review = await Review.create({category, tags, authorScore, title, text, userId: user.id})
-        let reviewId = review.id
-        if (imageLink && imageLink.length > 0) {
-            for (const link of imageLink) {
+        const createdReview = await Review.create({
+            category: review.category,
+            tags: review.tags,
+            authorScore: review.authorScore,
+            title: review.title,
+            text: review.text,
+            userId: user.id
+        })
+        let reviewId = createdReview.id
+        if (review.imageLink && review.imageLink.length > 0) {
+            for (const link of review.imageLink) {
                 await ReviewImage.create({imageLink: link, reviewId})
             }
         }
-        return res.status(200).json({message: 'Review were successfully created!'})
+        return res.json([createdReview])
     }
 
     async getAllAuthorReviews(req, res, next) {

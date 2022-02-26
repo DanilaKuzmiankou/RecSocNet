@@ -9,6 +9,10 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.form_group_text_field {
+  height: 90%;
+}
+
 .review_modal_headers {
   font-size: 20px;
 }

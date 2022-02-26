@@ -8,5 +8,10 @@ export async function getUserReviews(authId: string) {
 
 export async function saveEditedReview(authId: string, review:Object) {
     let body = JSON.stringify({authId: authId, review:review})
-    return changeDateToUserTimezone(await postRequest('/api/review/edited', body))
+    return changeDateToUserTimezone(await postRequest('/api/review/edit', body))
+}
+
+export async function saveNewReview(authId: string, review:Object) {
+    let body = JSON.stringify({authId: authId, review:review})
+    return changeDateToUserTimezone(await postRequest('/api/review/create', body))
 }

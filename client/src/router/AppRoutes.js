@@ -3,8 +3,6 @@ import {HomePage, ProfilePage} from '../pages/index.pages'
 import React from "react";
 
 
-
-
 export const AppRoutes = () => (
 
     <Routes>

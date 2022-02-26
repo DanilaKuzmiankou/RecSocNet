@@ -6,6 +6,7 @@ export const ReviewBody = (props) =>
 {
     let redactedReview = props.review
 
+
     function updateRedactedReview(){
             props.updateRedactedReview(redactedReview);
     }
@@ -32,6 +33,7 @@ export const ReviewBody = (props) =>
     <div contentEditable={props.params.editable} suppressContentEditableWarning={true} onInput={e => {
         redactedReview.tags = e.currentTarget.textContent
         updateRedactedReview()
+
     }}>
         <ReactMarkdown children={props.review?.tags} />
     </div>
