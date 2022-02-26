@@ -57,6 +57,19 @@ class ReviewController {
         await oldReview.update({ title:review.title, text:review.text, tags:review.tags, category:review.category, authorScore:review.authorScore })
     }
 
+    async deleteReview(req, res, next) {
+        const {authId, id} = req.body
+        if (!authId) {
+            return next(ApiError.badRequest('There is no authId!'))
+        }
+        const user = await User.findOne({where: {authId}})
+        await Review.destroy({
+            where: {id}
+        });
+    }
+
+
+
 }
 
 module.exports = new ReviewController()

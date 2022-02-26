@@ -15,3 +15,8 @@ export async function saveNewReview(authId: string, review:Object) {
     let body = JSON.stringify({authId: authId, review:review})
     return changeDateToUserTimezone(await postRequest('/api/review/create', body))
 }
+
+export async function deleteUserReview(authId: string, id:number) {
+    let body = JSON.stringify({authId: authId, id:id})
+    return await postRequest('/api/review/delete', body)
+}

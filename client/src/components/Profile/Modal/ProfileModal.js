@@ -50,6 +50,7 @@ export class MydModalWithGrid extends React.Component {
             console.log(this.state.createdReview)
             this.setState({createdReview: this.state.createdReview})
             this.props.handleToCreate(this.state.createdReview)
+            this.handleModalHide()
         }
         else {
             console.log(validationAnswer)

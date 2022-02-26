@@ -4,8 +4,9 @@ import {Button, Container} from "react-bootstrap";
 import {CustomBootstrapTable, CustomSpinner, UserProfile} from "../../components/index.components";
 import {getUserByAuthId, getUserById, registerNewUser} from "../../store/UserStore";
 import {useParams} from "react-router-dom";
-import {getUserReviews, saveEditedReview, saveNewReview} from "../../store/ReviewStore";
+import {deleteUserReview, getUserReviews, saveEditedReview, saveNewReview} from "../../store/ReviewStore";
 import {MydModalWithGrid} from "../../components/Profile/Modal/ProfileModal";
+import {RotatingSquare} from "react-loader-spinner";
 
 export const ProfilePage = (props) => {
 
@@ -35,7 +36,7 @@ export const ProfilePage = (props) => {
 
         setTimeout(async () => {
             setLoading(false);
-        }, 200);
+        }, 1200);
 
     }, [isAuthenticated, selectedReview])
 
@@ -66,6 +67,7 @@ export const ProfilePage = (props) => {
                 let userBrowsedProfile = await getUserById(routerParams.id)
                 setOwner(userBrowsedProfile)
                 let reviews = await getUserReviews(userBrowsedProfile.authId)
+                console.log('reviews: ', reviews)
                 setReviews(reviews)
                 if (userBrowsedProfile.authId === mainUserSearched.authId || mainUserSearched.role === "admin") {
                     setIsMainUserAdmin(true)
@@ -144,13 +146,15 @@ export const ProfilePage = (props) => {
     }
 
 
-    const deleteReview = () => {
-        if(selectedReview.length>0) {
-
+    const deleteReview = async () => {
+        let selectedId = reviewsTable.current.node.selectionContext.selected[0]
+        if (selectedId) {
+            let filtered = reviews.filter(review => review.id!=selectedId)
+            setReviews(filtered)
+            await deleteUserReview(owner.authId, selectedId)
         }
-
+        console.log('aha')
     }
-
 
 
     const handleToUpdate = async (newReview) => {
@@ -171,36 +175,49 @@ export const ProfilePage = (props) => {
         setReviews(newReviews)
     }
 
-    if (loading) {
-        return <CustomSpinner/>
-    }
 
     return (
-
-        <Container fluid>
-            <h1> Profile Page! </h1>
-            <UserProfile owner={owner}/>
-            <div className="reviews_table_button_container">
-                <Button className="reviews_table_button" onClick={createReview}>Create</Button>
-                <span> &nbsp; </span>
-                <Button className="reviews_table_button" onClick={viewReview}>View</Button>
-                <span> &nbsp; </span>
-                <Button className="reviews_table_button" onClick={editReview}>Edit</Button>
-                <span> &nbsp; </span>
-                <Button className="reviews_table_button" onClick={deleteReview}>Delete</Button>
-                <span> &nbsp; </span>
-            </div>
-
-                <MydModalWithGrid ref={reviewsModal}
-                                  review={selectedReview[0]}
-                                  params={modalParams}
-                                  handleToUpdate = {handleToUpdate}
-                                  handleToCreate = {handleToCreate}
+        <div>
+        {
+            loading ?
+                <RotatingSquare
+                    wrapperClass="custom_spinner"
+                    ariaLabel="rotating-square"
+                    visible={true}
+                    color="grey"
+                    strokeWidth="10"
                 />
+                :
+                <Container fluid>
+
+                    <h1> Profile Page! </h1>
+                    <UserProfile owner={owner}/>
+                    <div className="reviews_table_button_container">
+                        <Button className="reviews_table_button" onClick={viewReview}>View</Button>
+                        <span> &nbsp; </span>
+
+                        {isMainUserAdmin &&
+                            <div>
+                                <Button className="reviews_table_button mr-3 ml-3"
+                                        onClick={createReview}>Create</Button>{" "}
+                                <Button className="reviews_table_button" onClick={editReview}>Edit</Button>{" "}
+                                <Button className="reviews_table_button" onClick={deleteReview}>Delete</Button>
+                            </div>
+                        }
+                    </div>
+
+                    <MydModalWithGrid ref={reviewsModal}
+                                      review={selectedReview[0]}
+                                      params={modalParams}
+                                      handleToUpdate={handleToUpdate}
+                                      handleToCreate={handleToCreate}
+                    />
 
 
-            <CustomBootstrapTable reviews={reviews} ref={reviewsTable}/>
-        </Container>
+                    <CustomBootstrapTable reviews={reviews} ref={reviewsTable}/>
+                </Container>
+        }
+        </div>
 
     )
 }

@@ -24,8 +24,8 @@ const Review = sequelize.define('review', {
     title: {type: DataTypes.STRING, allowNull:false},
     text: {type: DataTypes.TEXT, allowNull:false},
     authorScore: {type: DataTypes.INTEGER, allowNull:false},
-    usersReviewScore: {type: DataTypes.INTEGER},
-    usersContentScore: {type: DataTypes.INTEGER},
+    usersReviewScore: {type: DataTypes.INTEGER, defaultValue:0},
+    usersContentScore: {type: DataTypes.INTEGER, defaultValue:0},
     createdAt: {type: DataTypes.DATE},
 })
 

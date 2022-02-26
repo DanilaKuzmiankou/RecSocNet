@@ -16,9 +16,18 @@ export const ReviewCreateBody = (props) => {
 
     let tags =
         [
-            "news",
+            "world war",
+            "fantasy",
+            "scam",
+            "politics"
+        ]
+
+    let category =
+        [
+            "books",
             "games",
-            "music"
+            "music",
+            "lifestyle"
         ]
 
     function onSelect(selectedList, selectedItem) {
@@ -35,7 +44,16 @@ export const ReviewCreateBody = (props) => {
         props.updateCreatedReview(newReview);
     }
 
+    const options = category.map((item) => {
+        return (
+            <option key={item} value={item}>
+                {item}
+            </option>
+        )
+    })
+
     return (
+
         <div>
             <Form onSubmit={(e) => updateCreatedReview()}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -55,18 +73,23 @@ export const ReviewCreateBody = (props) => {
                 <Row>
                     <Col xs={3}>
                         <Form.Label>Category</Form.Label>
-                        <Form.Select
+                        <Form.Control
+                            as="select"
                             aria-label="Category"
                             onChange={e => {
-                                newReview.category = e.target.value
-                                updateCreatedReview()
+                                if(e.target.value!=="Select category") {
+                                    newReview.category = e.target.value
+                                    updateCreatedReview()
+                                }
+                                else {
+                                    newReview.category = ""
+                                }
                             }
                             }
                         >
-                            <option value="1">Games</option>
-                            <option value="2">Films</option>
-                            <option value="3">Books</option>
-                        </Form.Select>
+                            <option>Select category</option>
+                            {options}
+                        </Form.Control>
                     </Col>
 
 
