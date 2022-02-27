@@ -7,6 +7,7 @@ const User = sequelize.define('user', {
     name: {type: DataTypes.STRING, allowNull:false},
     role: {type: DataTypes.STRING, defaultValue: "user"},
     likes: {type: DataTypes.INTEGER, defaultValue: 0},
+    profilePictureUrl: {type: DataTypes.STRING},
     createdAt: {type: DataTypes.DATE},
     updatedAt: {type: DataTypes.DATE},
 }, { timestamps: false })

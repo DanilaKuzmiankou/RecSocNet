@@ -1,6 +1,6 @@
 import {useAuth0} from '@auth0/auth0-react'
 import React, {Fragment, useEffect, useRef, useState} from "react";
-import {Button, Container, Row} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import {CustomBootstrapTable, UserProfile} from "../../components/index.components";
 import {getUserByAuthId, getUserById, registerNewUser} from "../../store/UserStore";
 import {useParams} from "react-router-dom";
@@ -38,7 +38,7 @@ export const ProfilePage = (props) => {
 
         setTimeout(async () => {
             setLoading(false);
-        }, 1200);
+        }, 500);
 
     }, [isAuthenticated, selectedReview])
 
@@ -61,7 +61,7 @@ export const ProfilePage = (props) => {
         } else {
             console.log('3')
             let token = await getAccessTokenSilently()
-            await registerNewUser(token, user.sub, user.name)
+            await registerNewUser(token, user.sub, user.name, user.picture)
             let mainUserSearched = await getUserByAuthId(token, user.sub)
             setMainUser(mainUserSearched)
             if (routerParams.id) {
@@ -92,11 +92,11 @@ export const ProfilePage = (props) => {
     const createReview = () => {
         let params = modalParams
         params.title = "Review Creation"
-        params.editable="true"
-        params.displayBtns="true"
-        params.displayScore="none"
-        params.displayCreateReviewForm="true"
-        params.displayEditAndViewForm="none"
+        params.editable = "true"
+        params.displayBtns = "true"
+        params.displayScore = "none"
+        params.displayCreateReviewForm = "true"
+        params.displayEditAndViewForm = "none"
         setModalParams(params)
         setTimeout(async () => {
             reviewsModal.current?.handleModalShowHide()
@@ -108,7 +108,7 @@ export const ProfilePage = (props) => {
         let selectedReview = reviews.filter(review => {
             return review.id === selectedId
         })
-        if(selectedReview.length>0) {
+        if (selectedReview.length > 0) {
             let params = modalParams
             params.title = "Review view"
             params.editable = "false"
@@ -131,7 +131,7 @@ export const ProfilePage = (props) => {
         let selectedReview = reviews.filter(review => {
             return review.id === selectedId
         })
-        if(selectedReview.length>0) {
+        if (selectedReview.length > 0) {
             let params = modalParams
             params.title = "Review Editing"
             params.editable = "true"
@@ -151,7 +151,7 @@ export const ProfilePage = (props) => {
     const deleteReview = async () => {
         let selectedId = reviewsTable.current.node.selectionContext.selected[0]
         if (selectedId) {
-            let filtered = reviews.filter(review => review.id!==selectedId)
+            let filtered = reviews.filter(review => review.id !== selectedId)
             setReviews(filtered)
             await deleteUserReview(owner.authId, selectedId)
         }
@@ -178,64 +178,68 @@ export const ProfilePage = (props) => {
     }
 
     const changeDisplayFiltersState = (e) => {
-        if(!displayFilters){
+        if (!displayFilters) {
             setDisplayFilters("none")
             setFiltersBtnText('Show filters')
-        }
-        else {
+        } else {
             setDisplayFilters("")
             setFiltersBtnText('Hide filters')
         }
     }
 
 
-
     return (
-        <div >
-        {
-            loading ?
-                <RotatingSquare
-                    wrapperClass="custom_spinner"
-                    ariaLabel="rotating-square"
-                    visible={true}
-                    color="grey"
-                    strokeWidth="10"
-                />
-                :
-                <Container fluid>
+        <div>
+            {
+                loading ?
+                    <RotatingSquare
+                        wrapperClass="custom_spinner"
+                        ariaLabel="rotating-square"
+                        visible={true}
+                        color="grey"
+                        strokeWidth="10"
+                    />
+                    :
+                    <Container fluid className="profile_page_container">
+                        <h1 className="small_margin_left no_select"> User Profile </h1>
 
-                    <h1> Profile Page! </h1>
-                    <UserProfile owner={owner}/>
-
-                    <Fragment>
-                        <div style={{ display: "inline" }}>
-                            <Button onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
-                            <Button className="reviews_table_button float-end small_margin_right" onClick={deleteReview}>Delete</Button>
+                        <div className="user_profile">
+                            <UserProfile owner={owner}/>
                         </div>
-                        {isMainUserAdmin &&
-                                <div style={{ display: "inline" }}>
-                                    <Button className="reviews_table_button float-end small_margin_right" onClick={createReview}>Create</Button>
-                                    <Button className="reviews_table_button float-end small_margin_right" onClick={editReview}>Edit</Button>
-                                    <Button className="reviews_table_button float-end small_margin_right" onClick={viewReview}>View</Button>
+
+                        <Fragment>
+                            <div style={{display: "inline"}}>
+                                <Button onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
+                                <Button className="reviews_table_button float-end small_margin_right"
+                                        onClick={deleteReview}>Delete</Button>
+                            </div>
+                            {isMainUserAdmin &&
+                                <div style={{display: "inline"}}>
+                                    <Button className="reviews_table_button float-end small_margin_right"
+                                            onClick={createReview}>Create</Button>
+                                    <Button className="reviews_table_button float-end small_margin_right"
+                                            onClick={editReview}>Edit</Button>
+                                    <Button className="reviews_table_button float-end small_margin_right"
+                                            onClick={viewReview}>View</Button>
                                 </div>
-                        }
-                    </Fragment>
+                            }
+                        </Fragment>
 
 
-                    <MydModalWithGrid ref={reviewsModal}
-                                      review={selectedReview[0]}
-                                      params={modalParams}
-                                      handleToUpdate={handleToUpdate}
-                                      handleToCreate={handleToCreate}
-                    />
+                        <MydModalWithGrid ref={reviewsModal}
+                                          review={selectedReview[0]}
+                                          params={modalParams}
+                                          handleToUpdate={handleToUpdate}
+                                          handleToCreate={handleToCreate}
+                        />
 
 
-                    <CustomBootstrapTable reviews={reviews}
-                                          ref={reviewsTable}
-                                          displayFilters={displayFilters}
-                    />
-                </Container>
-        }
+                        <CustomBootstrapTable reviews={reviews}
+                                              ref={reviewsTable}
+                                              displayFilters={displayFilters}
+                        />
+                    </Container>
+            }
         </div>
 
     )

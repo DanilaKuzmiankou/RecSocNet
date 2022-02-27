@@ -5,7 +5,7 @@ class UserController {
 
 
     async registration (req, res, next) {
-        const {authId, name} = req.body
+        const {authId, name, picture} = req.body
         if (!name || !authId) {
             return next(ApiError.badRequest('There is no authId or user name!'))
         }
@@ -13,7 +13,8 @@ class UserController {
         if (candidate) {
             return res.status(200).json({message: 'User was successfully logged in!'})
         }
-        const user = await User.create({authId, name})
+        console.log('pic', picture)
+        const user = await User.create({authId, name, profilePictureUrl:picture})
         return res.status(200).json({message: 'User was successfully registered!'})
     }
 

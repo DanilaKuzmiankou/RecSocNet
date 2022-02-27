@@ -1,3 +1,27 @@
+
+.profile_page_container {
+  background-image: url("../public/profile_page_background.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+
+.small_margin_left{
+  margin-left: 100px;
+}
+
+.small_margin_top{
+  margin-top: 20px;
+}
+
+.user_profile{
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

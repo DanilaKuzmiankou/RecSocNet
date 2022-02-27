@@ -1,6 +1,9 @@
 .env
 node_modules
 .idea
+/migrations
+/models/index.js
 
 client/.env
 client/node_modules
+config

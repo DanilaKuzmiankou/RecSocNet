@@ -1,7 +1,7 @@
 import {postRequest, postSecretRequest} from "../api/index.network";
 
-export async function registerNewUser(token: string, authId: string, name: string) {
-    let body = JSON.stringify({authId: authId, name: name})
+export async function registerNewUser(token: string, authId: string, name: string, picture: string) {
+    let body = JSON.stringify({authId: authId, name: name, picture: picture})
     return await postSecretRequest(token, '/api/user/registration', body)
 }
 
