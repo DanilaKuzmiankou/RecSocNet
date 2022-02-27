@@ -215,7 +215,7 @@ export const ProfilePage = (props) => {
                                     <div style={{display: "inline"}}>
                                         <Button onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
                                         <Button className="reviews_table_button float-end small_margin_right"
-                                                onClick={deleteReview}>Delete</Button>
+                                                onClick={viewReview}>View</Button>
                                     </div>
                                     {isMainUserAdmin &&
                                         <div style={{display: "inline"}}>
@@ -224,7 +224,8 @@ export const ProfilePage = (props) => {
                                             <Button className="reviews_table_button float-end small_margin_right"
                                                     onClick={editReview}>Edit</Button>
                                             <Button className="reviews_table_button float-end small_margin_right"
-                                                    onClick={viewReview}>View</Button>
+                                                    onClick={deleteReview}>Delete</Button>
+
                                         </div>
                                     }
                                 </Fragment>
@@ -235,10 +236,20 @@ export const ProfilePage = (props) => {
                             </div>
                             :
                             <div className="center no_select">
-                                <h2 className="no_wrap">Ooooops...It seems you have not reviews, click the button to create the first!</h2>
-                                <div className="profile_button_container">
-                                <Button className="profile_button" variant="danger" onClick={createReview}>Tap me!</Button>
-                                </div>
+                                {isMainUserAdmin ?
+                                    <div>
+                                        <h2 className="no_wrap">Ooooops...It seems you have not reviews, click the
+                                            button to create the first!</h2>
+                                        <div className="profile_button_container">
+                                            <Button className="profile_button" variant="danger" onClick={createReview}>Tap
+                                                me!</Button>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div>
+                                            <h2 className="no_wrap">This user has no reviews at the moment!</h2>
+                                    </div>
+                                }
                             </div>
                         }
 
