@@ -200,6 +200,7 @@ export const ProfilePage = (props) => {
                         strokeWidth="10"
                     />
                     :
+
                     <Container fluid className="profile_page_container">
                         <h1 className="small_margin_left no_select"> User Profile </h1>
 
@@ -207,24 +208,39 @@ export const ProfilePage = (props) => {
                             <UserProfile owner={owner}/>
                         </div>
 
-                        <Fragment>
-                            <div style={{display: "inline"}}>
-                                <Button onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
-                                <Button className="reviews_table_button float-end small_margin_right"
-                                        onClick={deleteReview}>Delete</Button>
+                        {reviews && reviews.length > 0 ?
+                            <div>
+                                <h1 className="text-center">Reviews</h1>
+                                <Fragment>
+                                    <div style={{display: "inline"}}>
+                                        <Button onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
+                                        <Button className="reviews_table_button float-end small_margin_right"
+                                                onClick={deleteReview}>Delete</Button>
+                                    </div>
+                                    {isMainUserAdmin &&
+                                        <div style={{display: "inline"}}>
+                                            <Button className="reviews_table_button float-end small_margin_right"
+                                                    onClick={createReview}>Create</Button>
+                                            <Button className="reviews_table_button float-end small_margin_right"
+                                                    onClick={editReview}>Edit</Button>
+                                            <Button className="reviews_table_button float-end small_margin_right"
+                                                    onClick={viewReview}>View</Button>
+                                        </div>
+                                    }
+                                </Fragment>
+                                <CustomBootstrapTable reviews={reviews}
+                                                      ref={reviewsTable}
+                                                      displayFilters={displayFilters}
+                                />
                             </div>
-                            {isMainUserAdmin &&
-                                <div style={{display: "inline"}}>
-                                    <Button className="reviews_table_button float-end small_margin_right"
-                                            onClick={createReview}>Create</Button>
-                                    <Button className="reviews_table_button float-end small_margin_right"
-                                            onClick={editReview}>Edit</Button>
-                                    <Button className="reviews_table_button float-end small_margin_right"
-                                            onClick={viewReview}>View</Button>
+                            :
+                            <div className="center no_select">
+                                <h2 className="no_wrap">Ooooops...It seems you have not reviews, click the button to create the first!</h2>
+                                <div className="profile_button_container">
+                                <Button className="profile_button" variant="danger" onClick={createReview}>Tap me!</Button>
                                 </div>
-                            }
-                        </Fragment>
-
+                            </div>
+                        }
 
                         <MydModalWithGrid ref={reviewsModal}
                                           review={selectedReview[0]}
@@ -234,10 +250,6 @@ export const ProfilePage = (props) => {
                         />
 
 
-                        <CustomBootstrapTable reviews={reviews}
-                                              ref={reviewsTable}
-                                              displayFilters={displayFilters}
-                        />
                     </Container>
             }
         </div>
