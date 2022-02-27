@@ -89,7 +89,7 @@ export class CustomBootstrapTable extends React.Component {
             }),
             sort: true,
             headerAlign: 'center',
-            classes: "center_text",
+            classes: "text-center",
             headerFormatter: headerFormat
         }, {
             dataField: 'tags',
@@ -99,7 +99,7 @@ export class CustomBootstrapTable extends React.Component {
                 style: {display: this.props.displayFilters},
             }),
             sort: true,
-            classes: "center_text",
+            classes: "text-center",
             headerAlign: 'center',
             headerFormatter: headerFormat
         }, {
@@ -111,7 +111,7 @@ export class CustomBootstrapTable extends React.Component {
             }),
             sort: true,
             headerAlign: 'center',
-            classes: "center_text",
+            classes: "text-center",
             headerFormatter: headerFormat
         }, {
             dataField: 'usersContentScore',
@@ -121,7 +121,7 @@ export class CustomBootstrapTable extends React.Component {
                 style: {display: this.props.displayFilters},
             }),
             sort: true,
-            classes: "center_text",
+            classes: "text-center",
             headerAlign: 'center',
             headerFormatter: headerFormat
         }, {
@@ -132,7 +132,7 @@ export class CustomBootstrapTable extends React.Component {
                 style: {display: this.props.displayFilters},
             }),
             sort: true,
-            classes: "center_text",
+            classes: "text-center",
             headerAlign: 'center',
             headerFormatter: headerFormat
         }, {
@@ -147,7 +147,7 @@ export class CustomBootstrapTable extends React.Component {
                 }
             },
             headerAlign: 'center',
-            classes: "center_text",
+            classes: "text-center",
             headerFormatter: headerFormat,
             filter: dateFilter({
                 withoutEmptyComparatorOption: true,
