@@ -3,17 +3,17 @@ import {changeDateToUserTimezone} from "../utils/CustomDate";
 
 export async function getUserReviews(authId: string) {
     let body = JSON.stringify({authId: authId})
-    return changeDateToUserTimezone(await postRequest('/api/review/getAuthorReviews', body))
+    return await postRequest('/api/review/getAuthorReviews', body)
 }
 
 export async function saveEditedReview(authId: string, review:Object) {
     let body = JSON.stringify({authId: authId, review:review})
-    return changeDateToUserTimezone(await postRequest('/api/review/edit', body))
+    return await postRequest('/api/review/edit', body)
 }
 
 export async function saveNewReview(authId: string, review:Object) {
     let body = JSON.stringify({authId: authId, review:review})
-    return changeDateToUserTimezone(await postRequest('/api/review/create', body))
+    return await postRequest('/api/review/create', body)
 }
 
 export async function deleteUserReview(authId: string, id:number) {

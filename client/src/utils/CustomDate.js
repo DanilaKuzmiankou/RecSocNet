@@ -15,6 +15,12 @@ export async function changeDateToUserTimezone(array: Array) {
     return array
 }
 
+export function changeSingleDateToUserTimezone(str: String) {
+        let clientTimeZone = dayjs.tz.guess()
+        str = formatTime(new Date(str), clientTimeZone)
+    return str
+}
+
 function formatTime(date: Date, timeZone: string) {
     let time = moment.tz(date, timeZone)
     return time.format(process.env.REACT_APP_DATESTRING_FORMAT).replace(/['"]+/g, ''); /* timezone_string = "Australia/Sydney" */

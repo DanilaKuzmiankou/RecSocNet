@@ -1,7 +1,7 @@
 import {useAuth0} from '@auth0/auth0-react'
-import React, {useEffect, useRef, useState} from "react";
-import {Button, Container} from "react-bootstrap";
-import {CustomBootstrapTable, CustomSpinner, UserProfile} from "../../components/index.components";
+import React, {Fragment, useEffect, useRef, useState} from "react";
+import {Button, Container, Row} from "react-bootstrap";
+import {CustomBootstrapTable, UserProfile} from "../../components/index.components";
 import {getUserByAuthId, getUserById, registerNewUser} from "../../store/UserStore";
 import {useParams} from "react-router-dom";
 import {deleteUserReview, getUserReviews, saveEditedReview, saveNewReview} from "../../store/ReviewStore";
@@ -21,6 +21,8 @@ export const ProfilePage = (props) => {
     const reviewsTable = useRef(null);
     const reviewsModal = useRef(null);
     const [selectedReview, setSelectedReview] = useState({})
+    const [displayFilters, setDisplayFilters] = useState('none')
+    const [filtersBtnText, setFiltersBtnText] = useState('Show filters')
     const [modalParams, setModalParams] = useState(
         {
             title: "",
@@ -149,7 +151,7 @@ export const ProfilePage = (props) => {
     const deleteReview = async () => {
         let selectedId = reviewsTable.current.node.selectionContext.selected[0]
         if (selectedId) {
-            let filtered = reviews.filter(review => review.id!=selectedId)
+            let filtered = reviews.filter(review => review.id!==selectedId)
             setReviews(filtered)
             await deleteUserReview(owner.authId, selectedId)
         }
@@ -175,9 +177,21 @@ export const ProfilePage = (props) => {
         setReviews(newReviews)
     }
 
+    const changeDisplayFiltersState = (e) => {
+        if(!displayFilters){
+            setDisplayFilters("none")
+            setFiltersBtnText('Show filters')
+        }
+        else {
+            setDisplayFilters("")
+            setFiltersBtnText('Hide filters')
+        }
+    }
+
+
 
     return (
-        <div>
+        <div >
         {
             loading ?
                 <RotatingSquare
@@ -192,19 +206,21 @@ export const ProfilePage = (props) => {
 
                     <h1> Profile Page! </h1>
                     <UserProfile owner={owner}/>
-                    <div className="reviews_table_button_container">
-                        <Button className="reviews_table_button" onClick={viewReview}>View</Button>
-                        <span> &nbsp; </span>
 
+                    <Fragment>
+                        <div style={{ display: "inline" }}>
+                            <Button onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
+                            <Button className="reviews_table_button float-end small_margin_right" onClick={deleteReview}>Delete</Button>
+                        </div>
                         {isMainUserAdmin &&
-                            <div>
-                                <Button className="reviews_table_button mr-3 ml-3"
-                                        onClick={createReview}>Create</Button>{" "}
-                                <Button className="reviews_table_button" onClick={editReview}>Edit</Button>{" "}
-                                <Button className="reviews_table_button" onClick={deleteReview}>Delete</Button>
-                            </div>
+                                <div style={{ display: "inline" }}>
+                                    <Button className="reviews_table_button float-end small_margin_right" onClick={createReview}>Create</Button>
+                                    <Button className="reviews_table_button float-end small_margin_right" onClick={editReview}>Edit</Button>
+                                    <Button className="reviews_table_button float-end small_margin_right" onClick={viewReview}>View</Button>
+                                </div>
                         }
-                    </div>
+                    </Fragment>
+
 
                     <MydModalWithGrid ref={reviewsModal}
                                       review={selectedReview[0]}
@@ -214,7 +230,10 @@ export const ProfilePage = (props) => {
                     />
 
 
-                    <CustomBootstrapTable reviews={reviews} ref={reviewsTable}/>
+                    <CustomBootstrapTable reviews={reviews}
+                                          ref={reviewsTable}
+                                          displayFilters={displayFilters}
+                    />
                 </Container>
         }
         </div>
