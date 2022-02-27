@@ -12,8 +12,9 @@
 .no_wrap{
   white-space: nowrap;
 }
-.nice{
-  display: none;
+
+.center_text{
+  text-align: center;
 }
 
 .small_margin_right{
