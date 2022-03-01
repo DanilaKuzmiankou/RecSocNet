@@ -45,20 +45,22 @@ export class MydModalWithGrid extends React.Component {
     }
 
     async createNewReview() {
-        // const validationAnswer = this.validateFields(this.state.createdReview)
-        // if(validationAnswer.length===0) {
-        //     console.log("Creating....")
-        //     console.log(this.state.createdReview)
-        //     this.setState({createdReview: this.state.createdReview})
-        //     this.props.handleToCreate(this.state.createdReview)
-        //     this.handleModalHide()
-        // }
-        // else {
-        //     console.log(validationAnswer)
-        // }
-        console.log(this.state.createdReview)
-        let url = await uploadImagesToFirebaseCloud(this.state.createdReview.images)
-        console.log('result: ', url)
+        const validationAnswer = this.validateFields(this.state.createdReview)
+        if(validationAnswer.length===0) {
+            console.log("Creating....")
+            console.log(this.state.createdReview)
+            const urls = await uploadImagesToFirebaseCloud(this.state.createdReview.images)
+            this.state.createdReview.images = urls
+            //this.setState({createdReview: this.state.createdReview})
+            this.props.handleToCreate(this.state.createdReview)
+            this.handleModalHide()
+        }
+        else {
+            console.log(validationAnswer)
+        }
+        console.log('before:', this.state.createdReview)
+
+        console.log('result: ', this.state.createdReview)
     }
 
     editReview() {

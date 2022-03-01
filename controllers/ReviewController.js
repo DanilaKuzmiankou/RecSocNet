@@ -19,8 +19,8 @@ class ReviewController {
             userId: user.id
         })
         let reviewId = createdReview.id
-        if (review.imageLink && review.imageLink.length > 0) {
-            for (const link of review.imageLink) {
+        if (review.images && review.images.length > 0) {
+            for (const link of review.images) {
                 await ReviewImage.create({imageLink: link, reviewId})
             }
         }
