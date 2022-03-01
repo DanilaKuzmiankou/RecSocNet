@@ -44,14 +44,17 @@ export class MydModalWithGrid extends React.Component {
         }
     }
 
+    async uploadImagesToFirebase() {
+        if (this.state.createdReview.images && this.state.createdReview.images.length > 0) {
+            const urls = await uploadImagesToFirebaseCloud(this.state.createdReview.images)
+            this.state.createdReview.images = urls
+        }
+    }
+
     async createNewReview() {
         const validationAnswer = this.validateFields(this.state.createdReview)
         if(validationAnswer.length===0) {
-            console.log("Creating....")
-            console.log(this.state.createdReview)
-            const urls = await uploadImagesToFirebaseCloud(this.state.createdReview.images)
-            this.state.createdReview.images = urls
-            //this.setState({createdReview: this.state.createdReview})
+            await this.uploadImagesToFirebase()
             this.props.handleToCreate(this.state.createdReview)
             this.handleModalHide()
         }
@@ -97,9 +100,12 @@ export class MydModalWithGrid extends React.Component {
         else {
             return "Enter review score!"
         }
+        //checking if all required (all fields except of images) are filled, return error if it isn't
         for (let key in review) {
             if (review[key] === null || review[key] == "") {
-                return errorAnswer + key
+                if(key!=="images") {
+                    return errorAnswer + key
+                }
             }
         }
         return ""
