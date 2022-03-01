@@ -3,6 +3,7 @@ import React from "react";
 import "../../../App.css"
 import {ReviewBody} from "../../Review/ReviewBody";
 import {ReviewCreateBody} from "../../Review/ReviewCreateBody";
+import {uploadImagesToFirebaseCloud} from "../../../store/ReviewStore";
 
 export class MydModalWithGrid extends React.Component {
     constructor(props) {
@@ -43,18 +44,21 @@ export class MydModalWithGrid extends React.Component {
         }
     }
 
-    createNewReview() {
-        const validationAnswer = this.validateFields(this.state.createdReview)
-        if(validationAnswer.length===0) {
-            console.log("Creating....")
-            console.log(this.state.createdReview)
-            this.setState({createdReview: this.state.createdReview})
-            this.props.handleToCreate(this.state.createdReview)
-            this.handleModalHide()
-        }
-        else {
-            console.log(validationAnswer)
-        }
+    async createNewReview() {
+        // const validationAnswer = this.validateFields(this.state.createdReview)
+        // if(validationAnswer.length===0) {
+        //     console.log("Creating....")
+        //     console.log(this.state.createdReview)
+        //     this.setState({createdReview: this.state.createdReview})
+        //     this.props.handleToCreate(this.state.createdReview)
+        //     this.handleModalHide()
+        // }
+        // else {
+        //     console.log(validationAnswer)
+        // }
+        console.log(this.state.createdReview)
+        let url = await uploadImagesToFirebaseCloud(this.state.createdReview.images)
+        console.log('result: ', url)
     }
 
     editReview() {

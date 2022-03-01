@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import "../../App.css"
-import {Col, Form, Row} from "react-bootstrap";
+import {Button, Col, Form, Image, Row} from "react-bootstrap";
 import {Multiselect} from "multiselect-react-dropdown";
+import {UploadImage} from "../../components/index.components";
 
 export const ReviewCreateBody = (props) => {
+
 
     let newReview =
         {
@@ -11,7 +13,8 @@ export const ReviewCreateBody = (props) => {
             category: "",
             tags: "",
             authorScore: "",
-            text: ""
+            text: "",
+            images: []
         }
 
     let tags =
@@ -43,6 +46,12 @@ export const ReviewCreateBody = (props) => {
     function updateCreatedReview() {
         props.updateCreatedReview(newReview);
     }
+
+    function updateImages(images) {
+        newReview.images = images
+        props.updateCreatedReview(newReview);
+    }
+
 
     const options = category.map((item) => {
         return (
@@ -77,11 +86,10 @@ export const ReviewCreateBody = (props) => {
                             as="select"
                             aria-label="Category"
                             onChange={e => {
-                                if(e.target.value!=="Select category") {
+                                if (e.target.value !== "Select category") {
                                     newReview.category = e.target.value
                                     updateCreatedReview()
-                                }
-                                else {
+                                } else {
                                     newReview.category = ""
                                 }
                             }
@@ -97,9 +105,11 @@ export const ReviewCreateBody = (props) => {
                         <Form.Label>Tags</Form.Label>
                         <Multiselect
                             isObject={false}
-                            onKeyPressFn={function noRefCheck(){}}
+                            onKeyPressFn={function noRefCheck() {
+                            }}
                             onRemove={onRemove}
-                            onSearch={function noRefCheck(){}}
+                            onSearch={function noRefCheck() {
+                            }}
                             onSelect={onSelect}
                             options={tags}
                             placeholder="Enter tags"
@@ -121,7 +131,6 @@ export const ReviewCreateBody = (props) => {
                     </Col>
                 </Row>
 
-
                 <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Text</Form.Label>
                     <Form.Control as="textarea"
@@ -135,6 +144,11 @@ export const ReviewCreateBody = (props) => {
                                   }
                     />
                 </Form.Group>
+
+
+
+                <UploadImage updateImages={updateImages} />
+
 
             </Form>
         </div>

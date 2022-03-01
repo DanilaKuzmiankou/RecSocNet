@@ -8,4 +8,5 @@ router.post('/registration', JWTCheck, userController.registration)
 //router.get('/users', userController.getUsers)
 router.post("/getUser", userController.getUserByAuth);
 router.post("/getUserById", userController.getUser);
+router.post("/dropzone", userController.reactDropzonePlug);
 module.exports = router

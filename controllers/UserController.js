@@ -31,6 +31,11 @@ class UserController {
         return res.json(user)
     }
 
+    async reactDropzonePlug(req, res, next) {
+
+        return res.status(200).json({message: 'just imitation of server answer that file was uploaded'})
+    }
+
     async getUserByAuth(req, res, next) {
         const {authId} = req.body
         const user = await User.findOne({where: {authId}})

@@ -202,6 +202,7 @@ export const ProfilePage = (props) => {
                     :
 
                     <Container fluid className="profile_page_container">
+
                         <h1 className="small_margin_left no_select"> User Profile </h1>
 
                         <div className="user_profile">
