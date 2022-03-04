@@ -1,7 +1,12 @@
 const ApiError = require("../error/ApiError");
 const {Review, User, ReviewImage} = require("../models/Models");
 
+var reviewController = this;
+
 class ReviewController {
+    constructor() {
+        reviewController = this
+    }
 
     async addNewReview(req, res, next) {
         const {authId, review} = req.body
@@ -10,7 +15,7 @@ class ReviewController {
             return next(ApiError.badRequest('Enter all required fields'))
         }
         let user = await User.findOne({where: {authId}})
-        const createdReview = await Review.create({
+        let createdReview = await Review.create({
             category: review.category,
             tags: review.tags,
             authorScore: review.authorScore,
@@ -18,32 +23,45 @@ class ReviewController {
             text: review.text,
             userId: user.id
         })
-        let reviewId = createdReview.id
         if (review.images && review.images.length > 0) {
-            for (const link of review.images) {
-                await ReviewImage.create({imageLink: link, reviewId})
-            }
+            createdReview = await reviewController.addReviewImages(createdReview, review.images)
         }
         return res.json([createdReview])
     }
 
+     async addReviewImages (createdReview, images){
+        let imagesDB = []
+        let image
+        for (const link of images) {
+            let image = await ReviewImage.create({imageLink: link})
+            imagesDB.push(image)
+        }
+        await createdReview.setImages(imagesDB)
+        createdReview = await Review.findOne({
+            where: {id:createdReview.id},
+            include: [{
+                model: ReviewImage,
+                as: 'images',
+                attributes: ['imageLink']
+            }]
+        });
+        return createdReview
+    }
+
     async getAllAuthorReviews(req, res, next) {
-        const {authId} = req.body
+        const {authId, userId} = req.body
         if (!authId) {
             return next(ApiError.badRequest('There is no authId!'))
         }
-        const user = await User.findOne({where: {authId}})
-        const reviews = await user.getReviews()
-        // let images
-        // reviews.map(async function (review) {
-        //
-        //     images = await ReviewImage.findAll({where: {reviewId: review.id}})
-        //     console.log("iamges 1")
-        //     console.log(images)
-        // })
-        // console.log("images 2:")
-        // console.log(images)
-        return res.json(reviews)
+        let images = await Review.findAll({
+            where: {userId},
+            include: [{
+                model: ReviewImage,
+                as: 'images',
+                    attributes: ['imageLink']
+            }]
+        });
+        return res.json(images)
     }
 
 
@@ -63,13 +81,42 @@ class ReviewController {
             return next(ApiError.badRequest('There is no authId!'))
         }
         const user = await User.findOne({where: {authId}})
-        await Review.destroy({
-            where: {id}
-        });
+        try {
+            ReviewImage.destroy({
+                where: {reviewId: id}
+            }).then(Review.destroy({
+                where: {id}
+            }))
+            return res.status(200).json({message: 'Review was successfully deleted!'})
+        }
+        catch (e) {
+            return res.status(500).json({message: 'An error occurred while review deleting: ', e})
+        }
     }
 
+    async deleteImage(req, res, next) {
+        const {url} = req.body
+        try {
+            await ReviewImage.destroy({
+                where: {imageLink: url}
+            });
+            return res.status(200).json({message: 'Image was successfully deleted!'})
+        }
+        catch (e) {
+            return res.status(500).json({message: 'An error occurred while image deleting: ', e})
+        }
+    }
 
+    async addImage(req, res, next) {
+        const {url, reviewId} = req.body
+        await ReviewImage.create({
+            imageLink:url,
+            reviewId:reviewId
+        })
+        return res.status(200).json({message: 'Image was successfully added!'})
+    }
 
 }
+
 
 module.exports = new ReviewController()

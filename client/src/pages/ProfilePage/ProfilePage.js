@@ -1,10 +1,16 @@
 import {useAuth0} from '@auth0/auth0-react'
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import {Button, Container} from "react-bootstrap";
-import {CustomBootstrapTable, UserProfile} from "../../components/index.components";
+import {CustomBootstrapTable, UploadImage, UserProfile} from "../../components/index.components";
 import {getUserByAuthId, getUserById, registerNewUser} from "../../store/UserStore";
 import {useParams} from "react-router-dom";
-import {deleteUserReview, getUserReviews, saveEditedReview, saveNewReview} from "../../store/ReviewStore";
+import {
+    deleteImagesFromFirebaseCloud,
+    deleteUserReview,
+    getUserReviews,
+    saveEditedReview,
+    saveNewReview
+} from "../../store/ReviewStore";
 import {MydModalWithGrid} from "../../components/Profile/Modal/ProfileModal";
 import {RotatingSquare} from "react-loader-spinner";
 
@@ -29,8 +35,8 @@ export const ProfilePage = (props) => {
             editable: "false",
             displayBtns: "none",
             displayScore: "",
-            displayCreateReviewForm: "none",
-            displayEditAndViewForm: ""
+            displayCreateForm: false,
+            displayEditForm: false
         })
 
     useEffect(async () => {
@@ -55,7 +61,7 @@ export const ProfilePage = (props) => {
                 let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
                 setOwner(userBrowsedProfile)
                 setIsMainUserAdmin(false)
-                let reviews = await getUserReviews(userBrowsedProfile.authId)
+                let reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id)
                 setReviews(reviews)
             }
         } else {
@@ -68,7 +74,7 @@ export const ProfilePage = (props) => {
                 console.log('4')
                 let userBrowsedProfile = await getUserById(routerParams.id)
                 setOwner(userBrowsedProfile)
-                let reviews = await getUserReviews(userBrowsedProfile.authId)
+                let reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id)
                 console.log('reviews: ', reviews)
                 setReviews(reviews)
                 if (userBrowsedProfile.authId === mainUserSearched.authId || mainUserSearched.role === "admin") {
@@ -78,8 +84,8 @@ export const ProfilePage = (props) => {
                 }
             } else {
                 console.log('5')
-                let newReviews = await getUserReviews(mainUserSearched.authId)
-
+                let newReviews = await getUserReviews(mainUserSearched.authId, mainUserSearched.id)
+                console.log('reviews: ', newReviews)
                 setReviews(newReviews)
                 console.log('user: ', mainUserSearched)
                 setOwner(mainUserSearched)
@@ -95,8 +101,8 @@ export const ProfilePage = (props) => {
         params.editable = "true"
         params.displayBtns = "true"
         params.displayScore = "none"
-        params.displayCreateReviewForm = "true"
-        params.displayEditAndViewForm = "none"
+        params.displayCreateForm = true
+        params.displayEditForm = false
         setModalParams(params)
         setTimeout(async () => {
             reviewsModal.current?.handleModalShowHide()
@@ -137,10 +143,11 @@ export const ProfilePage = (props) => {
             params.editable = "true"
             params.displayBtns = "true"
             params.displayScore = "none"
-            params.displayCreateReviewForm = "none"
-            params.displayEditAndViewForm = "true"
+            params.displayCreateForm = false
+            params.displayEditForm = true
             setModalParams(params)
             setSelectedReview(selectedReview)
+            console.log('selected: ', selectedReview)
             setTimeout(async () => {
                 reviewsModal.current?.handleModalShowHide()
             }, 100);
@@ -153,9 +160,9 @@ export const ProfilePage = (props) => {
         if (selectedId) {
             let filtered = reviews.filter(review => review.id !== selectedId)
             setReviews(filtered)
+            await deleteImagesFromFirebaseCloud(reviews.find(review => review.id === selectedId).images)
             await deleteUserReview(owner.authId, selectedId)
         }
-        console.log('aha')
     }
 
 
@@ -172,6 +179,8 @@ export const ProfilePage = (props) => {
 
     const handleToCreate = async (newReview) => {
         const createdReview = await saveNewReview(owner.authId, newReview)
+        console.log('new', createdReview)
+        console.log('others', reviews)
         const newReviews = [...reviews]
         newReviews.push(createdReview[0])
         setReviews(newReviews)
@@ -254,8 +263,10 @@ export const ProfilePage = (props) => {
                             </div>
                         }
 
+
                         <MydModalWithGrid ref={reviewsModal}
                                           review={selectedReview[0]}
+                                          images={selectedReview[0]?.images}
                                           params={modalParams}
                                           handleToUpdate={handleToUpdate}
                                           handleToCreate={handleToCreate}

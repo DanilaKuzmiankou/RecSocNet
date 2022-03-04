@@ -1,9 +1,13 @@
 import {Button, Container, Modal} from "react-bootstrap";
-import React from "react";
+import React, {useRef} from "react";
 import "../../../App.css"
 import {ReviewBody} from "../../Review/ReviewBody";
 import {ReviewCreateBody} from "../../Review/ReviewCreateBody";
-import {uploadImagesToFirebaseCloud} from "../../../store/ReviewStore";
+import {
+    addImagesToDatabase,
+    deleteImagesFromFirebaseCloud,
+    uploadImagesToFirebaseCloud
+} from "../../../store/ReviewStore";
 
 export class MydModalWithGrid extends React.Component {
     constructor(props) {
@@ -13,15 +17,26 @@ export class MydModalWithGrid extends React.Component {
             params: this.props.params,
             review: this.props.review,
             redactedReview: this.props.review,
-            createdReview: {}
+            reviewImages: this.props.images,
+            emptyReview: {
+                title: "",
+                category: "",
+                tags: "",
+                authorScore: "",
+                text: "",
+                images: []
+            }
         };
-
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
 
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.review !== prevProps.review) {
             this.setState({review: this.props.review})
+        }
+        if (this.props.images !== prevProps.images) {
+            this.setState({images: this.props.images})
         }
         if (this.props.params !== prevProps.params) {
             this.setState({params: this.props.params})
@@ -30,6 +45,7 @@ export class MydModalWithGrid extends React.Component {
 
     handleModalShowHide() {
         this.setState({showHide: !this.state.showHide})
+        console.log('rev!!', this.state.review)
     }
 
     handleModalHide() {
@@ -37,44 +53,63 @@ export class MydModalWithGrid extends React.Component {
     }
 
     handleModalSaveChanges() {
-        if (this.state.params.displayCreateReviewForm === "none") {
-            this.editReview()
-        } else {
+        if (this.state.params.displayCreateForm) {
             this.createNewReview()
+
+        } else {
+            this.editReview()
         }
     }
 
     async uploadImagesToFirebase() {
-        if (this.state.createdReview.images && this.state.createdReview.images.length > 0) {
-            const urls = await uploadImagesToFirebaseCloud(this.state.createdReview.images)
-            this.state.createdReview.images = urls
+        if (this.state.redactedReview.images && this.state.redactedReview.images.length > 0) {
+            const urls = await uploadImagesToFirebaseCloud(this.state.redactedReview.images)
+            this.state.redactedReview.images = urls
         }
     }
 
     async createNewReview() {
-        const validationAnswer = this.validateFields(this.state.createdReview)
+        const validationAnswer = this.validateFields(this.state.redactedReview)
         if(validationAnswer.length===0) {
             await this.uploadImagesToFirebase()
-            this.props.handleToCreate(this.state.createdReview)
+            this.props.handleToCreate(this.state.redactedReview)
             this.handleModalHide()
         }
         else {
             console.log(validationAnswer)
         }
-        console.log('before:', this.state.createdReview)
-
-        console.log('result: ', this.state.createdReview)
     }
 
-    editReview() {
-        if (this.validateFields(this.state.redactedReview)) {
+    async editReview() {
+        const validationAnswer = this.validateFields(this.state.redactedReview)
+        if (validationAnswer.length === 0) {
+            await this.uploadOrDeletePictures()
             this.setState({review: this.state.redactedReview})
             this.props.handleToUpdate(this.state.redactedReview)
+            this.handleModalHide()
         } else {
-            console.log('Wrong!')
+            console.log(validationAnswer)
         }
     }
 
+    async uploadOrDeletePictures() {
+        const picturesToUpload = []
+        const redactedPictures = []
+        const allPictures = this.state.redactedReview.images
+        allPictures.forEach(function (picture) {
+            if (picture.constructor === File) {
+                picturesToUpload.push(picture)
+            } else {
+                redactedPictures.push(picture)
+            }
+        })
+        const picturesToDelete = this.state.images.filter(
+            prevPicture => redactedPictures.find(
+                redactedPicture => redactedPicture.preview === prevPicture.imageLink) === undefined)
+        await deleteImagesFromFirebaseCloud(picturesToDelete)
+        const picturesUrl = await uploadImagesToFirebaseCloud(picturesToUpload)
+        await addImagesToDatabase(picturesUrl, this.state.redactedReview.id)
+    }
 
     updateReview = (redactedReview) => {
         /**
@@ -84,12 +119,10 @@ export class MydModalWithGrid extends React.Component {
         this.state.redactedReview = redactedReview
     }
 
-    updateCreatedReview = (createdReview) => {
-        this.state.createdReview = createdReview
-    }
 
 
     validateFields(review) {
+
         const errorAnswer = "Enter review "
         if(review.authorScore) {
             let score = parseInt(review?.authorScore)
@@ -103,7 +136,8 @@ export class MydModalWithGrid extends React.Component {
         //checking if all required (all fields except of images) are filled, return error if it isn't
         for (let key in review) {
             if (review[key] === null || review[key] == "") {
-                if(key!=="images") {
+                if(key!=="images" && key!=="usersReviewScore" && key!=="usersContentScore") {
+                    console.log('catch!',key)
                     return errorAnswer + key
                 }
             }
@@ -131,18 +165,36 @@ export class MydModalWithGrid extends React.Component {
                     <Modal.Body className="show-grid">
 
                         <Container>
+                            {/**
+                                <div style={{display: this.state.params.displayEditAndViewForm}}>
+                                    <ReviewBody review={this.state.review}
+                                                params={this.state.params}
+                                                updateRedactedReview={this.updateReview}
 
-                            <div style={{display: this.state.params.displayEditAndViewForm}}>
-                                <ReviewBody review={this.state.review}
-                                            params={this.state.params}
-                                            updateRedactedReview={this.updateReview}
+                                    />
+                                </div>
+                            **/}
+                            {this.state.params.displayEditForm ?
+                                <div>
+                                    <ReviewCreateBody
+                                        review={this.state.review}
+                                        params={this.state.params}
+                                        updateRedactedReview={this.updateReview}
 
-                                />
+                                    />
+                                </div>
 
-                            </div>
-                            <div style={{display: this.state.params.displayCreateReviewForm}}>
-                                <ReviewCreateBody updateCreatedReview={this.updateCreatedReview}/>
-                            </div>
+                                :
+
+                                <div>
+                                    <ReviewCreateBody
+                                        updateRedactedReview={this.updateReview}
+                                        review={this.state.emptyReview}
+
+                                    />
+                                </div>
+                            }
+
                         </Container>
 
                     </Modal.Body>

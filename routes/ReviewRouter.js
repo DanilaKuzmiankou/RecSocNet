@@ -9,5 +9,8 @@ router.post('/getAuthorReviews', reviewController.getAllAuthorReviews)
 router.post('/edit', reviewController.saveReview)
 router.post('/create', reviewController.addNewReview)
 router.post('/delete', reviewController.deleteReview)
+router.post('/deleteImage', reviewController.deleteImage)
+router.post('/addImage', reviewController.addImage)
+
 
 module.exports = router

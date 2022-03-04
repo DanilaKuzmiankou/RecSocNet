@@ -1,10 +1,21 @@
 import ReactMarkdown from "react-markdown";
-import React from "react";
+import React, {useEffect} from "react";
 import "../../App.css"
+import {UploadImage} from "../UploadImage/UploadImage";
+import {Image} from "react-bootstrap";
 
 export const ReviewBody = (props) =>
 {
+
     let redactedReview = props.review
+
+    useEffect( () => {
+        console.log('emmm')
+        console.log('red', redactedReview)
+            updateRedactedReview()
+    }, [props]);
+
+
 
 
     function updateRedactedReview(){
@@ -63,6 +74,10 @@ export const ReviewBody = (props) =>
     }}>
         <ReactMarkdown children={props.review?.text} />
     </div>
+
+            <h1 className="review_modal_headers">Images:</h1>
+            <UploadImage filesUrl={props.review?.images} />
+
         </div>
     )
 }

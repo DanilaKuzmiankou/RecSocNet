@@ -20,11 +20,6 @@ class UserController {
 
 
 
-    // async getUser(req, res, next) {
-    //     const user = await User.findOne({where: {id: req.params.id}})
-    //     return res.json(user)
-    // }
-
     async getUser(req, res, next) {
         const {id} = req.body
         const user = await User.findOne({where: {id: id}})

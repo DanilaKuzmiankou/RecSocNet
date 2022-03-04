@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import "../../App.css"
 import filterFactory, {Comparator, dateFilter, numberFilter, textFilter} from 'react-bootstrap-table2-filter';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
-import {changeSingleDateToUserTimezone} from "../../utils/CustomDate";
+import {changeSingleDateToUserTimezone} from "../../utils/Utils";
 
 export class CustomBootstrapTable extends React.Component {
     constructor(props) {

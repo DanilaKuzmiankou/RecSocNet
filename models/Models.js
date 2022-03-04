@@ -45,8 +45,12 @@ Rating.belongsTo(User)
 Review.hasMany(Rating)
 Rating.belongsTo(Review)
 
-Review.hasMany(ReviewImage)
-ReviewImage.belongsTo(Review)
+
+
+Review.hasMany(ReviewImage, { as: { singular: 'image', plural: 'images' }, onDelete: 'CASCADE'})
+ReviewImage.belongsTo(Review, )
+
+
 
 module.exports = {
     User,

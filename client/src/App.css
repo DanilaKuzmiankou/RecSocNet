@@ -1,3 +1,20 @@
+ul {
+  margin: 0;
+}
+
+.dropzone {
+  text-align: center;
+  padding: 20px;
+  border: 3px dashed #eeeeee;
+  background-color: #fafafa;
+  color: #bdbdbd;
+
+  margin-bottom: 20px;
+}
+.focusedStyle {
+  border-color: #2196f3;
+}
+
 
 .profile_page_container {
   background-image: url("../public/profile_page_background.jpg");
