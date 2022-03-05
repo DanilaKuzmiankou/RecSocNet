@@ -7,16 +7,18 @@ import {
     deleteImagesFromFirebaseCloud,
     uploadImagesToFirebaseCloud
 } from "../../../api/store/ReviewStore";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import LoadingComponent from "../../LoadingComponent/LoadingComponent";
+import {setIsLoading} from "../../../store/reducers/LoadingSlice";
+import {ReviewBody} from "../../Review/ReviewBody";
 
 export const MydModalWithGrid = forwardRef((props, ref) => {
 
     const editedReview = useSelector((state) => state.review.editedReview)
-    const selectedReview = useSelector((state) => state.review.selectedReview)
+    const isLoading = useSelector((state) => state.loading.isLoading)
     const params = useSelector((state) => state.modal.params)
-
     const modal = useRef();
-
+    const dispatch = useDispatch()
     const empty = {
         title: "",
         category: "",
@@ -27,8 +29,8 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
     }
 
     const [showModal, setShowModal] = useState(false)
-
     const [emptyReview, setEmptyReview] = useState(empty)
+    //const [isLoading, setIsLoading] = useState(false)
 
     useImperativeHandle(ref, () => ({
         showReviewModal() {
@@ -37,6 +39,7 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
     }));
 
     const handleModalSaveChanges = async () => {
+        dispatch(setIsLoading(true))
         let newReview = Object.assign({}, modal.current.save())
         if (params.displayCreateForm) {
             console.log('create: ', newReview)
@@ -45,6 +48,7 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
             console.log('edit: ', newReview)
             await editReview(newReview)
         }
+        dispatch(setIsLoading(false))
     }
 
      const uploadImagesToFirebase = async (pictures) => {
@@ -104,13 +108,7 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
         await addImagesToDatabase(picturesUrl, editedReview.id)
     }
 
-    const updateReview = (redactedReview) => {
-        /**
-         * especially editing this.state.redactedReview without
-         * setState() to prevent rerender
-         */
-        this.state.redactedReview = redactedReview
-    }
+
 
     const validateFields = (review) => {
         const errorAnswer = "Enter review "
@@ -140,49 +138,59 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
         setShowModal(false)
     }
 
-        return (
-            <div>
-                <Modal show={showModal}
-                       aria-labelledby="contained-modal-title-vcenter"
-                       centered
-                       size="xl"
-                       backdrop="static"
-                       keyboard={false}
-                       className="no_select"
-                       scrollable="true"
-                >
-                    <Modal.Header closeButton onClick={closeModal}>
-                        <Modal.Title>{params.title}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="show-grid">
 
-                        <Container>
-                            {params.displayEditForm &&
+    return (
+            <div>
+                {isLoading &&
+                    <LoadingComponent/>
+                }
+                    <Modal show={showModal}
+                           aria-labelledby="contained-modal-title-vcenter"
+                           centered
+                           size="xl"
+                           backdrop="static"
+                           keyboard={false}
+                           className="no_select"
+                           scrollable="true"
+                    >
+                        <Modal.Header closeButton onClick={closeModal}>
+                            <Modal.Title>{params.title}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="show-grid">
+
+                            <Container>
+                                {params.displayEditForm &&
                                     <ReviewCreateBody
                                         review={editedReview}
                                         modeCreate={false}
                                         ref={modal}
                                     />
-                            }
-                            {params.displayCreateForm &&
+                                }
+                                {params.displayCreateForm &&
                                     <ReviewCreateBody
                                         modeCreate={true}
                                         review={emptyReview}
                                         ref={modal}
                                     />
-                            }
-                        </Container>
+                                }
+                                {params.displayViewForm &&
+                                    <ReviewBody
+                                        review={editedReview}
+                                    />
+                                }
+                            </Container>
 
-                    </Modal.Body>
-                    <Modal.Footer style={{display: params.displayModalButtons}}>
-                        <Button variant="secondary" onClick={closeModal}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleModalSaveChanges}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                        </Modal.Body>
+                        <Modal.Footer style={{display: params.displayModalButtons}}>
+                            <Button variant="secondary" onClick={closeModal}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={handleModalSaveChanges}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+
             </div>
         );
 })

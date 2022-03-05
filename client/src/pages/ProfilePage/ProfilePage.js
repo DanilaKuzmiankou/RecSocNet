@@ -17,6 +17,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setBrowsedUser, setCurrentUser, setIsCurrentUserAdmin} from "../../store/reducers/UserSlice";
 import {setDisplayFilters, setEditedReview, setReviews, setSelectedReview} from "../../store/reducers/ReviewSlice";
 import {setModalParams} from "../../store/reducers/ModalSlice";
+import {setIsLoading} from "../../store/reducers/LoadingSlice";
 
 export const ProfilePage = (props) => {
 
@@ -30,7 +31,9 @@ export const ProfilePage = (props) => {
     const selectedReview = useSelector((state) => state.review.selectedReview)
 
     const {user, isAuthenticated, getAccessTokenSilently} = useAuth0()
-    const [loading, setLoading] = useState(true);
+
+    const isLoading = useSelector((state) => state.loading.isLoading)
+
     const routerParams = useParams();
     const reviewsModal = useRef();
 
@@ -40,7 +43,7 @@ export const ProfilePage = (props) => {
         await checkPrivileges()
 
         setTimeout(async () => {
-            setLoading(false);
+            dispatch(setIsLoading(false))
         }, 500);
 
     }, [isAuthenticated])
@@ -124,6 +127,7 @@ export const ProfilePage = (props) => {
 
     const viewReview = () => {
         if(Object.keys(selectedReview).length !== 0){
+            dispatch(setEditedReview(selectedReview))
             dispatch(setModalParams({
                 title: "Review View",
                 displayModalButtons: "none",
@@ -138,7 +142,6 @@ export const ProfilePage = (props) => {
 
     const editReview = () => {
         if(Object.keys(selectedReview).length !== 0){
-            console.log('selected: ', selectedReview)
             dispatch(setEditedReview(selectedReview))
             dispatch(setModalParams({
                 title: "Review Editing",
@@ -163,11 +166,7 @@ export const ProfilePage = (props) => {
             }
         }
     }
-/*
-    console.log('rev1: ', reviews)
-    let res = await saveEditedReview(browsedUser.authId, newReview)
-    dispatch(setReviews(res))
-    console.log('rs', res)*/
+
     const handleToUpdate = async (newReview) => {
         let reviewFromApi = await saveEditedReview(newReview)
         let newArr = reviews.map(item =>
@@ -202,7 +201,7 @@ export const ProfilePage = (props) => {
     return (
         <div>
             {
-                loading ?
+                isLoading ?
                     <LoadingComponent/>
                     :
 
