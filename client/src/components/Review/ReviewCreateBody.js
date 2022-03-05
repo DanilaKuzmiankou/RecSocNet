@@ -1,24 +1,33 @@
-import React, {useEffect, useImperativeHandle, useRef, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
 import "../../App.css"
 import {Button, Col, Form, Image, Row} from "react-bootstrap";
 import {Multiselect} from "multiselect-react-dropdown";
 import {UploadImage} from "../../components/index.components";
+import {useDispatch, useSelector} from "react-redux";
+import {setEditedReview} from "../../store/reducers/ReviewSlice";
 
-export const ReviewCreateBody = (props) => {
+export const ReviewCreateBody = forwardRef((props, ref) => {
 
-   const [selectedTags, setSelectedTags] = useState([])
+    const [selectedTags, setSelectedTags] = useState([])
+    const dispatch = useDispatch()
 
-    let newReview = props.review
-    let oldRevIm = props.review.images
+    let currentReview = Object.assign({}, props.review)
 
     useEffect(async () => {
-            if(newReview && newReview.tags !== ""){
-                setSelectedTags((newReview.tags).split(","))
-            }
-            updateReview()
-        oldRevIm = props.review.images
+
+        if (currentReview && currentReview.tags !== "") {
+            setSelectedTags((currentReview.tags).split(","))
+        }
+        console.log(currentReview)
     }, []);
 
+
+    useImperativeHandle(ref, () => ({
+         save() {
+             dispatch(setEditedReview(currentReview))
+             return currentReview
+        }
+    }));
 
 
     let tags =
@@ -38,24 +47,16 @@ export const ReviewCreateBody = (props) => {
         ]
 
     function onSelect(selectedList, selectedItem) {
-        newReview.tags = selectedList.join(',')
-        updateReview()
+        currentReview.tags = selectedList.join(',')
     }
 
     function onRemove(selectedList, removedItem) {
-        newReview.tags = selectedList.join(',')
-        updateReview()
-    }
-
-    function updateReview() {
-        props.updateRedactedReview(newReview);
+        currentReview.tags = selectedList.join(',')
     }
 
     function updateImages(images) {
-        newReview.images = images
-        updateReview();
+        currentReview.images = images
     }
-
 
     const options = category.map((item) => {
         return (
@@ -66,9 +67,8 @@ export const ReviewCreateBody = (props) => {
     })
 
     return (
-
         <div>
-            <Form onSubmit={(e) => updateReview()}>
+            <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
@@ -76,8 +76,7 @@ export const ReviewCreateBody = (props) => {
                         placeholder="Enter review title"
                         defaultValue={props.review?.title}
                         onChange={e => {
-                            newReview.title = e.target.value
-                            updateReview()
+                            currentReview.title = e.target.value
                         }
                         }
                     />
@@ -93,10 +92,9 @@ export const ReviewCreateBody = (props) => {
                             defaultValue={props.review?.category}
                             onChange={e => {
                                 if (e.target.value !== "Select category") {
-                                    newReview.category = e.target.value
-                                    updateReview()
+                                    currentReview.category = e.target.value
                                 } else {
-                                    newReview.category = ""
+                                    currentReview.category = ""
                                 }
                             }
                             }
@@ -131,8 +129,7 @@ export const ReviewCreateBody = (props) => {
                                       min="1"
                                       onKeyDown={(evt) => evt.preventDefault()}
                                       onChange={e => {
-                                          newReview.authorScore = e.target.value
-                                          updateReview()
+                                          currentReview.authorScore = e.target.value
                                       }
                                       }
                         />
@@ -147,23 +144,20 @@ export const ReviewCreateBody = (props) => {
                                   defaultValue={props.review?.text}
                                   placeholder="Enter review text"
                                   onChange={e => {
-                                      newReview.text = e.target.value
-                                      updateReview()
+                                      currentReview.text = e.target.value
                                   }
                                   }
                     />
                 </Form.Group>
 
 
-
-                {/** <UploadImage updateImages={updateImages} /> */}
-
                 <UploadImage
                     updateImages={updateImages}
-                    filesUrl={newReview?.images}
+                    filesUrl={currentReview?.images}
                 />
 
             </Form>
         </div>
     )
 }
+)

@@ -53,7 +53,7 @@ class ReviewController {
         if (!authId) {
             return next(ApiError.badRequest('There is no authId!'))
         }
-        let images = await Review.findAll({
+        let reviews = await Review.findAll({
             where: {userId},
             include: [{
                 model: ReviewImage,
@@ -61,18 +61,23 @@ class ReviewController {
                     attributes: ['imageLink']
             }]
         });
-        return res.json(images)
+        return res.json(reviews)
     }
 
 
     async saveReview(req, res, next) {
-        const {authId, review} = req.body
-        if (!authId) {
-            return next(ApiError.badRequest('There is no authId!'))
-        }
-        const user = await User.findOne({where: {authId}})
+        const {review} = req.body
         const oldReview = await Review.findOne({where: {id: review.id}})
         await oldReview.update({ title:review.title, text:review.text, tags:review.tags, category:review.category, authorScore:review.authorScore })
+        let newReview = await Review.findOne({
+            where: {id: review.id},
+            include: [{
+                model: ReviewImage,
+                as: 'images',
+                attributes: ['imageLink']
+            }]
+        })
+        return res.json(newReview)
     }
 
     async deleteReview(req, res, next) {

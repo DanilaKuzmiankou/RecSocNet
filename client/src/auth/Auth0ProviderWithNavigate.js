@@ -1,9 +1,8 @@
 import {Auth0Provider} from '@auth0/auth0-react'
-import {Children} from '../types/index.d'
 import {useNavigate} from "react-router-dom";
 
 
-const Auth0ProviderWithNavigate = ({children}: Children) => {
+const Auth0ProviderWithNavigate = ({children}: React.ReactNode ) => {
     const navigate = useNavigate()
 
 

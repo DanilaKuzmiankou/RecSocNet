@@ -6,25 +6,14 @@ import "../../App.css"
 import filterFactory, {Comparator, dateFilter, numberFilter, textFilter} from 'react-bootstrap-table2-filter';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import {changeSingleDateToUserTimezone} from "../../utils/Utils";
+import {useDispatch, useSelector} from "react-redux";
+import {setSelectedReview} from "../../store/reducers/ReviewSlice";
 
-export class CustomBootstrapTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            reviews: this.props.reviews,
-            changedReviews: [],
-        };
-    }
+export const CustomBootstrapTable = () => {
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
-        if (this.props.reviews !== prevProps.reviews) {
-            this.setState({reviews: this.props.reviews})
-        }
-    }
-
-
-    render() {
+    const dispatch = useDispatch()
+    const reviews = useSelector((state) => state.review.reviews)
+    const displayFilters = useSelector((state) => state.review.displayFilters)
 
         function headerFormat(column, colIndex) {
             return (
@@ -59,7 +48,7 @@ export class CustomBootstrapTable extends React.Component {
             text: 'Title',
             filter: textFilter({
                 placeholder: 'Title',
-                style: {display: this.props.displayFilters},
+                style: {display: displayFilters},
             }),
             sort: true,
             headerAlign: 'center',
@@ -69,7 +58,7 @@ export class CustomBootstrapTable extends React.Component {
             text: 'Text',
             filter: textFilter({
                 placeholder: 'Text',
-                style: {display: this.props.displayFilters},
+                style: {display: displayFilters},
             }),
             formatter: (cell, row, rowIndex, extraData) => (
                 <div>
@@ -84,7 +73,7 @@ export class CustomBootstrapTable extends React.Component {
             text: 'Category',
             filter: textFilter({
                 placeholder: 'Category',
-                style: {display: this.props.displayFilters},
+                style: {display: displayFilters},
 
             }),
             sort: true,
@@ -96,7 +85,7 @@ export class CustomBootstrapTable extends React.Component {
             text: 'Tags',
             filter: textFilter({
                 placeholder: 'Tags',
-                style: {display: this.props.displayFilters},
+                style: {display: displayFilters},
             }),
             sort: true,
             classes: "text-center",
@@ -107,7 +96,7 @@ export class CustomBootstrapTable extends React.Component {
             text: 'Author creation score',
             filter: numberFilter({
                 placeholder: 'Author score ',
-                style: {display: this.props.displayFilters},
+                style: {display: displayFilters},
             }),
             sort: true,
             headerAlign: 'center',
@@ -118,7 +107,7 @@ export class CustomBootstrapTable extends React.Component {
             text: 'Users creation score',
             filter: numberFilter({
                 placeholder: 'User score ',
-                style: {display: this.props.displayFilters},
+                style: {display: displayFilters},
             }),
             sort: true,
             classes: "text-center",
@@ -129,7 +118,7 @@ export class CustomBootstrapTable extends React.Component {
             text: 'Likes',
             filter: numberFilter({
                 placeholder: 'Likes',
-                style: {display: this.props.displayFilters},
+                style: {display: displayFilters},
             }),
             sort: true,
             classes: "text-center",
@@ -153,12 +142,12 @@ export class CustomBootstrapTable extends React.Component {
                 withoutEmptyComparatorOption: true,
                 comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
                 comparatorClassName: 'custom-comparator-class',
-                style: {display: this.props.displayFilters}
+                style: {display: displayFilters}
             }),
             formatter: dateFormatter
         }];
 
-        if (!this.state.reviews) {
+        if (!reviews) {
             throw Error('reviews not found')
         }
 
@@ -168,20 +157,21 @@ export class CustomBootstrapTable extends React.Component {
                 <BootstrapTable
                     headerWrapperClasses="no_wrap no_select"
                     bordered={false}
-                    ref={n => this.node = n}
                     keyField='id'
-                    data={this.state.reviews}
+                    data={reviews}
                     columns={columns}
                     filter={filterFactory()}
                     filterPosition="top"
                     selectRow={{
                         mode: 'radio',
                         clickToSelect: true,
-                        style: {backgroundColor: '#c8e6c9'}
+                        style: {backgroundColor: '#c8e6c9'},
+                        onSelect: (row, isSelect, rowIndex, e) => {
+                            dispatch(setSelectedReview(row))
+                        }
                     }}
                 />
             </Container>
         )
 
-    }
 }

@@ -133,6 +133,8 @@ export const UploadImage = ({updateImages, filesUrl}) => {
     const removePicture = async (file) => {
         let newFiles = [...files]
         //if file was added by dropzone right now it has property @path, otherwise - not
+        console.log('before: ', files)
+        console.log('to delete: ', file)
         if (!file.hasOwnProperty('path')) {
            // await deleteImageFromFirebaseCloud(file.preview)
 
@@ -140,7 +142,7 @@ export const UploadImage = ({updateImages, filesUrl}) => {
         newFiles = newFiles.filter(iteratedFile => iteratedFile.preview !== file.preview)
         setFiles(newFiles)
         updateImages(newFiles)
-
+        console.log('after: ', newFiles)
     };
 
     return (

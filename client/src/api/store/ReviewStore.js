@@ -1,6 +1,6 @@
-import {postRequest, postRequestToCloudinary} from "../api/index.network";
-import {changeDateToUserTimezone, generateRandomString} from "../utils/Utils";
-import firebase from "../utils/Firebase";
+import {postRequest, postRequestToCloudinary} from "../index.network";
+import {changeDateToUserTimezone, generateRandomString} from "../../utils/Utils";
+import firebase from "../../utils/Firebase";
 import {forEach} from "react-bootstrap/ElementChildren";
 
 export async function getUserReviews(authId: string, userId:number) {
@@ -8,8 +8,8 @@ export async function getUserReviews(authId: string, userId:number) {
     return await postRequest('/api/review/getAuthorReviews', body)
 }
 
-export async function saveEditedReview(authId: string, review: Object) {
-    let body = JSON.stringify({authId: authId, review: review})
+export async function saveEditedReview(review: Object) {
+    let body = JSON.stringify({review: review})
     return await postRequest('/api/review/edit', body)
 }
 
@@ -62,7 +62,7 @@ export async function deleteImagesFromFirebaseCloud(pictures: Array) {
 }
 
 export async function addImagesToDatabase(picturesUrl: Array, reviewId: String) {
-    picturesUrl.forEach(pictureUrl => addImageToDatabase(pictureUrl, reviewId))
+    picturesUrl?.forEach(pictureUrl => addImageToDatabase(pictureUrl, reviewId))
 }
 
 

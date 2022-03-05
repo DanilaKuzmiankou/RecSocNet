@@ -1,8 +1,8 @@
 import {useAuth0} from '@auth0/auth0-react'
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import {Button, Container} from "react-bootstrap";
-import {CustomBootstrapTable, UploadImage, UserProfile} from "../../components/index.components";
-import {getUserByAuthId, getUserById, registerNewUser} from "../../store/UserStore";
+import {CustomBootstrapTable, LoadingComponent, UploadImage, UserProfile} from "../../components/index.components";
+import {getUserByAuthId, getUserById, registerNewUser} from "../../api/store/UserStore";
 import {useParams} from "react-router-dom";
 import {
     deleteImagesFromFirebaseCloud,
@@ -10,34 +10,31 @@ import {
     getUserReviews,
     saveEditedReview,
     saveNewReview
-} from "../../store/ReviewStore";
+} from "../../api/store/ReviewStore";
 import {MydModalWithGrid} from "../../components/Profile/Modal/ProfileModal";
 import {RotatingSquare} from "react-loader-spinner";
+import {useDispatch, useSelector} from "react-redux";
+import {setBrowsedUser, setCurrentUser, setIsCurrentUserAdmin} from "../../store/reducers/UserSlice";
+import {setDisplayFilters, setEditedReview, setReviews, setSelectedReview} from "../../store/reducers/ReviewSlice";
+import {setModalParams} from "../../store/reducers/ModalSlice";
 
 export const ProfilePage = (props) => {
 
+    const dispatch = useDispatch()
 
-    const {user, isAuthenticated, getAccessTokenSilently, loginWithRedirect, logout} = useAuth0()
-    const [reviews, setReviews] = useState([]);
+    const browsedUser = useSelector((state) => state.user.browsedUser)
+    const currentUser = useSelector((state) => state.user.currentUser)
+    const reviews = useSelector((state) => state.review.reviews)
+    const isCurrentUserAdmin = useSelector((state) => state.user.isCurrentUserAdmin)
+    const displayFilters = useSelector((state) => state.review.displayFilters)
+    const selectedReview = useSelector((state) => state.review.selectedReview)
+
+    const {user, isAuthenticated, getAccessTokenSilently} = useAuth0()
     const [loading, setLoading] = useState(true);
-    const [mainUser, setMainUser] = useState({});  //main user - is the user who is currently performing actions in the application
-    const [owner, setOwner] = useState({})    //owner - is the user, which profile we're browsing now
-    const [isMainUserAdmin, setIsMainUserAdmin] = useState(false)
     const routerParams = useParams();
-    const reviewsTable = useRef(null);
-    const reviewsModal = useRef(null);
-    const [selectedReview, setSelectedReview] = useState({})
-    const [displayFilters, setDisplayFilters] = useState('none')
+    const reviewsModal = useRef();
+
     const [filtersBtnText, setFiltersBtnText] = useState('Show filters')
-    const [modalParams, setModalParams] = useState(
-        {
-            title: "",
-            editable: "false",
-            displayBtns: "none",
-            displayScore: "",
-            displayCreateForm: false,
-            displayEditForm: false
-        })
 
     useEffect(async () => {
         await checkPrivileges()
@@ -46,152 +43,157 @@ export const ProfilePage = (props) => {
             setLoading(false);
         }, 500);
 
-    }, [isAuthenticated, selectedReview])
+    }, [isAuthenticated])
 
     const checkPrivileges = async () => {
-
         if (!isAuthenticated) {
             if (!routerParams.id) {
                 console.log('1')
-                /*let path = `/`;
-                navigate(path);*/
-                //loginWithRedirect()
+                redirectToAuthPage()
             } else {
                 console.log('2')
-                let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
-                setOwner(userBrowsedProfile)
-                setIsMainUserAdmin(false)
-                let reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id)
-                setReviews(reviews)
+                await setCurrentUserAsGuest()
             }
         } else {
             console.log('3')
-            let token = await getAccessTokenSilently()
-            await registerNewUser(token, user.sub, user.name, user.picture)
-            let mainUserSearched = await getUserByAuthId(token, user.sub)
-            setMainUser(mainUserSearched)
-            if (routerParams.id) {
-                console.log('4')
-                let userBrowsedProfile = await getUserById(routerParams.id)
-                setOwner(userBrowsedProfile)
-                let reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id)
-                console.log('reviews: ', reviews)
-                setReviews(reviews)
-                if (userBrowsedProfile.authId === mainUserSearched.authId || mainUserSearched.role === "admin") {
-                    setIsMainUserAdmin(true)
-                } else {
-                    setIsMainUserAdmin(false)
-                }
-            } else {
-                console.log('5')
-                let newReviews = await getUserReviews(mainUserSearched.authId, mainUserSearched.id)
-                console.log('reviews: ', newReviews)
-                setReviews(newReviews)
-                console.log('user: ', mainUserSearched)
-                setOwner(mainUserSearched)
-                setIsMainUserAdmin(true)
-            }
+            await setCurrentUserAsAuthUser()
+        }
+    }
+
+
+    const setCurrentUserAsGuest = async () => {
+        let userBrowsedProfile = await getUserById(routerParams.id) //userBrowsedProfile - profile of user, which you browse now
+        dispatch(setBrowsedUser(userBrowsedProfile))
+        dispatch(setIsCurrentUserAdmin(false))
+        let reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id)
+        dispatch(setReviews(reviews))
+    }
+
+    const redirectToAuthPage = () => {
+        console.log('redirecting...')
+        /*let path = `/`;
+                navigate(path);*/
+        //loginWithRedirect()
+    }
+
+    const authUserInOtherUserProfile = async (mainUserSearched) => {
+        let userBrowsedProfile = await getUserById(routerParams.id)
+        dispatch(setBrowsedUser(userBrowsedProfile))
+        let reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id)
+        dispatch(setReviews(reviews))
+        if (userBrowsedProfile.authId === mainUserSearched.authId || mainUserSearched.role === "admin") {
+            console.log('admin!')
+            dispatch(setIsCurrentUserAdmin(true))
+        } else {
+            dispatch(setIsCurrentUserAdmin(false))
+        }
+    }
+
+    const authUserInOwnProfile = async (mainUserSearched) => {
+        let newReviews = await getUserReviews(mainUserSearched.authId, mainUserSearched.id)
+        dispatch(setReviews(newReviews))
+        dispatch(setBrowsedUser(mainUserSearched))
+        dispatch(setIsCurrentUserAdmin(true))
+    }
+
+    const setCurrentUserAsAuthUser = async () => {
+        let token = await getAccessTokenSilently()
+        await registerNewUser(token, user.sub, user.name, user.picture)
+        let mainUserSearched = await getUserByAuthId(token, user.sub)
+        dispatch(setCurrentUser(mainUserSearched))
+        if (routerParams.id) {
+            console.log('4')
+            await authUserInOtherUserProfile(mainUserSearched)
+        } else {
+            console.log('5')
+            await authUserInOwnProfile(mainUserSearched)
         }
     }
 
 
     const createReview = () => {
-        let params = modalParams
-        params.title = "Review Creation"
-        params.editable = "true"
-        params.displayBtns = "true"
-        params.displayScore = "none"
-        params.displayCreateForm = true
-        params.displayEditForm = false
-        setModalParams(params)
-        setTimeout(async () => {
-            reviewsModal.current?.handleModalShowHide()
-        }, 100);
-
+        dispatch(setModalParams({
+            title: "Review Creating",
+            displayModalButtons: "",
+            displayCreateForm: true,
+            displayEditForm: false,
+            displayViewForm: false,
+        }))
+        reviewsModal?.current.showReviewModal()
     }
+
     const viewReview = () => {
-        let selectedId = reviewsTable.current.node.selectionContext.selected[0]
-        let selectedReview = reviews.filter(review => {
-            return review.id === selectedId
-        })
-        if (selectedReview.length > 0) {
-            let params = modalParams
-            params.title = "Review view"
-            params.editable = "false"
-            params.displayBtns = "none"
-            params.displayScore = "true"
-            params.displayCreateReviewForm = "none"
-            params.displayEditAndViewForm = "true"
-            setModalParams(params)
-            setSelectedReview(selectedReview)
-            setTimeout(async () => {
-                reviewsModal.current?.handleModalShowHide()
-            }, 100);
+        if(Object.keys(selectedReview).length !== 0){
+            dispatch(setModalParams({
+                title: "Review View",
+                displayModalButtons: "none",
+                displayCreateForm: false,
+                displayEditForm: false,
+                displayViewForm: true,
+            }))
+            reviewsModal?.current.showReviewModal()
         }
     }
 
 
     const editReview = () => {
-
-        let selectedId = reviewsTable.current.node.selectionContext.selected[0]
-        let selectedReview = reviews.filter(review => {
-            return review.id === selectedId
-        })
-        if (selectedReview.length > 0) {
-            let params = modalParams
-            params.title = "Review Editing"
-            params.editable = "true"
-            params.displayBtns = "true"
-            params.displayScore = "none"
-            params.displayCreateForm = false
-            params.displayEditForm = true
-            setModalParams(params)
-            setSelectedReview(selectedReview)
+        if(Object.keys(selectedReview).length !== 0){
             console.log('selected: ', selectedReview)
-            setTimeout(async () => {
-                reviewsModal.current?.handleModalShowHide()
-            }, 100);
+            dispatch(setEditedReview(selectedReview))
+            dispatch(setModalParams({
+                title: "Review Editing",
+                displayModalButtons: "",
+                displayCreateForm: false,
+                displayEditForm: true,
+                displayViewForm: false,
+            }))
+            reviewsModal?.current.showReviewModal()
         }
     }
 
 
     const deleteReview = async () => {
-        let selectedId = reviewsTable.current.node.selectionContext.selected[0]
-        if (selectedId) {
-            let filtered = reviews.filter(review => review.id !== selectedId)
-            setReviews(filtered)
-            await deleteImagesFromFirebaseCloud(reviews.find(review => review.id === selectedId).images)
-            await deleteUserReview(owner.authId, selectedId)
+        if(Object.keys(selectedReview).length !== 0){
+            let selectedId = selectedReview.id
+            if (selectedId) {
+                let filtered = reviews.filter(review => review.id !== selectedId)
+                dispatch(setReviews(filtered))
+                await deleteImagesFromFirebaseCloud(reviews.find(review => review.id === selectedId).images)
+                await deleteUserReview(browsedUser.authId, selectedId)
+            }
         }
     }
-
-
+/*
+    console.log('rev1: ', reviews)
+    let res = await saveEditedReview(browsedUser.authId, newReview)
+    dispatch(setReviews(res))
+    console.log('rs', res)*/
     const handleToUpdate = async (newReview) => {
-        console.log('rev1: ', reviews)
-        setReviews(
-            reviews.map(item =>
-                item.id === newReview.id
-                    ? newReview
-                    : item
-            ))
-        await saveEditedReview(owner.authId, newReview)
+        let reviewFromApi = await saveEditedReview(newReview)
+        let newArr = reviews.map(item =>
+            item.id === reviewFromApi.id
+                ? reviewFromApi
+                : item
+        )
+        dispatch(setReviews(newArr))
+        dispatch(setSelectedReview(reviewFromApi))
     }
 
     const handleToCreate = async (newReview) => {
-        const createdReview = await saveNewReview(owner.authId, newReview)
+        const createdReview = await saveNewReview(browsedUser.authId, newReview)
         console.log('new', createdReview)
         console.log('others', reviews)
         const newReviews = [...reviews]
         newReviews.push(createdReview[0])
-        setReviews(newReviews)
+        dispatch(setReviews(newReviews))
     }
 
     const changeDisplayFiltersState = (e) => {
         if (!displayFilters) {
-            setDisplayFilters("none")
+            dispatch(setDisplayFilters("none"))
             setFiltersBtnText('Show filters')
         } else {
-            setDisplayFilters("")
+            dispatch(setDisplayFilters(""))
             setFiltersBtnText('Hide filters')
         }
     }
@@ -201,21 +203,13 @@ export const ProfilePage = (props) => {
         <div>
             {
                 loading ?
-                    <RotatingSquare
-                        wrapperClass="custom_spinner"
-                        ariaLabel="rotating-square"
-                        visible={true}
-                        color="grey"
-                        strokeWidth="10"
-                    />
+                    <LoadingComponent/>
                     :
 
                     <Container fluid className="profile_page_container">
-
                         <h1 className="small_margin_left no_select"> User Profile </h1>
-
                         <div className="user_profile">
-                            <UserProfile owner={owner}/>
+                            <UserProfile/>
                         </div>
 
                         {reviews && reviews.length > 0 ?
@@ -227,7 +221,7 @@ export const ProfilePage = (props) => {
                                         <Button className="reviews_table_button float-end small_margin_right"
                                                 onClick={viewReview}>View</Button>
                                     </div>
-                                    {isMainUserAdmin &&
+                                    {isCurrentUserAdmin &&
                                         <div style={{display: "inline"}}>
                                             <Button className="reviews_table_button float-end small_margin_right"
                                                     onClick={createReview}>Create</Button>
@@ -239,14 +233,11 @@ export const ProfilePage = (props) => {
                                         </div>
                                     }
                                 </Fragment>
-                                <CustomBootstrapTable reviews={reviews}
-                                                      ref={reviewsTable}
-                                                      displayFilters={displayFilters}
-                                />
+                                <CustomBootstrapTable  />
                             </div>
                             :
                             <div className="center no_select">
-                                {isMainUserAdmin ?
+                                {isCurrentUserAdmin ?
                                     <div>
                                         <h2 className="no_wrap">Ooooops...It seems you have not reviews, click the
                                             button to create the first!</h2>
@@ -257,7 +248,7 @@ export const ProfilePage = (props) => {
                                     </div>
                                     :
                                     <div>
-                                            <h2 className="no_wrap">This user has no reviews at the moment!</h2>
+                                        <h2 className="no_wrap">This user has no reviews at the moment!</h2>
                                     </div>
                                 }
                             </div>
@@ -265,9 +256,6 @@ export const ProfilePage = (props) => {
 
 
                         <MydModalWithGrid ref={reviewsModal}
-                                          review={selectedReview[0]}
-                                          images={selectedReview[0]?.images}
-                                          params={modalParams}
                                           handleToUpdate={handleToUpdate}
                                           handleToCreate={handleToCreate}
                         />

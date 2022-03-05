@@ -1,101 +1,89 @@
 import {Button, Container, Modal} from "react-bootstrap";
-import React, {useRef} from "react";
+import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import "../../../App.css"
-import {ReviewBody} from "../../Review/ReviewBody";
 import {ReviewCreateBody} from "../../Review/ReviewCreateBody";
 import {
     addImagesToDatabase,
     deleteImagesFromFirebaseCloud,
     uploadImagesToFirebaseCloud
-} from "../../../store/ReviewStore";
+} from "../../../api/store/ReviewStore";
+import {useSelector} from "react-redux";
 
-export class MydModalWithGrid extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showHide: false,
-            params: this.props.params,
-            review: this.props.review,
-            redactedReview: this.props.review,
-            reviewImages: this.props.images,
-            emptyReview: {
-                title: "",
-                category: "",
-                tags: "",
-                authorScore: "",
-                text: "",
-                images: []
-            }
-        };
+export const MydModalWithGrid = forwardRef((props, ref) => {
+
+    const editedReview = useSelector((state) => state.review.editedReview)
+    const selectedReview = useSelector((state) => state.review.selectedReview)
+    const params = useSelector((state) => state.modal.params)
+
+    const modal = useRef();
+
+    const empty = {
+        title: "",
+        category: "",
+        tags: "",
+        authorScore: "",
+        text: "",
+        images: []
     }
 
+    const [showModal, setShowModal] = useState(false)
 
+    const [emptyReview, setEmptyReview] = useState(empty)
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.review !== prevProps.review) {
-            this.setState({review: this.props.review})
+    useImperativeHandle(ref, () => ({
+        showReviewModal() {
+            setShowModal(true)
         }
-        if (this.props.images !== prevProps.images) {
-            this.setState({images: this.props.images})
-        }
-        if (this.props.params !== prevProps.params) {
-            this.setState({params: this.props.params})
-        }
-    }
+    }));
 
-    handleModalShowHide() {
-        this.setState({showHide: !this.state.showHide})
-        console.log('rev!!', this.state.review)
-    }
-
-    handleModalHide() {
-        this.setState({showHide: false})
-    }
-
-    handleModalSaveChanges() {
-        if (this.state.params.displayCreateForm) {
-            this.createNewReview()
-
+    const handleModalSaveChanges = async () => {
+        let newReview = Object.assign({}, modal.current.save())
+        if (params.displayCreateForm) {
+            console.log('create: ', newReview)
+            await createNewReview(newReview)
         } else {
-            this.editReview()
+            console.log('edit: ', newReview)
+            await editReview(newReview)
         }
     }
 
-    async uploadImagesToFirebase() {
-        if (this.state.redactedReview.images && this.state.redactedReview.images.length > 0) {
-            const urls = await uploadImagesToFirebaseCloud(this.state.redactedReview.images)
-            this.state.redactedReview.images = urls
+     const uploadImagesToFirebase = async (pictures) => {
+        if (pictures && pictures.length > 0) {
+            const urls = await uploadImagesToFirebaseCloud(pictures)
+            return urls
         }
     }
 
-    async createNewReview() {
-        const validationAnswer = this.validateFields(this.state.redactedReview)
+    const createNewReview = async (newReview) => {
+        const validationAnswer = validateFields(newReview)
         if(validationAnswer.length===0) {
-            await this.uploadImagesToFirebase()
-            this.props.handleToCreate(this.state.redactedReview)
-            this.handleModalHide()
+            newReview.images = await uploadImagesToFirebase(newReview.images)
+            props.handleToCreate(newReview)
+            setEmptyReview(empty)
+            closeModal()
         }
         else {
+            setEmptyReview(newReview)
+            alert(validationAnswer)
             console.log(validationAnswer)
         }
     }
 
-    async editReview() {
-        const validationAnswer = this.validateFields(this.state.redactedReview)
+    const editReview = async (newReview) => {
+        const validationAnswer = validateFields(newReview)
         if (validationAnswer.length === 0) {
-            await this.uploadOrDeletePictures()
-            this.setState({review: this.state.redactedReview})
-            this.props.handleToUpdate(this.state.redactedReview)
-            this.handleModalHide()
+            await uploadOrDeletePictures(newReview)
+            props.handleToUpdate(newReview)
+            closeModal()
         } else {
             console.log(validationAnswer)
         }
     }
 
-    async uploadOrDeletePictures() {
+    const uploadOrDeletePictures = async (newReview) => {
         const picturesToUpload = []
         const redactedPictures = []
-        const allPictures = this.state.redactedReview.images
+        const allPictures = newReview.images
         allPictures.forEach(function (picture) {
             if (picture.constructor === File) {
                 picturesToUpload.push(picture)
@@ -103,15 +91,20 @@ export class MydModalWithGrid extends React.Component {
                 redactedPictures.push(picture)
             }
         })
-        const picturesToDelete = this.state.images.filter(
+        const picturesToDelete = editedReview.images.filter(
             prevPicture => redactedPictures.find(
-                redactedPicture => redactedPicture.preview === prevPicture.imageLink) === undefined)
+                redactedPicture => redactedPicture.imageLink === prevPicture.imageLink || redactedPicture.preview === prevPicture.imageLink ) === undefined)
+        console.log('all: ', allPictures)
+        console.log('upload: ', picturesToUpload)
+        console.log('delete: ', picturesToDelete)
+        console.log('selectedReview: ', editedReview.images)
+
         await deleteImagesFromFirebaseCloud(picturesToDelete)
-        const picturesUrl = await uploadImagesToFirebaseCloud(picturesToUpload)
-        await addImagesToDatabase(picturesUrl, this.state.redactedReview.id)
+        const picturesUrl = await uploadImagesToFirebase(picturesToUpload)
+        await addImagesToDatabase(picturesUrl, editedReview.id)
     }
 
-    updateReview = (redactedReview) => {
+    const updateReview = (redactedReview) => {
         /**
          * especially editing this.state.redactedReview without
          * setState() to prevent rerender
@@ -119,10 +112,7 @@ export class MydModalWithGrid extends React.Component {
         this.state.redactedReview = redactedReview
     }
 
-
-
-    validateFields(review) {
-
+    const validateFields = (review) => {
         const errorAnswer = "Enter review "
         if(review.authorScore) {
             let score = parseInt(review?.authorScore)
@@ -142,15 +132,17 @@ export class MydModalWithGrid extends React.Component {
                 }
             }
         }
+        console.log('nice! rev: ', review)
         return ""
     }
 
+    const closeModal = () => {
+        setShowModal(false)
+    }
 
-    render() {
         return (
             <div>
-                <Modal show={this.state.showHide}
-                       ref={n => this.node = n}
+                <Modal show={showModal}
                        aria-labelledby="contained-modal-title-vcenter"
                        centered
                        size="xl"
@@ -159,61 +151,38 @@ export class MydModalWithGrid extends React.Component {
                        className="no_select"
                        scrollable="true"
                 >
-                    <Modal.Header closeButton onClick={() => this.handleModalShowHide()}>
-                        <Modal.Title>{this.state.params.title}</Modal.Title>
+                    <Modal.Header closeButton onClick={closeModal}>
+                        <Modal.Title>{params.title}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="show-grid">
 
                         <Container>
-                            {/**
-                                <div style={{display: this.state.params.displayEditAndViewForm}}>
-                                    <ReviewBody review={this.state.review}
-                                                params={this.state.params}
-                                                updateRedactedReview={this.updateReview}
-
-                                    />
-                                </div>
-                            **/}
-                            {this.state.params.displayEditForm ?
-                                <div>
+                            {params.displayEditForm &&
                                     <ReviewCreateBody
-                                        review={this.state.review}
-                                        params={this.state.params}
-                                        updateRedactedReview={this.updateReview}
-
+                                        review={editedReview}
+                                        modeCreate={false}
+                                        ref={modal}
                                     />
-                                </div>
-
-                                :
-
-                                <div>
-                                    <ReviewCreateBody
-                                        updateRedactedReview={this.updateReview}
-                                        review={this.state.emptyReview}
-
-                                    />
-                                </div>
                             }
-
+                            {params.displayCreateForm &&
+                                    <ReviewCreateBody
+                                        modeCreate={true}
+                                        review={emptyReview}
+                                        ref={modal}
+                                    />
+                            }
                         </Container>
 
                     </Modal.Body>
-
-                    <Modal.Footer style={{display: this.state.params.displayBtns}}>
-                        <Button variant="secondary" onClick={() => this.handleModalHide()}>
+                    <Modal.Footer style={{display: params.displayModalButtons}}>
+                        <Button variant="secondary" onClick={closeModal}>
                             Close
                         </Button>
-
-                        <Button variant="primary" onClick={() => this.handleModalSaveChanges()}>
+                        <Button variant="primary" onClick={handleModalSaveChanges}>
                             Save Changes
                         </Button>
-
                     </Modal.Footer>
-
                 </Modal>
             </div>
         );
-
-    }
-
-}
+})
