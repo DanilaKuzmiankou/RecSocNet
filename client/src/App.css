@@ -10,11 +10,17 @@
 }
 
 .react-bootstrap-table table {
-  display: block;
+  display: contents ;
   table-layout: auto;
   overflow-x:auto !important;
 }
 
+
+.react-bootstrap-table tableWORKING {
+  display: grid ;
+  table-layout: auto;
+  overflow-x:auto !important;
+}
 
 .table1{
   overflow: auto;
