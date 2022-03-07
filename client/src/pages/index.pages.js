@@ -1,3 +1,3 @@
-export {HomePage} from './HomePage/HomePage'
+export {RecommendationsPage} from './RecommendationsPage/RecommendationsPage'
 export {ProfilePage} from './ProfilePage/ProfilePage'
 

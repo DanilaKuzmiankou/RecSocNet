@@ -1,7 +1,12 @@
 import {useAuth0} from '@auth0/auth0-react'
 import React, {Fragment, useEffect, useRef, useState} from "react";
-import {Button, Container} from "react-bootstrap";
-import {CustomBootstrapTable, LoadingComponent, UploadImage, UserProfile} from "../../components/index.components";
+import {Button, Col, Container, Row} from "react-bootstrap";
+import {
+    CustomBootstrapTable,
+    CustomModal,
+    LoadingComponent,
+    UserProfile
+} from "../../components/index.components";
 import {getUserByAuthId, getUserById, registerNewUser} from "../../api/store/UserStore";
 import {useParams} from "react-router-dom";
 import {
@@ -11,8 +16,6 @@ import {
     saveEditedReview,
     saveNewReview
 } from "../../api/store/ReviewStore";
-import {MydModalWithGrid} from "../../components/Profile/Modal/ProfileModal";
-import {RotatingSquare} from "react-loader-spinner";
 import {useDispatch, useSelector} from "react-redux";
 import {setBrowsedUser, setCurrentUser, setIsCurrentUserAdmin} from "../../store/reducers/UserSlice";
 import {setDisplayFilters, setEditedReview, setReviews, setSelectedReview} from "../../store/reducers/ReviewSlice";
@@ -34,6 +37,8 @@ export const ProfilePage = (props) => {
 
     const isLoading = useSelector((state) => state.loading.isLoading)
 
+
+
     const routerParams = useParams();
     const reviewsModal = useRef();
 
@@ -47,6 +52,9 @@ export const ProfilePage = (props) => {
         }, 500);
 
     }, [isAuthenticated])
+
+
+
 
     const checkPrivileges = async () => {
         if (!isAuthenticated) {
@@ -118,9 +126,12 @@ export const ProfilePage = (props) => {
         dispatch(setModalParams({
             title: "Review Creating",
             displayModalButtons: "",
+            displayModalFeedback: "none",
             displayCreateForm: true,
             displayEditForm: false,
             displayViewForm: false,
+            displayHeader:"",
+            backdrop:"static"
         }))
         reviewsModal?.current.showReviewModal()
     }
@@ -131,9 +142,12 @@ export const ProfilePage = (props) => {
             dispatch(setModalParams({
                 title: "Review View",
                 displayModalButtons: "none",
+                displayModalFeedback: "",
                 displayCreateForm: false,
                 displayEditForm: false,
                 displayViewForm: true,
+                displayHeader:"none",
+                backdrop:"true"
             }))
             reviewsModal?.current.showReviewModal()
         }
@@ -146,9 +160,12 @@ export const ProfilePage = (props) => {
             dispatch(setModalParams({
                 title: "Review Editing",
                 displayModalButtons: "",
+                displayModalFeedback: "none",
                 displayCreateForm: false,
                 displayEditForm: true,
                 displayViewForm: false,
+                displayHeader:"",
+                backdrop:"static"
             }))
             reviewsModal?.current.showReviewModal()
         }
@@ -199,13 +216,15 @@ export const ProfilePage = (props) => {
 
 
     return (
-        <div>
+        <Container fluid className="profile_page_container">
+            <Row>
+                <Col>
             {
                 isLoading ?
                     <LoadingComponent/>
                     :
 
-                    <Container fluid className="profile_page_container">
+                    <div>
                         <h1 className="small_margin_left no_select"> User Profile </h1>
                         <div className="user_profile">
                             <UserProfile/>
@@ -251,18 +270,19 @@ export const ProfilePage = (props) => {
                                     </div>
                                 }
                             </div>
+
                         }
 
 
-                        <MydModalWithGrid ref={reviewsModal}
-                                          handleToUpdate={handleToUpdate}
-                                          handleToCreate={handleToCreate}
+                        <CustomModal ref={reviewsModal}
+                                 handleToUpdate={handleToUpdate}
+                                 handleToCreate={handleToCreate}
                         />
-
-
-                    </Container>
+                    </div>
             }
-        </div>
 
+                </Col>
+            </Row>
+        </Container>
     )
 }

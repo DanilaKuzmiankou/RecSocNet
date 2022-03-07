@@ -15,6 +15,7 @@ export const reviewSlice = createSlice({
             images: []
         },
         editedReview: {},
+        newestReviews: []
     },
     reducers: {
         setReviews: (state, action) => {
@@ -32,11 +33,22 @@ export const reviewSlice = createSlice({
         setEditedReview: (state, action) => {
             state.editedReview = action.payload
         },
+        setNewestReviews: (state, action) => {
+            state.newestReviews = action.payload
+        },
 
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setReviews, setDisplayFilters, setSelectedReview, setCreatedReview, setEditedReview } = reviewSlice.actions
+export const {
+    setReviews,
+    setDisplayFilters,
+    setSelectedReview,
+    setCreatedReview,
+    setEditedReview,
+    setNewestReviews
+
+} = reviewSlice.actions
 
 export default reviewSlice.reducer

@@ -1,4 +1,4 @@
-import {postRequest, postRequestToCloudinary} from "../index.network";
+import {getRequest, postRequest, postRequestToCloudinary} from "../index.network";
 import {changeDateToUserTimezone, generateRandomString} from "../../utils/Utils";
 import firebase from "../../utils/Firebase";
 import {forEach} from "react-bootstrap/ElementChildren";
@@ -6,6 +6,10 @@ import {forEach} from "react-bootstrap/ElementChildren";
 export async function getUserReviews(authId: string, userId:number) {
     let body = JSON.stringify({authId: authId, userId:userId})
     return await postRequest('/api/review/getAuthorReviews', body)
+}
+
+export async function getNewestReviews() {
+    return await getRequest('/api/review/newestReviews')
 }
 
 export async function saveEditedReview(review: Object) {

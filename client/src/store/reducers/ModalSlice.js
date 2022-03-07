@@ -3,10 +3,13 @@ import {createSlice} from '@reduxjs/toolkit'
 const initialState = {
     params: {
         title: "",
-        displayModalButtons: "none",
+        displayModalSaveCancelButtons: "none",
+        displayModalFeedback:"none",
         displayCreateForm: false,
         displayEditForm: false,
         displayViewForm: false,
+        displayHeader: "",
+        backdrop: "static"
     },
 
 }
@@ -21,6 +24,9 @@ export const modalSlice = createSlice({
             state.params.displayCreateForm = action.payload.displayCreateForm
             state.params.displayEditForm = action.payload.displayEditForm
             state.params.displayViewForm = action.payload.displayViewForm
+            state.params.displayHeader = action.payload.displayHeader
+            state.params.backdrop = action.payload.backdrop
+            state.params.displayModalFeedback = action.payload.displayModalFeedback
         },
 
     },

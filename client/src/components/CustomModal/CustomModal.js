@@ -1,22 +1,24 @@
 import {Button, Container, Modal} from "react-bootstrap";
 import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
-import "../../../App.css"
-import {ReviewCreateBody} from "../../Review/ReviewCreateBody";
+import "../../App.css"
+import {ReviewCreateBody} from "../Review/ReviewCreateBody";
 import {
     addImagesToDatabase,
     deleteImagesFromFirebaseCloud,
     uploadImagesToFirebaseCloud
-} from "../../../api/store/ReviewStore";
+} from "../../api/store/ReviewStore";
 import {useDispatch, useSelector} from "react-redux";
-import LoadingComponent from "../../LoadingComponent/LoadingComponent";
-import {setIsLoading} from "../../../store/reducers/LoadingSlice";
-import {ReviewBody} from "../../Review/ReviewBody";
+import {LoadingComponent, Feedback} from "../index.components";
+import {setIsLoading} from "../../store/reducers/LoadingSlice";
+import {ReviewBody} from "../Review/ReviewBody";
 
-export const MydModalWithGrid = forwardRef((props, ref) => {
+export const CustomModal = forwardRef((props, ref) => {
 
     const editedReview = useSelector((state) => state.review.editedReview)
     const isLoading = useSelector((state) => state.loading.isLoading)
     const params = useSelector((state) => state.modal.params)
+    const user = useSelector((state) => state.user.browsedUser)
+
     const modal = useRef();
     const dispatch = useDispatch()
     const empty = {
@@ -30,7 +32,7 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
 
     const [showModal, setShowModal] = useState(false)
     const [emptyReview, setEmptyReview] = useState(empty)
-    //const [isLoading, setIsLoading] = useState(false)
+
 
     useImperativeHandle(ref, () => ({
         showReviewModal() {
@@ -42,10 +44,10 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
         dispatch(setIsLoading(true))
         let newReview = Object.assign({}, modal.current.save())
         if (params.displayCreateForm) {
-            console.log('create: ', newReview)
+            //console.log('create: ', newReview)
             await createNewReview(newReview)
         } else {
-            console.log('edit: ', newReview)
+            //console.log('edit: ', newReview)
             await editReview(newReview)
         }
         dispatch(setIsLoading(false))
@@ -98,10 +100,10 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
         const picturesToDelete = editedReview.images.filter(
             prevPicture => redactedPictures.find(
                 redactedPicture => redactedPicture.imageLink === prevPicture.imageLink || redactedPicture.preview === prevPicture.imageLink ) === undefined)
-        console.log('all: ', allPictures)
-        console.log('upload: ', picturesToUpload)
-        console.log('delete: ', picturesToDelete)
-        console.log('selectedReview: ', editedReview.images)
+        // console.log('all: ', allPictures)
+        // console.log('upload: ', picturesToUpload)
+        // console.log('delete: ', picturesToDelete)
+        // console.log('selectedReview: ', editedReview.images)
 
         await deleteImagesFromFirebaseCloud(picturesToDelete)
         const picturesUrl = await uploadImagesToFirebase(picturesToUpload)
@@ -148,13 +150,14 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
                            aria-labelledby="contained-modal-title-vcenter"
                            centered
                            size="xl"
-                           backdrop="static"
+                           backdrop={params.backdrop}
                            keyboard={false}
                            className="no_select"
                            scrollable="true"
+                           onHide={closeModal}
                     >
-                        <Modal.Header closeButton onClick={closeModal}>
-                            <Modal.Title>{params.title}</Modal.Title>
+                        <Modal.Header style={{display:params.displayHeader}} closeButton onClick={closeModal}>
+                            <Modal.Title >{params.title}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body className="show-grid">
 
@@ -175,12 +178,14 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
                                 }
                                 {params.displayViewForm &&
                                     <ReviewBody
+                                        user={user}
                                         review={editedReview}
+                                        closeModal={closeModal}
                                     />
                                 }
                             </Container>
-
                         </Modal.Body>
+
                         <Modal.Footer style={{display: params.displayModalButtons}}>
                             <Button variant="secondary" onClick={closeModal}>
                                 Close
@@ -189,6 +194,12 @@ export const MydModalWithGrid = forwardRef((props, ref) => {
                                 Save Changes
                             </Button>
                         </Modal.Footer>
+
+
+                        <Modal.Footer style={{display: params.displayModalFeedback, backgroundColor: "#EEF1F0"}}>
+                           <Feedback review={editedReview} />
+                        </Modal.Footer>
+
                     </Modal>
 
             </div>

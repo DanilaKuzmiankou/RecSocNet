@@ -64,6 +64,20 @@ class ReviewController {
         return res.json(reviews)
     }
 
+    async getNewestReviews(req, res, next) {
+        let reviews = await Review.findAll({
+            order: [ [ 'createdAt', 'DESC' ]],
+            include: [{
+                model: ReviewImage,
+                as: 'images',
+                attributes: ['imageLink']
+            }],
+            limit: 10
+        });
+        return res.json(reviews)
+    }
+
+
 
     async saveReview(req, res, next) {
         const {review} = req.body

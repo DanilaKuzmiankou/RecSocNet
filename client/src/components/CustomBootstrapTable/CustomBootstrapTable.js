@@ -8,6 +8,7 @@ import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 import {changeSingleDateToUserTimezone} from "../../utils/Utils";
 import {useDispatch, useSelector} from "react-redux";
 import {setSelectedReview} from "../../store/reducers/ReviewSlice";
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 
 export const CustomBootstrapTable = () => {
 
@@ -51,7 +52,6 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerAlign: 'center',
             headerFormatter: headerFormat
         }, {
             dataField: 'text',
@@ -66,7 +66,6 @@ export const CustomBootstrapTable = () => {
                 </div>
             ),
             sort: true,
-            headerAlign: 'center',
             headerFormatter: headerFormat
         }, {
             dataField: 'category',
@@ -77,8 +76,6 @@ export const CustomBootstrapTable = () => {
 
             }),
             sort: true,
-            headerAlign: 'center',
-            classes: "text-center",
             headerFormatter: headerFormat
         }, {
             dataField: 'tags',
@@ -88,8 +85,6 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            classes: "text-center",
-            headerAlign: 'center',
             headerFormatter: headerFormat
         }, {
             dataField: 'authorScore',
@@ -99,8 +94,6 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerAlign: 'center',
-            classes: "text-center",
             headerFormatter: headerFormat
         }, {
             dataField: 'usersContentScore',
@@ -110,8 +103,6 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            classes: "text-center",
-            headerAlign: 'center',
             headerFormatter: headerFormat
         }, {
             dataField: 'usersReviewScore',
@@ -121,8 +112,6 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            classes: "text-center",
-            headerAlign: 'center',
             headerFormatter: headerFormat
         }, {
             dataField: 'createdAt',
@@ -135,8 +124,6 @@ export const CustomBootstrapTable = () => {
                     return Date.parse(b) - Date.parse(a)
                 }
             },
-            headerAlign: 'center',
-            classes: "text-center",
             headerFormatter: headerFormat,
             filter: dateFilter({
                 withoutEmptyComparatorOption: true,
@@ -153,15 +140,15 @@ export const CustomBootstrapTable = () => {
 
         return (
 
-            <Container fluid>
                 <BootstrapTable
-                    headerWrapperClasses="no_wrap no_select"
                     bordered={false}
+                    wrapperClasses="table-responsive table"
                     keyField='id'
                     data={reviews}
                     columns={columns}
                     filter={filterFactory()}
                     filterPosition="top"
+
                     selectRow={{
                         mode: 'radio',
                         clickToSelect: true,
@@ -171,7 +158,6 @@ export const CustomBootstrapTable = () => {
                         }
                     }}
                 />
-            </Container>
         )
 
 }
