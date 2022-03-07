@@ -9,7 +9,7 @@ export async function getUserReviews(authId: string, userId:number) {
 }
 
 export async function getNewestReviews() {
-    return await getRequest('/api/review/newestReviews')
+    return await postRequest('/api/review/newestReviews')
 }
 
 export async function saveEditedReview(review: Object) {
