@@ -10,8 +10,8 @@
 }
 
 .react-bootstrap-table table {
-  display: contents ;
-  table-layout: auto;
+  display: compact ;
+  table-layout: fixed;
   overflow-x:auto !important;
 }
 
