@@ -21,7 +21,10 @@ export const CustomBootstrapTable = () => {
                 <div>
                     <OverlayTrigger placement="bottom" delay={{show: 150, hide: 200}}
                                     overlay={<Tooltip id="tooltip-disabled">Click to sort!</Tooltip>}>
-                        <h5>{column.text} </h5>
+                        <h5 style={{fontSize:'30px'}}>{column.text}
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+                        </h5>
                     </OverlayTrigger>
                 </div>
             );
@@ -52,7 +55,8 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerFormatter: headerFormat
+            headerFormatter: headerFormat,
+            headerAlign: 'center'
         }, {
             dataField: 'text',
             text: 'Text',
@@ -66,7 +70,8 @@ export const CustomBootstrapTable = () => {
                 </div>
             ),
             sort: true,
-            headerFormatter: headerFormat
+            headerFormatter: headerFormat,
+            headerAlign: 'center'
         }, {
             dataField: 'category',
             text: 'Category',
@@ -76,7 +81,8 @@ export const CustomBootstrapTable = () => {
 
             }),
             sort: true,
-            headerFormatter: headerFormat
+            headerFormatter: headerFormat,
+            headerAlign: 'center'
         }, {
             dataField: 'tags',
             text: 'Tags',
@@ -85,16 +91,17 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerFormatter: headerFormat
+            headerFormatter: headerFormat,
+            headerAlign: 'center'
         }, {
             dataField: 'authorScore',
-            text: 'Author creation score',
+            text: 'Author score',
             filter: numberFilter({
                 placeholder: 'Author score ',
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerFormatter: headerFormat
+            headerFormatter: headerFormat,
         }, {
             dataField: 'usersContentScore',
             text: 'Users creation score',
@@ -112,7 +119,8 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerFormatter: headerFormat
+            headerFormatter: headerFormat,
+            headerAlign: 'center'
         }, {
             dataField: 'createdAt',
             text: 'Created',
@@ -125,6 +133,7 @@ export const CustomBootstrapTable = () => {
                 }
             },
             headerFormatter: headerFormat,
+            headerAlign: 'center',
             filter: dateFilter({
                 withoutEmptyComparatorOption: true,
                 comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
@@ -141,9 +150,9 @@ export const CustomBootstrapTable = () => {
         return (
 
                 <BootstrapTable
-
+                    headerClasses="react_bootstrap_table_header"
                     bordered={false}
-                    wrapperClasses="table-responsive"
+                    wrapperClasses="table-responsive table react_bootstrap_table_header"
                     keyField='id'
                     data={reviews}
                     columns={columns}
