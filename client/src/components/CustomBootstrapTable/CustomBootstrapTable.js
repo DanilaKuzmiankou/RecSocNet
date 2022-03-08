@@ -141,8 +141,9 @@ export const CustomBootstrapTable = () => {
         return (
 
                 <BootstrapTable
+
                     bordered={false}
-                    wrapperClasses="table-responsive table"
+                    wrapperClasses="table-responsive"
                     keyField='id'
                     data={reviews}
                     columns={columns}

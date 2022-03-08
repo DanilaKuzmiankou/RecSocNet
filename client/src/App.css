@@ -9,8 +9,11 @@
   text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
 }
 
+
+
 .react-bootstrap-table table {
-  display: contents ;
+
+  display: block ;
   table-layout: auto;
   overflow-x:auto !important;
 }
@@ -103,6 +106,7 @@ ul {
 
 
 .profile_page_container {
+
   background-image: url("../public/profile_page_background.jpg");
   background-position: center;
   background-size: cover;
