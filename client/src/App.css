@@ -25,13 +25,18 @@ html {
  */
 
 .center_profile_page{
-
-  height: 45vh; /* Magic here */
+  height: 45vh;
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
+.center_without_content{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .center{
   margin: 0;
   position: absolute;
@@ -192,21 +197,6 @@ ul {
   margin-bottom: 20px;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  border: 0;
-}
-
-
-
-
-
 
 .profile_button_container {
   display: flex;
@@ -236,10 +226,6 @@ ul {
   font-size: 20px;
 }
 
-.cancelUserSelect{
-  user-select: none;
-}
-
 .reviews_table_button {
   white-space: nowrap;
   user-select: none;
@@ -247,19 +233,24 @@ ul {
   text-decoration: none;
 
 }
-.reviews_table_button_container {
-  display: flex;
-  justify-content: flex-end;
-}
 
 
 .log_in_button {
   white-space: nowrap;
 }
 
-.navbar_brand {
-  float: none;
+.big_log_in_button {
+  border-radius: 15px;
+  height: 100px;
+  width: 230px;
+  font-size: 30px;
+  margin-top: 10px;
+  user-select: none;
+  color: white;
+  text-decoration: none;
+  white-space: nowrap;
 }
+
 
 .custom_spinner {
   margin: 0;
@@ -284,10 +275,6 @@ ul {
 }
 
 
-.navbar_home_button_container {
-  padding-left: 20px;
-}
-
 .navbar_home_button {
   white-space: nowrap;
   user-select: none;
@@ -296,59 +283,8 @@ ul {
   text-decoration: none;
 }
 
-
-.navbar_users_data_button {
-  white-space: nowrap;
-  user-select: none;
-  font-size: 35px;
-  color: white;
-  text-decoration: none;
-}
-
-.users_data_page_button_group {
-  padding-left: 10px;
-}
-
-.navbar_auth_button {
-  padding-right: 45px;
-}
-
-.users_data_page_container {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100vh;
-}
-
 .fonts {
   font: italic small-caps bold 16px/2 cursive;
   color: white;
   font-size: 55px;
-}
-
-.home_container {
-  height: 100vh;
-  display: flex;
-  position: relative;
-  align-items: center;
-  user-select: none;
-  justify-content: center;
-}
-
-.home_background {
-
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.home_button {
-  font: italic small-caps bold 16px/2 cursive;
-  border-radius: 15px;
-  height: 100px;
-  width: 240px;
-  font-size: 30px;
-  user-select: none;
-  margin: 0 auto;
-  display: block;
 }

@@ -5,6 +5,7 @@ export {CustomBootstrapTable} from "./CustomBootstrapTable/CustomBootstrapTable"
 export {UploadImage} from "./UploadImage/UploadImage";
 export {LoadingComponent} from "./LoadingComponent/LoadingComponent";
 export {AuthButton} from "./AuthUI/AuthButton/AuthButton";
+export {LogInButton} from "./AuthUI/LogInButton/LogInButton";
 export {Feedback} from "./Feedback/Feedback";
 export {ReviewBody} from "./Review/ReviewBody";
 export {ReviewShortened} from "./Review/ReviewShortened";

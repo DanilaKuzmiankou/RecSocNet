@@ -2,9 +2,10 @@ import {useAuth0} from '@auth0/auth0-react'
 import React, {Fragment, useEffect, useRef, useState} from "react";
 import {Button, Col, Container, Row} from "react-bootstrap";
 import {
+    AuthButton,
     CustomBootstrapTable,
     CustomModal,
-    LoadingComponent,
+    LoadingComponent, LogInButton,
     UserProfile
 } from "../../components/index.components";
 import {getUserByAuthId, getUserById, registerNewUser} from "../../api/store/UserStore";
@@ -38,7 +39,6 @@ export const ProfilePage = (props) => {
     const isLoading = useSelector((state) => state.loading.isLoading)
 
 
-
     const routerParams = useParams();
     const reviewsModal = useRef();
 
@@ -52,8 +52,6 @@ export const ProfilePage = (props) => {
         }, 500);
 
     }, [isAuthenticated])
-
-
 
 
     const checkPrivileges = async () => {
@@ -130,14 +128,14 @@ export const ProfilePage = (props) => {
             displayCreateForm: true,
             displayEditForm: false,
             displayViewForm: false,
-            displayHeader:"",
-            backdrop:"static"
+            displayHeader: "",
+            backdrop: "static"
         }))
         reviewsModal?.current.showReviewModal()
     }
 
     const viewReview = () => {
-        if(Object.keys(selectedReview).length !== 0){
+        if (Object.keys(selectedReview).length !== 0) {
             dispatch(setEditedReview(selectedReview))
             dispatch(setModalParams({
                 title: "Review View",
@@ -146,8 +144,8 @@ export const ProfilePage = (props) => {
                 displayCreateForm: false,
                 displayEditForm: false,
                 displayViewForm: true,
-                displayHeader:"none",
-                backdrop:"true"
+                displayHeader: "none",
+                backdrop: "true"
             }))
             reviewsModal?.current.showReviewModal()
         }
@@ -155,7 +153,7 @@ export const ProfilePage = (props) => {
 
 
     const editReview = () => {
-        if(Object.keys(selectedReview).length !== 0){
+        if (Object.keys(selectedReview).length !== 0) {
             dispatch(setEditedReview(selectedReview))
             dispatch(setModalParams({
                 title: "Review Editing",
@@ -164,8 +162,8 @@ export const ProfilePage = (props) => {
                 displayCreateForm: false,
                 displayEditForm: true,
                 displayViewForm: false,
-                displayHeader:"",
-                backdrop:"static"
+                displayHeader: "",
+                backdrop: "static"
             }))
             reviewsModal?.current.showReviewModal()
         }
@@ -173,7 +171,7 @@ export const ProfilePage = (props) => {
 
 
     const deleteReview = async () => {
-        if(Object.keys(selectedReview).length !== 0){
+        if (Object.keys(selectedReview).length !== 0) {
             let selectedId = selectedReview.id
             if (selectedId) {
                 let filtered = reviews.filter(review => review.id !== selectedId)
@@ -224,6 +222,10 @@ export const ProfilePage = (props) => {
                     :
 
                     <div>
+
+                        {routerParams.id || isAuthenticated ?
+
+                            <div>
                         <h1 className="small_margin_left no_select"> User Profile </h1>
                         <div className="user_profile">
                             <UserProfile/>
@@ -250,37 +252,43 @@ export const ProfilePage = (props) => {
                                         </div>
                                     }
                                 </Fragment>
-                                <CustomBootstrapTable  />
+                                <CustomBootstrapTable/>
                             </div>
                             :
 
-                            <div className="center_profile_page ">
-
-
-                                        {isCurrentUserAdmin ?
-                                            <div className="no_wrap_on_normal_screen">
-                                                <h2>Ooooops...It seems you have not reviews, click the
-                                                    button to create the first!</h2>
-                                                <div className="profile_button_container">
-                                                    <Button className="profile_button" variant="danger" onClick={createReview}>Tap
-                                                        me!</Button>
-                                                </div>
-                                            </div>
-                                            :
-                                            <div className="no_wrap_on_big_screen">
-                                                <h2>This user has no reviews at the moment!</h2>
-                                            </div>
-                                        }
+                            <div className="center_profile_page text-center">
+                                {isCurrentUserAdmin ?
+                                    <div className="no_wrap_on_normal_screen">
+                                        <h2>Ooooops...It seems you have not reviews, click the
+                                            button to create the first!</h2>
+                                        <div className="profile_button_container">
+                                            <Button className="profile_button" variant="danger" onClick={createReview}>Tap
+                                                me!</Button>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div className="no_wrap_on_big_screen">
+                                        <h2>This user has no reviews at the moment!</h2>
+                                    </div>
+                                }
 
                             </div>
-
+                        }
+                            </div>
+                        :
+                            <div className="no_wrap_on_normal_screen center_without_content text-center">
+                                <div>
+                                <h2>Log in to create your first review!</h2>
+                                     <LogInButton size={"big"} />
+                                </div>
+                            </div>
 
                         }
 
-
-                        <CustomModal ref={reviewsModal}
-                                 handleToUpdate={handleToUpdate}
-                                 handleToCreate={handleToCreate}
+                        <CustomModal
+                            ref={reviewsModal}
+                            handleToUpdate={handleToUpdate}
+                            handleToCreate={handleToCreate}
                         />
                     </div>
             }

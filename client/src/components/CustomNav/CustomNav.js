@@ -48,7 +48,7 @@ export const CustomNav = () => {
                                 <Col lg={"auto"} md={12} className="nav_elements_margin">
                                 <OverlayTrigger placement="bottom"
                                                 overlay={<Tooltip id="tooltip-disabled">To Profile!</Tooltip>}>
-                                    <a className="navbar_users_data_button" onClick={routeChange}>Profile</a>
+                                    <a className="navbar_home_button" onClick={routeChange}>Profile</a>
                                 </OverlayTrigger>
                                 </Col>
 
