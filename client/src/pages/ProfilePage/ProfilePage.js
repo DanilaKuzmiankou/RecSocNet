@@ -253,22 +253,27 @@ export const ProfilePage = (props) => {
                                 <CustomBootstrapTable  />
                             </div>
                             :
-                            <div className="center no_select">
-                                {isCurrentUserAdmin ?
-                                    <div>
-                                        <h2 className="no_wrap">Ooooops...It seems you have not reviews, click the
-                                            button to create the first!</h2>
-                                        <div className="profile_button_container">
-                                            <Button className="profile_button" variant="danger" onClick={createReview}>Tap
-                                                me!</Button>
-                                        </div>
-                                    </div>
-                                    :
-                                    <div>
-                                        <h2 className="no_wrap">This user has no reviews at the moment!</h2>
-                                    </div>
-                                }
+
+                            <div className="center_profile_page ">
+
+
+                                        {isCurrentUserAdmin ?
+                                            <div className="no_wrap_on_normal_screen">
+                                                <h2>Ooooops...It seems you have not reviews, click the
+                                                    button to create the first!</h2>
+                                                <div className="profile_button_container">
+                                                    <Button className="profile_button" variant="danger" onClick={createReview}>Tap
+                                                        me!</Button>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="no_wrap_on_big_screen">
+                                                <h2>This user has no reviews at the moment!</h2>
+                                            </div>
+                                        }
+
                             </div>
+
 
                         }
 

@@ -24,7 +24,37 @@ html {
 
  */
 
+.center_profile_page{
 
+  height: 45vh; /* Magic here */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.center{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.no_wrap{
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 1450px) {
+  .no_wrap_on_normal_screen {
+    white-space: nowrap;
+  }
+}
+@media screen and (min-width: 424px) {
+  .no_wrap_on_big_screen {
+    white-space: nowrap;
+  }
+}
 
 @media screen and (max-width: 769px) {
   .nav_elements_margin{
@@ -173,18 +203,10 @@ ul {
   border: 0;
 }
 
-.no_wrap{
-  white-space: nowrap;
-}
-
-.center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
 
-}
+
+
 
 .profile_button_container {
   display: flex;
@@ -240,9 +262,12 @@ ul {
 }
 
 .custom_spinner {
+  margin: 0;
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   z-index: 9999;
 }
 
