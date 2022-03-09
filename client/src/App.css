@@ -14,7 +14,7 @@ html {
   * {
     font-size: 13px;
   }
-
+}
 /* debug mode
 * {
   background: #000 !important;
@@ -25,9 +25,13 @@ html {
  */
 
 
-.profile_page_container {
-  background-image: url("../public/profile_page_background.jpg");
-}
+  .profile_page_container {
+    background-image: url("../public/profile_page_background.jpg");
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat
+  }
 
 .fit_text {
   white-space: nowrap;
@@ -41,14 +45,12 @@ html {
 font-size: 30px;
 }
 
-}
+
 .react-bootstrap-table table {
   display: block;
   table-layout: auto;
   overflow-x:auto !important;
 }
-
-
 
 
 

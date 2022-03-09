@@ -42,7 +42,7 @@ export const RecommendationsPage = () => {
 
 
     return (
-        <div>
+        <div >
             {
                 isLoading ?
                     <LoadingComponent/>

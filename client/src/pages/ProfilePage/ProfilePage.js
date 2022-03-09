@@ -217,8 +217,7 @@ export const ProfilePage = (props) => {
 
     return (
         <Container fluid className="profile_page_container">
-            <Row>
-                <Col>
+
             {
                 isLoading ?
                     <LoadingComponent/>
@@ -280,9 +279,7 @@ export const ProfilePage = (props) => {
                         />
                     </div>
             }
-
-                </Col>
-            </Row>
         </Container>
+
     )
 }

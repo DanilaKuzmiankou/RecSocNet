@@ -22,7 +22,10 @@ export const CustomBootstrapTable = () => {
                     <OverlayTrigger placement="bottom" delay={{show: 150, hide: 200}}
                                     overlay={<Tooltip id="tooltip-disabled">Click to sort!</Tooltip>}>
                         <h5 >{column.text}
-
+                            <span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </span>
                         </h5>
                     </OverlayTrigger>
                 </div>
@@ -54,8 +57,7 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerFormatter: headerFormat,
-            headerAlign: 'center'
+            headerFormatter: headerFormat
         }, {
             dataField: 'text',
             text: 'Text',
@@ -70,8 +72,7 @@ export const CustomBootstrapTable = () => {
                 </div>
             ),
             sort: true,
-            headerFormatter: headerFormat,
-            headerAlign: 'center'
+            headerFormatter: headerFormat
         }, {
             dataField: 'category',
             text: 'Category',
@@ -82,8 +83,7 @@ export const CustomBootstrapTable = () => {
             }),
             sort: true,
             classes: "text-center",
-            headerFormatter: headerFormat,
-            headerAlign: 'center'
+            headerFormatter: headerFormat
         }, {
             dataField: 'tags',
             text: 'Tags',
@@ -92,8 +92,7 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerFormatter: headerFormat,
-            headerAlign: 'center'
+            headerFormatter: headerFormat
         }, {
             dataField: 'authorScore',
             text: 'Author score',
@@ -120,8 +119,7 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters},
             }),
             sort: true,
-            headerFormatter: headerFormat,
-            headerAlign: 'center'
+            headerFormatter: headerFormat
         }, {
             dataField: 'createdAt',
             text: 'Created',
@@ -134,7 +132,6 @@ export const CustomBootstrapTable = () => {
                 }
             },
             headerFormatter: headerFormat,
-            headerAlign: 'center',
             filter: dateFilter({
                 withoutEmptyComparatorOption: true,
                 comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
@@ -142,6 +139,7 @@ export const CustomBootstrapTable = () => {
                 style: {display: displayFilters}
             }),
             formatter: dateFormatter
+
         }];
 
         if (!reviews) {
@@ -149,7 +147,6 @@ export const CustomBootstrapTable = () => {
         }
 
         return (
-
                 <BootstrapTable
                     bordered={false}
                     wrapperClasses="table responsive-table"
@@ -168,7 +165,5 @@ export const CustomBootstrapTable = () => {
                         }
                     }}
                 />
-
         )
-
 }
