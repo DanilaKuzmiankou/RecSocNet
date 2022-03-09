@@ -25,6 +25,15 @@ html {
  */
 
 
+
+@media screen and (max-width: 769px) {
+  .nav_elements_margin{
+    /*text-align: center;*/
+    margin-bottom: 15px;
+}
+}
+
+
   .profile_page_container {
     background-image: url("../public/profile_page_background.jpg");
     min-height: 100vh;
@@ -257,7 +266,7 @@ ul {
 .navbar_home_button {
   white-space: nowrap;
   user-select: none;
-  font-size: 25px;
+  font-size: 35px;
   color: white;
   text-decoration: none;
 }
@@ -265,9 +274,8 @@ ul {
 
 .navbar_users_data_button {
   white-space: nowrap;
-  padding-right: 15px;
   user-select: none;
-  font-size: 25px;
+  font-size: 35px;
   color: white;
   text-decoration: none;
 }
