@@ -44,7 +44,7 @@ export const CustomModal = forwardRef((props, ref) => {
         dispatch(setIsLoading(true))
         let newReview = Object.assign({}, modal.current.save())
         if (params.displayCreateForm) {
-            //console.log('create: ', newReview)
+            console.log('create: ', newReview)
             await createNewReview(newReview)
         } else {
             //console.log('edit: ', newReview)

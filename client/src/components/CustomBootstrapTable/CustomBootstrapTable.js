@@ -21,8 +21,7 @@ export const CustomBootstrapTable = () => {
                 <div>
                     <OverlayTrigger placement="bottom" delay={{show: 150, hide: 200}}
                                     overlay={<Tooltip id="tooltip-disabled">Click to sort!</Tooltip>}>
-                        <h5 style={{fontSize:'30px'}}>{column.text}
-                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <h5 >{column.text}
 
                         </h5>
                     </OverlayTrigger>
@@ -64,6 +63,7 @@ export const CustomBootstrapTable = () => {
                 placeholder: 'Text',
                 style: {display: displayFilters},
             }),
+            classes: "text-center",
             formatter: (cell, row, rowIndex, extraData) => (
                 <div>
                     <ReactMarkdown children={formatString(row.text)}/>
@@ -81,6 +81,7 @@ export const CustomBootstrapTable = () => {
 
             }),
             sort: true,
+            classes: "text-center",
             headerFormatter: headerFormat,
             headerAlign: 'center'
         }, {
@@ -150,9 +151,8 @@ export const CustomBootstrapTable = () => {
         return (
 
                 <BootstrapTable
-                    headerClasses="react_bootstrap_table_header"
                     bordered={false}
-                    wrapperClasses="table-responsive table react_bootstrap_table_header"
+                    wrapperClasses="table responsive-table"
                     keyField='id'
                     data={reviews}
                     columns={columns}
@@ -168,6 +168,7 @@ export const CustomBootstrapTable = () => {
                         }
                     }}
                 />
+
         )
 
 }

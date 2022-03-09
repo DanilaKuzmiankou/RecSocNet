@@ -8,7 +8,7 @@ function App() {
 
     return (
       <BrowserRouter>
-          <div >
+          <div>
               <Auth0ProviderWithNavigate>
                   <CustomNav/>
                   <AppRoutes/>

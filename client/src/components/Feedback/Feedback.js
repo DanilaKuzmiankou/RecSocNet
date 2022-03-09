@@ -18,7 +18,7 @@ export const Feedback = (props) => {
                     <Comments/>
                     <span>&nbsp;&nbsp;&nbsp;</span>
                     <StarRatings
-                        rating={props.review?.authorScore}
+                        rating={0}
                         starRatedColor="#ffd700"
                         starHoverColor="#ffd700"
                         numberOfStars={5}

@@ -1,6 +1,33 @@
 @import '~react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+html {
+  overflow-x: hidden;
+}
 
+* {
+  font-size: 22px;
+  font-family: Arial, serif;
+
+}
+
+@media screen and (max-width: 750px) {
+  * {
+    font-size: 13px;
+  }
+
+/* debug mode
+* {
+  background: #000 !important;
+  color: #0f0 !important;
+  outline: solid #f00 1px !important;
+}
+
+ */
+
+
+.profile_page_container {
+  background-image: url("../public/profile_page_background.jpg");
+}
 
 .fit_text {
   white-space: nowrap;
@@ -9,30 +36,19 @@
   text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
 }
 
+
 .react_bootstrap_table_header {
 font-size: 30px;
 }
 
-
-
+}
 .react-bootstrap-table table {
-
-  display: contents ;
+  display: block;
   table-layout: auto;
   overflow-x:auto !important;
 }
 
 
-.react-bootstrap-table tableWORKING {
-  display: grid ;
-  table-layout: auto;
-  overflow-x:auto !important;
-}
-
-.table1{
-  overflow: auto;
-  table-layout: auto !important;
-}
 
 
 
@@ -109,13 +125,8 @@ ul {
 }
 
 
-.profile_page_container {
-  font-size: 30px;
-  background-image: url("../public/profile_page_background.jpg");
-  background-position: center;
-  background-size: cover;
 
-}
+
 
 .profile_button {
   border-radius: 15px;
