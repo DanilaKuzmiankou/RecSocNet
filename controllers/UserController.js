@@ -19,7 +19,7 @@ class UserController {
             return res.status(200).json({message: 'User was successfully logged in!'})
         }
         console.log('pic', picture)
-        const user = await User.create({authId, username, profilePictureUrl:picture})
+        const user = await User.create({authId, name:username, profilePictureUrl:picture})
         return res.status(200).json({message: 'User was successfully registered!'})
     }
 
