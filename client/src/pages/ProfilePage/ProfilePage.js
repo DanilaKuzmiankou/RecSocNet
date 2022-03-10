@@ -222,7 +222,6 @@ export const ProfilePage = (props) => {
                     :
 
                     <div>
-
                         {routerParams.id || isAuthenticated ?
 
                             <div>

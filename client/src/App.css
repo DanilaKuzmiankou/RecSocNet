@@ -1,4 +1,3 @@
-@import '~react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 html {
   overflow-x: hidden;
@@ -23,6 +22,19 @@ html {
 }
 
  */
+.sr-only{
+  display: none;
+}
+
+.ql-editor{
+  cursor: text;
+  min-height:200px;
+}
+
+.editor {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
 
 .center_profile_page{
   height: 45vh;

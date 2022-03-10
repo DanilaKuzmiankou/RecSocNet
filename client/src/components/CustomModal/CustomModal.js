@@ -47,7 +47,7 @@ export const CustomModal = forwardRef((props, ref) => {
             console.log('create: ', newReview)
             await createNewReview(newReview)
         } else {
-            //console.log('edit: ', newReview)
+            console.log('edit: ', newReview)
             await editReview(newReview)
         }
         dispatch(setIsLoading(false))
@@ -100,10 +100,10 @@ export const CustomModal = forwardRef((props, ref) => {
         const picturesToDelete = editedReview.images.filter(
             prevPicture => redactedPictures.find(
                 redactedPicture => redactedPicture.imageLink === prevPicture.imageLink || redactedPicture.preview === prevPicture.imageLink ) === undefined)
-        // console.log('all: ', allPictures)
-        // console.log('upload: ', picturesToUpload)
-        // console.log('delete: ', picturesToDelete)
-        // console.log('selectedReview: ', editedReview.images)
+        console.log('all: ', allPictures)
+        console.log('upload: ', picturesToUpload)
+        console.log('delete: ', picturesToDelete)
+        console.log('selectedReview: ', editedReview.images)
 
         await deleteImagesFromFirebaseCloud(picturesToDelete)
         const picturesUrl = await uploadImagesToFirebase(picturesToUpload)

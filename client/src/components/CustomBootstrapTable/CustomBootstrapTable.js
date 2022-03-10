@@ -1,7 +1,6 @@
 import BootstrapTable from 'react-bootstrap-table-next';
 import React from 'react';
 import {Container, OverlayTrigger, Tooltip} from "react-bootstrap";
-import ReactMarkdown from 'react-markdown'
 import "../../App.css"
 import filterFactory, {Comparator, dateFilter, numberFilter, textFilter} from 'react-bootstrap-table2-filter';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
@@ -9,6 +8,7 @@ import {changeSingleDateToUserTimezone} from "../../utils/Utils";
 import {useDispatch, useSelector} from "react-redux";
 import {setSelectedReview} from "../../store/reducers/ReviewSlice";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
+import ReactQuill from "react-quill";
 
 export const CustomBootstrapTable = () => {
 
@@ -68,7 +68,11 @@ export const CustomBootstrapTable = () => {
             classes: "text-center",
             formatter: (cell, row, rowIndex, extraData) => (
                 <div>
-                    <ReactMarkdown children={formatString(row.text)}/>
+                    <ReactQuill
+                        theme={null}
+                        readOnly={true}
+                        defaultValue={formatString(row.text)}
+                    />
                 </div>
             ),
             sort: true,

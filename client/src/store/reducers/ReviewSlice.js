@@ -6,14 +6,6 @@ export const reviewSlice = createSlice({
         reviews: [],
         selectedReview: {},
         displayFilters: "none",
-        createdReview: {
-            title: "",
-            category: "",
-            tags: "",
-            authorScore: "",
-            text: "",
-            images: []
-        },
         editedReview: {},
         newestReviews: []
     },
@@ -26,9 +18,6 @@ export const reviewSlice = createSlice({
         },
         setSelectedReview: (state, action) => {
             state.selectedReview = action.payload
-        },
-        setCreatedReview: (state, action) => {
-            state.createdReview = action.payload
         },
         setEditedReview: (state, action) => {
             state.editedReview = action.payload
@@ -45,7 +34,6 @@ export const {
     setReviews,
     setDisplayFilters,
     setSelectedReview,
-    setCreatedReview,
     setEditedReview,
     setNewestReviews
 

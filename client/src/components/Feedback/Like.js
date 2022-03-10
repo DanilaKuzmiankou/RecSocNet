@@ -30,7 +30,6 @@ export const Like = (props) => {
     }
 
     const onLikeHover = (value) =>{
-
         if(value)
         {
             setFullSymbol("black")
@@ -38,7 +37,6 @@ export const Like = (props) => {
         else {
             setFullSymbol("red")
         }
-        console.log('hover!')
     }
 
             return (

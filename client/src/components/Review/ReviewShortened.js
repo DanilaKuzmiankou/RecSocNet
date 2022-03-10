@@ -1,21 +1,18 @@
 import {Col, Container, Row} from "react-bootstrap";
 import StarRatings from "react-star-ratings/build/star-ratings";
-import {Editor} from "react-draft-wysiwyg";
 import React, {useEffect, useState} from "react";
-import EditorState from "draft-js/lib/EditorState";
-import {convertFromRaw} from "draft-js";
-import {markdownToDraft} from "markdown-draft-js";
+import ReactQuill from "react-quill";
 
 export const ReviewShortened = (props) => {
 
-    const [editorState, setEditorState] = useState(undefined)
+    const [editorText, setEditorText] = useState('');
 
     useEffect(async () => {
         let isMounted = true;
         if (isMounted) {
-            //let shortenedText = formatText(props.review?.text)
-            let shortenedText = props.review?.text
-            setEditorState(EditorState.createWithContent(convertFromRaw(markdownToDraft(shortenedText))))
+            let shortenedText = formatText(props.review?.text)
+            //let shortenedText = props.review?.text
+            setEditorText(shortenedText)
         }
         return () => {
             isMounted = false
@@ -74,11 +71,10 @@ export const ReviewShortened = (props) => {
             </Container>
 
             <div>
-                <Editor
-                    wrapperClassName="fit_text"
-                    toolbarHidden
-                    editorState={editorState}
+                <ReactQuill
+                    theme={null}
                     readOnly={true}
+                    value={editorText}
                 />
             </div>
         </div>

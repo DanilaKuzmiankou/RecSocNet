@@ -76,20 +76,26 @@ export const UploadImage = ({updateImages, filesUrl}) => {
     });
 
     useEffect(async () => {
-        // Make sure to revoke the data uris to avoid memory leaks
-
-        if (filesUrl && filesUrl.length) {
-            let newFiles = [...files]
-            for(let i=0; i<filesUrl.length; i++) {
-                let obj = {
-                    preview: filesUrl[i].imageLink
+        let isMounted = true;
+        if (isMounted) {
+            if (filesUrl && filesUrl.length) {
+                let newFiles = [...files]
+                for (let i = 0; i < filesUrl.length; i++) {
+                    let obj = {
+                        preview: filesUrl[i].imageLink
+                    }
+                    newFiles.push(obj)
                 }
-                newFiles.push(obj)
+                setFiles(newFiles)
             }
-            setFiles(newFiles)
+        }
+        else {
+            files.forEach(file => URL.revokeObjectURL(file.preview));
         }
 
-        //files.forEach(file => URL.revokeObjectURL(file.preview));
+        return () => {
+            isMounted = false
+        };
     }, [filesUrl]);
 
 

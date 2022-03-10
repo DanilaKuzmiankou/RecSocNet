@@ -1,25 +1,23 @@
 import React, {useEffect, useState} from "react";
 import "../../App.css"
 import {Col, Container, Image, Row} from "react-bootstrap";
-import {Editor} from "react-draft-wysiwyg";
-import EditorState from "draft-js/lib/EditorState";
-import {convertFromRaw} from "draft-js";
-import {markdownToDraft} from "markdown-draft-js";
 import StarRatings from "react-star-ratings/build/star-ratings";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import fontawesome from '@fortawesome/fontawesome'
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import ReactQuill from "react-quill";
 
 export const ReviewBody = (props) => {
 
     fontawesome.library.add(faArrowLeft);
 
-    const [editorState, setEditorState] = useState(undefined)
+    const [editorText, setEditorText] = useState('');
 
     useEffect(async () => {
         let isMounted = true;
         if (isMounted) {
-            setEditorState(EditorState.createWithContent(convertFromRaw(markdownToDraft(props.review?.text))))
+            console.log('text: ', props.review?.text)
+            setEditorText(props.review?.text)
         }
         return () => {
             isMounted = false
@@ -81,14 +79,14 @@ export const ReviewBody = (props) => {
 
 
                 <div>
-                    <Editor
-                        toolbarHidden
-                        editorState={editorState}
+                    <ReactQuill
+                        theme={null}
                         readOnly={true}
+                        defaultValue={props.review?.text}
                     />
                 </div>
 
-                {props.review?.images.map((image, index) => (
+                {props.review?.images?.map((image, index) => (
                     <div className="thumb" key={index}>
                         <div className="thumbInner">
                             <Image
