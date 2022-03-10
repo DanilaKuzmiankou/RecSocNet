@@ -17,9 +17,9 @@ export const UserProfile = () =>  {
                             width={120}
                         />
                     </Col>
-                    <Col>
+                    <Col >
                         <div className="small_margin_top">
-                        <h4  className="no_wrap"> User name: {browsedUser.name} </h4>
+                        <h4 className="no_wrap"> User name: {browsedUser.name} </h4>
                         <h4 className="no_wrap"> User likes: {browsedUser.likes} </h4>
                         </div>
                     </Col>

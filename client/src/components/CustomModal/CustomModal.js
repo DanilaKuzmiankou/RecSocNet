@@ -97,7 +97,7 @@ export const CustomModal = forwardRef((props, ref) => {
                 redactedPictures.push(picture)
             }
         })
-        const picturesToDelete = editedReview.images.filter(
+        const picturesToDelete = editedReview.images?.filter(
             prevPicture => redactedPictures.find(
                 redactedPicture => redactedPicture.imageLink === prevPicture.imageLink || redactedPicture.preview === prevPicture.imageLink ) === undefined)
         console.log('all: ', allPictures)

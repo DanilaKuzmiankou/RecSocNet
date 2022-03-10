@@ -225,60 +225,64 @@ export const ProfilePage = (props) => {
                         {routerParams.id || isAuthenticated ?
 
                             <div>
-                        <h1 className="small_margin_left no_select"> User Profile </h1>
-                        <div className="user_profile">
-                            <UserProfile/>
-                        </div>
+                                <h1 className="small_margin_left no_select"> User Profile </h1>
+                                <div className="user_profile">
+                                    <UserProfile/>
+                                </div>
 
-                        {reviews && reviews.length > 0 ?
-                            <div>
-                                <h1 className="text-center">Reviews</h1>
-                                <Fragment>
-                                    <div style={{display: "inline"}}>
-                                        <Button onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
-                                        <Button className="reviews_table_button float-end small_margin_right"
-                                                onClick={viewReview}>View</Button>
+                                {reviews && reviews.length > 0 ?
+                                    <div>
+                                        <h1 className="text-center">Reviews</h1>
+
+                                        <Fragment>
+                                            <div className="reviews_table_container">
+                                                <Button variant="success" onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
+                                                <Button variant="success" className="reviews_table_button"
+                                                        onClick={viewReview}>View</Button>
+                                            </div>
+                                            {isCurrentUserAdmin &&
+                                                <div className="reviews_table_container">
+                                                    <Button variant="success" className="reviews_table_button"
+                                                            onClick={createReview}>Create</Button>
+                                                    <Button variant="success" className="reviews_table_button"
+                                                            onClick={editReview}>Edit</Button>
+                                                    <Button variant="success" className="reviews_table_button"
+                                                            onClick={deleteReview}>Delete</Button>
+
+                                                </div>
+                                            }
+                                        </Fragment>
+
+
+                                    <CustomBootstrapTable/>
                                     </div>
-                                    {isCurrentUserAdmin &&
-                                        <div style={{display: "inline"}}>
-                                            <Button className="reviews_table_button float-end small_margin_right"
-                                                    onClick={createReview}>Create</Button>
-                                            <Button className="reviews_table_button float-end small_margin_right"
-                                                    onClick={editReview}>Edit</Button>
-                                            <Button className="reviews_table_button float-end small_margin_right"
-                                                    onClick={deleteReview}>Delete</Button>
+                                    :
 
-                                        </div>
-                                    }
-                                </Fragment>
-                                <CustomBootstrapTable/>
-                            </div>
-                            :
-
-                            <div className="center_profile_page text-center">
+                                    <div className="center_profile_page text-center">
                                 {isCurrentUserAdmin ?
                                     <div className="no_wrap_on_normal_screen">
-                                        <h2>Ooooops...It seems you have not reviews, click the
-                                            button to create the first!</h2>
-                                        <div className="profile_button_container">
-                                            <Button className="profile_button" variant="danger" onClick={createReview}>Tap
-                                                me!</Button>
-                                        </div>
+                                    <h2>Ooooops...It seems you have not reviews, click the
+                                    button to create the first!</h2>
+                                    <div className="profile_button_container">
+                                    <Button className="profile_button" variant="danger"
+                                    onClick={createReview}>Tap
+                                    me!</Button>
+                                    </div>
                                     </div>
                                     :
                                     <div className="no_wrap_on_big_screen">
-                                        <h2>This user has no reviews at the moment!</h2>
+                                    <h2>This user has no reviews at the moment!</h2>
                                     </div>
                                 }
 
+                                    </div>
+                                }
                             </div>
-                        }
-                            </div>
-                        :
+                            :
                             <div className="no_wrap_on_normal_screen center_without_content text-center">
                                 <div>
-                                <h2>Log in to create your first review!</h2>
-                                     <LogInButton size={"big"} />
+                                    <h2>Log in to create your first review!</h2>
+                                    <LogInButton size={"big"}/>
                                 </div>
                             </div>
 
