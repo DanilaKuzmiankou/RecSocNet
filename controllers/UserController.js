@@ -7,7 +7,7 @@ class UserController {
     async registration (req, res, next) {
         const {authId, name, picture} = req.body
         let username = name
-        if(!name){
+        if(!name || name ===""){
             username='New user'
         }
         console.log('user.sub, user.name, user.picture ', authId, username, picture)
