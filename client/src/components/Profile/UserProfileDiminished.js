@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import "../../App.css"
 import {Image, NavDropdown} from "react-bootstrap";
 import {useAuth0} from "@auth0/auth0-react";
-import {getUserByAuthId} from "../../api/store/UserStore";
+import {getUserByAuthId, registerNewUser} from "../../api/store/UserStore";
 
 export const UserProfileDiminished = () =>  {
 
@@ -11,6 +11,7 @@ export const UserProfileDiminished = () =>  {
 
     useEffect(async () => {
         const token = await getAccessTokenSilently()
+        await registerNewUser(token, user.sub, user.name, user.picture)
         let browsed = await getUserByAuthId(token, user.sub)
         setBrowsedUser(browsed)
         console.log('browsed: ', browsedUser)
