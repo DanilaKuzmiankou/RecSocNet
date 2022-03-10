@@ -8,7 +8,7 @@ class UserController {
         const {authId, name, picture} = req.body
         let username = name
         if(!name){
-            username='undefined'
+            username='New user'
         }
         console.log('user.sub, user.name, user.picture ', authId, username, picture)
         if (!authId) {
