@@ -24,83 +24,74 @@ export const ReviewBody = (props) => {
         };
     }, []);
 
-    const closeModal = () =>{
+    const closeModal = () => {
         props.closeModal()
     }
 
     return (
-        <Container fluid>
-            <Row>
-                <Col>
+        <div>
             <FontAwesomeIcon size="lg"
                              icon="fa-solid fa-arrow-left"
                              onClick={closeModal}
             />
+        <Container fluid>
 
-            <div style={{padding: "15px"}}>
-                <div className="form-group form-inline">
-                    <label style={{fontSize: "13px", fontStyle: "italic"}}>by </label>
-                    <label style={{
-                        fontSize: "22px",
-                        display: 'inline-block',
-                        marginLeft: "7px"
-                    }}
-                    >
-                        {props.user?.name}
-                    </label>
-                </div>
+                    <div className="review_container">
+                        <div className="form-group form-inline">
+                            <label style={{fontSize: "13px", fontStyle: "italic"}}>by </label>
+                            <label style={{
+                                fontSize: "22px",
+                                display: 'inline-block',
+                                marginLeft: "7px"
+                            }}>
+                                {props.user?.name}
+                            </label>
+                        </div>
 
-                <h1>{props.review?.title}</h1>
+                        <h1>{props.review?.title}</h1>
 
-                <Container style={{
-                    paddingTop: "10px",
-                    paddingBottom: "20px"
-                }}>
-                    <Row>
-                        <Col md="auto">
+                        <div style={{
+                            paddingTop: "10px",
+                            paddingBottom: "20px",
+                        }}>
                             <label className="review_category">{props.review?.category}</label>
-                        </Col>
-
-                        <Col md="auto">
                             <label className="review_tags">{props.review?.tags}</label>
-                        </Col>
+                            <div className="review_rating_container">
+                                <StarRatings
 
-                        <Col md={{span: 0, offset: 7}}>
-                            <StarRatings
-                                rating={props.review?.authorScore}
-                                starRatedColor="#ffd700"
-                                numberOfStars={5}
-                                starDimension="30px"
-                                name='rating'
-                            />
-                        </Col>
-                    </Row>
-                </Container>
+                                    rating={props.review?.authorScore}
+                                    starRatedColor="#ffd700"
+                                    numberOfStars={5}
+                                    starDimension="30px"
+                                    name='rating'
+                                />
+                            </div>
+                        </div>
 
 
-                <div>
-                    <ReactQuill
-                        theme={null}
-                        readOnly={true}
-                        defaultValue={props.review?.text}
-                    />
-                </div>
-
-                {props.review?.images?.map((image, index) => (
-                    <div className="thumb" key={index}>
-                        <div className="thumbInner">
-                            <Image
-                                src={image.imageLink}
-                                className="review_img"
+                        <div>
+                            <ReactQuill
+                                theme={null}
+                                readOnly={true}
+                                defaultValue={props.review?.text}
                             />
                         </div>
-                    </div>
-                ))
-                }
 
-            </div>
-                </Col>
-            </Row>
+                        {props.review?.images?.map((image, index) => (
+                            <div className="thumb" key={index}>
+                                <div className="thumbInner">
+                                    <Image
+                                        src={image.imageLink}
+                                        className="review_img"
+                                    />
+                                </div>
+                            </div>
+                        ))
+                        }
+
+                    </div>
+
         </Container>
+        </div>
     )
 }

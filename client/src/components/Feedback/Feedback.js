@@ -14,9 +14,10 @@ export const Feedback = (props) => {
     return (
         <div className="d-flex align-items-end justify-content-around" >
                     <Like style={{paddingRight: "10px"}}/>
-                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;</span>
                     <Comments/>
-                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <span>&nbsp;&nbsp;</span>
+            <div className="feedback_rating">
                     <StarRatings
                         rating={0}
                         starRatedColor="#ffd700"
@@ -26,7 +27,7 @@ export const Feedback = (props) => {
                         changeRating={changeRating}
                         name='rating'
                     />
-            <span>&nbsp;&nbsp;&nbsp;</span>
+            </div>
         </div>
     )
 }
