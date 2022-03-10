@@ -5,10 +5,13 @@ import {useSelector} from "react-redux";
 
 export const UserProfile = () =>  {
 
+
     const browsedUser = useSelector((state) => state.user.browsedUser)
 
         return (
-            <div className="no_select">
+            <div className="no_select"
+            style={{display: "inline"}}
+            >
                 <Row >
                     <Col xs={"auto"}>
                         <Image

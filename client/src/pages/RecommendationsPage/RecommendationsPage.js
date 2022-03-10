@@ -1,4 +1,4 @@
-import {Button, Container} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import React, {useEffect, useLayoutEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
@@ -36,30 +36,40 @@ export const RecommendationsPage = () => {
 
     const fetchNewestReviews = async () => {
         let newestReviews = await getNewestReviews()
+
         dispatch(setNewestReviews(newestReviews))
         console.log('newest: ', newestReviews)
     }
 
+    const ons2s =(value) =>{
+        console.log('click: ', value)
+    }
 
     return (
-        <div >
+        <div className="recommendations_page_container">
             {
                 isLoading ?
                     <LoadingComponent/>
                     :
-                        <Container
-                            style={{
-                                width: 700,
-                                height: 10
-                            }}
-                        >
-                            {newestReviews.map((review, id) => (
-                                <ReviewShortened
-                                    key={id}
-                                    review={review}
-                                />
-                            ))}
-                        </Container>
+                    <Container>
+                        <Row>
+                            <Col> </Col>
+                            <Col sm={8}>
+                                {newestReviews.map((review, id) => (
+                                    <div
+                                        key={id}
+                                        className="review_shortened_container">
+                                        <ReviewShortened
+                                            key={id}
+                                            review={review}
+                                        />
+                                    </div>
+                                ))}
+                            </Col>
+                            <Col> </Col>
+                        </Row>
+
+                    </Container>
             }
         </div>
     );

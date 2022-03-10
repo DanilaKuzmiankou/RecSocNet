@@ -11,18 +11,6 @@ export const ReviewBody = (props) => {
 
     fontawesome.library.add(faArrowLeft);
 
-    const [editorText, setEditorText] = useState('');
-
-    useEffect(async () => {
-        let isMounted = true;
-        if (isMounted) {
-            console.log('text: ', props.review?.text)
-            setEditorText(props.review?.text)
-        }
-        return () => {
-            isMounted = false
-        };
-    }, []);
 
     const closeModal = () => {
         props.closeModal()

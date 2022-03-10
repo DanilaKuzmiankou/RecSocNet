@@ -13,11 +13,14 @@ import {
     Tooltip
 } from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
-import {AuthButton} from "../index.components"
+import {AuthButton, LogInButton} from "../index.components"
+import {useAuth0} from "@auth0/auth0-react";
+import {UserProfileDiminished} from "../Profile/UserProfileDiminished";
 
 export const CustomNav = () => {
 
     const navigate = useNavigate()
+    const {isAuthenticated} = useAuth0()
     const routeChange = () => {
         let path = `/profile`;
         navigate(path);
@@ -44,15 +47,8 @@ export const CustomNav = () => {
 
                     <div>
                         <Container >
-                            <Row  >
-                                <Col lg={"auto"} md={12} className="nav_elements_margin">
-                                <OverlayTrigger placement="bottom"
-                                                overlay={<Tooltip id="tooltip-disabled">To Profile!</Tooltip>}>
-                                    <a className="navbar_home_button" onClick={routeChange}>Profile</a>
-                                </OverlayTrigger>
-                                </Col>
-
-                                <Col lg={"auto"} md={12} className="nav_elements_margin">
+                            <Row >
+                                <Col lg={"auto"} sm={12} className="nav_elements_margin">
                                     <Form className="d-flex">
                                         <FormControl
                                             type="search"
@@ -63,9 +59,12 @@ export const CustomNav = () => {
                                         <Button variant="outline-success">Search</Button>
                                     </Form>
                                 </Col>
-
-                                <Col lg={"auto"} md={12} className="nav_elements_margin" >
-                                    <AuthButton/>
+                                <Col lg={"auto"} sm={12} className="nav_elements_margin" >
+                                    {isAuthenticated ?
+                                        <UserProfileDiminished/>
+                                        :
+                                        <LogInButton/>
+                                    }
                                 </Col>
                             </Row>
                         </Container>

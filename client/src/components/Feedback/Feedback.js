@@ -1,14 +1,16 @@
 import {Button, Col, Container, Row} from "react-bootstrap";
 import StarRatings from "react-star-ratings/build/star-ratings";
-import React from "react";
+import React, {useState} from "react";
 import {Like} from "./Like";
 import {Comments} from "./Comments";
 
 export const Feedback = (props) => {
 
+    const [rating, setRating] = useState(0)
 
     const changeRating = (rating) => {
         console.log('rating: ', rating)
+        setRating(rating)
     }
 
     return (
@@ -19,7 +21,7 @@ export const Feedback = (props) => {
                     <span>&nbsp;&nbsp;</span>
             <div className="feedback_rating">
                     <StarRatings
-                        rating={0}
+                        rating={rating}
                         starRatedColor="#ffd700"
                         starHoverColor="#ffd700"
                         numberOfStars={5}

@@ -71,7 +71,12 @@ class ReviewController {
                 model: ReviewImage,
                 as: 'images',
                 attributes: ['imageLink']
-            }],
+            },
+                {
+                    model: User,
+                    attributes: ['id', 'name']
+                }
+            ],
             limit: 10
         });
         return res.json(reviews)

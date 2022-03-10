@@ -159,7 +159,7 @@ export const CustomModal = forwardRef((props, ref) => {
                         <Modal.Header style={{display:params.displayHeader}} closeButton onClick={closeModal}>
                             <Modal.Title >{params.title}</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body className="show-grid">
+                        <Modal.Body>
 
                             <Container>
                                 {params.displayEditForm &&
