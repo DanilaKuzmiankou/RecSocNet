@@ -51,7 +51,7 @@ export const ProfilePage = (props) => {
             dispatch(setIsLoading(false))
         }, 500);
 
-    }, [isAuthenticated])
+    }, [isAuthenticated, user])
 
 
     const checkPrivileges = async () => {
