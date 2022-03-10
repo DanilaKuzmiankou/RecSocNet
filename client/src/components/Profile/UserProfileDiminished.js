@@ -10,9 +10,10 @@ export const UserProfileDiminished = () =>  {
     const [browsedUser, setBrowsedUser] = useState({})
 
     useEffect(async () => {
-        const token = await getAccessTokenSilently()
+
         console.log('user.sub, user.name, user.picture', user.sub, user.name, user.picture)
         if(isAuthenticated) {
+            const token = await getAccessTokenSilently()
             await registerNewUser(token, user.sub, user.name, user.picture)
             let browsed = await getUserByAuthId(token, user.sub)
             setBrowsedUser(browsed)
