@@ -6,16 +6,19 @@ import {getUserByAuthId, registerNewUser} from "../../api/store/UserStore";
 
 export const UserProfileDiminished = () =>  {
 
-    const {user, getAccessTokenSilently, logout} = useAuth0()
+    const {user, getAccessTokenSilently, logout, isAuthenticated} = useAuth0()
     const [browsedUser, setBrowsedUser] = useState({})
 
     useEffect(async () => {
         const token = await getAccessTokenSilently()
-        await registerNewUser(token, user.sub, user.name, user.picture)
-        let browsed = await getUserByAuthId(token, user.sub)
-        setBrowsedUser(browsed)
+        console.log('user.sub, user.name, user.picture', user.sub, user.name, user.picture)
+        if(isAuthenticated) {
+            await registerNewUser(token, user.sub, user.name, user.picture)
+            let browsed = await getUserByAuthId(token, user.sub)
+            setBrowsedUser(browsed)
+        }
         console.log('browsed: ', browsedUser)
-    }, [])
+    }, [isAuthenticated])
 
 
     return (
@@ -23,7 +26,6 @@ export const UserProfileDiminished = () =>  {
         {browsedUser &&
         <div className="no_select user_profile_diminished_container">
                     <Image
-
                         src={user.picture}
                         height={50}
                         width={50}

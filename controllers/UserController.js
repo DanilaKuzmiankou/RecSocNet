@@ -6,8 +6,9 @@ class UserController {
 
     async registration (req, res, next) {
         const {authId, name, picture} = req.body
+        console.log('user.sub, user.name, user.picture ', authId, name, picture)
         if (!name || !authId) {
-            return next(ApiError.badRequest('There is no authId or user name!'))
+            return next(ApiError.badRequest('There is no authId or user name!', ' user.sub, user.name, user.picture ', authId, name, picture))
         }
         const candidate = await User.findOne({where: {authId}})
         if (candidate) {
