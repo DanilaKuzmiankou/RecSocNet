@@ -1,8 +1,13 @@
 const ApiError = require("../error/ApiError");
 const {User} = require("../models/Models");
 
+var userController = this;
+
 class UserController {
 
+    constructor() {
+        userController = this
+    }
 
     async registration (req, res, next) {
         const {authId, name, picture} = req.body
@@ -23,7 +28,30 @@ class UserController {
         return res.status(200).json({message: 'User was successfully registered!'})
     }
 
+    async changeName(req, res, next) {
+        const {authId, newUserName} = req.body
+        let answer = await userController.validateUserName(newUserName)
+        if(answer===""){
+            const candidate = await User.findOne({where: {authId}})
+            if(candidate){
+                await candidate.update({ name: newUserName })
+                return res.status(200).json({message: 'User name was successfully changed!'})
+            }
+            return res.status(202).json({message: 'User was not found'})
+        }
+        return res.status(202).json({message: answer})
+    }
 
+    async validateUserName(username) {
+        if (username && !(/\s/).test(username)) {
+            const candidate = await User.findOne({where: {name: username}})
+            if(!candidate){
+                return ""
+            }
+            return "This username is already taken!"
+        }
+        return "Not valid user name. Spaces are not allowed!"
+    }
 
     async getUser(req, res, next) {
         const {id} = req.body
@@ -31,10 +59,6 @@ class UserController {
         return res.json(user)
     }
 
-    async reactDropzonePlug(req, res, next) {
-
-        return res.status(200).json({message: 'just imitation of server answer that file was uploaded'})
-    }
 
     async getUserByAuth(req, res, next) {
         const {authId} = req.body

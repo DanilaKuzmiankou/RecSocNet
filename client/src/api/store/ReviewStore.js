@@ -51,16 +51,18 @@ export async function uploadImagesToFirebaseCloud(images: Array) {
     return imagesUrl
 }
 export async function deleteImagesFromFirebaseCloud(pictures: Array) {
-    const storage = firebase.storage()
-    for (let i = 0; i < pictures.length; i++) {
-        try {
-            let url = pictures[i].imageLink
-            let imageRef = storage.refFromURL(url)
-            const result = await imageRef.delete()
-            await deleteImageFromDatabase(url)
-        } catch (error) {
-            console.log("ERR ===", error);
-            alert("Image deleting failed!");
+    if(pictures && pictures.length) {
+        const storage = firebase.storage()
+        for (let i = 0; i < pictures?.length; i++) {
+            try {
+                let url = pictures[i].imageLink
+                let imageRef = storage.refFromURL(url)
+                const result = await imageRef.delete()
+                await deleteImageFromDatabase(url)
+            } catch (error) {
+                console.log("ERR ===", error);
+                alert("Image deleting failed!");
+            }
         }
     }
 }

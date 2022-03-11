@@ -32,7 +32,7 @@ export const ReviewBody = (props) => {
                                 display: 'inline-block',
                                 marginLeft: "7px"
                             }}>
-                                {props.user?.name}
+                                {props.review.user?.name}
                             </label>
                         </div>
 

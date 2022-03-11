@@ -1,8 +1,13 @@
-import {postRequest, postSecretRequest} from "../index.network";
+import {postRequest, postSecretRequest, rawPostRequest} from "../index.network";
 
 export async function registerNewUser(token: string, authId: string, name: string, picture: string) {
     let body = JSON.stringify({authId: authId, name: name, picture: picture})
     return await postSecretRequest(token, '/api/user/registration', body)
+}
+
+export async function changeUserName(authId: string, newUserName: string) {
+    let body = JSON.stringify({authId, newUserName})
+    return await rawPostRequest('/api/user/changeName', body)
 }
 
 export async function getUserById(id: number) {

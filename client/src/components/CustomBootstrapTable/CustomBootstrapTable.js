@@ -17,17 +17,23 @@ export const CustomBootstrapTable = () => {
     const displayFilters = useSelector((state) => state.review.displayFilters)
 
         function headerFormat(column, colIndex) {
+        let tooltipPlacement = "left"
+        if(colIndex===0){
+            tooltipPlacement='top-start'
+        }
             return (
                 <div>
-                    <OverlayTrigger placement="bottom" delay={{show: 150, hide: 200}}
+                    <OverlayTrigger placement={tooltipPlacement} delay={{show: 150, hide: 200}}
                                     overlay={<Tooltip id="tooltip-disabled">Click to sort!</Tooltip>}>
-                        <h5 >{column.text}
+                        <h5 >{column.text}</h5>
+                    </OverlayTrigger>
+                        <h5>
                             <span>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
                         </h5>
-                    </OverlayTrigger>
+
                 </div>
             );
         }
@@ -83,7 +89,6 @@ export const CustomBootstrapTable = () => {
             filter: textFilter({
                 placeholder: 'Category',
                 style: {display: displayFilters},
-
             }),
             sort: true,
             classes: "text-center",
@@ -101,6 +106,8 @@ export const CustomBootstrapTable = () => {
             dataField: 'authorScore',
             text: 'Author score',
             filter: numberFilter({
+                comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
+                withoutEmptyComparatorOption: true,
                 placeholder: 'Author score ',
                 style: {display: displayFilters},
             }),
@@ -110,6 +117,8 @@ export const CustomBootstrapTable = () => {
             dataField: 'usersContentScore',
             text: 'Users creation score',
             filter: numberFilter({
+                comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
+                withoutEmptyComparatorOption: true,
                 placeholder: 'User score ',
                 style: {display: displayFilters},
             }),
@@ -119,6 +128,8 @@ export const CustomBootstrapTable = () => {
             dataField: 'usersReviewScore',
             text: 'Likes',
             filter: numberFilter({
+                comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
+                withoutEmptyComparatorOption: true,
                 placeholder: 'Likes',
                 style: {display: displayFilters},
             }),

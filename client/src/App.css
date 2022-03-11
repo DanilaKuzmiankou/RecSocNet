@@ -1,7 +1,10 @@
 
+/*
 html {
     overflow-x: hidden;
 }
+*/
+
 
 * {
     font-size: 22px;
@@ -44,6 +47,7 @@ html {
     color: black;
     text-decoration: none;
 }
+
 
 .review_shortened_container {
     border: black 2px solid;
@@ -99,6 +103,14 @@ html {
     white-space: nowrap;
 }
 
+.profile_username_edit_container{
+    display: inline-flex;
+}
+.profile_username_edit_icon {
+    margin-left: 9px;
+
+}
+
 @media screen and (min-width: 1450px) {
     .no_wrap_on_normal_screen {
         white-space: nowrap;
@@ -117,7 +129,33 @@ html {
         margin-bottom: 15px;
     }
 }
+
+
+.profile_username_field {
+    width: 270px;
+}
+
+@media screen and (max-width: 360px) {
+    .profile_username_field {
+        width: 170px;
+    }
+}
+
+
+.profile_username_submit_button {
+    margin-left: 3px;
+    height:50px;
+}
+
+@media screen and (max-width: 750px) {
+    .profile_username_submit_button {
+        margin-left: 3px;
+        height:32px;
+    }
+}
+
 .recommendations_page_container {
+
     padding-top: 20px;
     background-color: rgba(218,224,230,255);
     min-height: 100vh;
@@ -375,8 +413,3 @@ ul {
     text-decoration: none;
 }
 
-.fonts {
-    font: italic small-caps bold 16px/2 cursive;
-    color: white;
-    font-size: 55px;
-}

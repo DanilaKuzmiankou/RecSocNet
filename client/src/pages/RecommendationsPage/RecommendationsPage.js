@@ -8,6 +8,7 @@ import {LoadingComponent, ReviewShortened} from "../../components/index.componen
 import {getNewestReviews} from "../../api/store/ReviewStore";
 import {setNewestReviews} from "../../store/reducers/ReviewSlice";
 
+
 export const RecommendationsPage = () => {
 
     const isAuthenticated = useAuth0()
@@ -41,9 +42,6 @@ export const RecommendationsPage = () => {
         console.log('newest: ', newestReviews)
     }
 
-    const ons2s =(value) =>{
-        console.log('click: ', value)
-    }
 
     return (
         <div className="recommendations_page_container">
@@ -51,7 +49,7 @@ export const RecommendationsPage = () => {
                 isLoading ?
                     <LoadingComponent/>
                     :
-                    <Container>
+                    <Container className="cont">
                         <Row>
                             <Col> </Col>
                             <Col sm={8}>
