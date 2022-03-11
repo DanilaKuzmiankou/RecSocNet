@@ -7,12 +7,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit} from "@fortawesome/free-solid-svg-icons";
 import {faEdit as editLight} from "@fortawesome/free-regular-svg-icons";
 import {changeUserName} from "../../api/store/UserStore";
-import {setBrowsedUser} from "../../store/reducers/UserSlice";
+import {setBrowsedUser, setCurrentUser} from "../../store/reducers/UserSlice";
 
 export const UserProfile = () => {
 
     const dispatch = useDispatch()
+    const currentUser = useSelector((state) => state.user.currentUser)
     const browsedUser = useSelector((state) => state.user.browsedUser)
+    const isCurrentUserAdmin = useSelector((state) => state.user.isCurrentUserAdmin)
     const [edit, setEdit] = useState(false)
     const [editUsername, setEditUsername] = useState('')
     const [username, setUsername] = useState(browsedUser?.name)
@@ -41,6 +43,12 @@ export const UserProfile = () => {
             let newBrowsedUser = Object.assign({}, browsedUser)
             newBrowsedUser.name = editUsername
             dispatch(setBrowsedUser(newBrowsedUser))
+            if(currentUser.authId===browsedUser.authId)
+            {
+                let newCurrentUser = Object.assign({}, currentUser)
+                newCurrentUser.name = editUsername
+                dispatch(setCurrentUser(newCurrentUser))
+            }
             setValidationMessage(answer.data.message)
         }
         else {
@@ -80,25 +88,27 @@ export const UserProfile = () => {
                                                     overlay={<Tooltip id="tooltip-disabled">Change user name</Tooltip>}>
                                     <div className="profile_username_edit_container">
                                         <h4 className="no_wrap"> User name: {username} </h4>
-                                        <Rating
-                                            className="profile_username_edit_icon"
-                                            start={0}
-                                            stop={1}
-                                            initialRating={edit}
-                                            onClick={showOrHideForm}
-                                            emptySymbol={
-                                                <FontAwesomeIcon icon={editLight}
-                                                                 color={"black"}
-                                                                 size="1x"
-                                                />
-                                            }
-                                            fullSymbol={
-                                                <FontAwesomeIcon icon={faEdit}
-                                                                 size="1x"
-                                                                 color={"black"}
-                                                />
-                                            }
-                                        />
+                                        {isCurrentUserAdmin &&
+                                            <Rating
+                                                className="profile_username_edit_icon"
+                                                start={0}
+                                                stop={1}
+                                                initialRating={edit}
+                                                onClick={showOrHideForm}
+                                                emptySymbol={
+                                                    <FontAwesomeIcon icon={editLight}
+                                                                     color={"black"}
+                                                                     size="1x"
+                                                    />
+                                                }
+                                                fullSymbol={
+                                                    <FontAwesomeIcon icon={faEdit}
+                                                                     size="1x"
+                                                                     color={"black"}
+                                                    />
+                                                }
+                                            />
+                                        }
                                     </div>
                                     </OverlayTrigger>
                                     <h4 className="no_wrap"> User likes: {browsedUser.likes} </h4>
