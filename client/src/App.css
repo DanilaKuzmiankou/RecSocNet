@@ -6,7 +6,7 @@ html {
 */
 
 
-* {
+:root {
     font-size: 22px;
     font-family: Arial, serif;
 
