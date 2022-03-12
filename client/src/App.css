@@ -26,6 +26,14 @@ html {
 }
 
  */
+
+.nav-link{
+    padding: 6px;
+}
+
+
+
+
 .user_profile_diminished_container{
     display: inline-flex;
     align-items: center;

@@ -29,14 +29,15 @@ export const UserProfileDiminished = () =>  {
         <div>
         {currentUser &&
         <div className="no_select user_profile_diminished_container">
+            <div>
                     <Image
                         src={currentUser?.profilePictureUrl}
                         height={50}
                         width={50}
                         roundedCircle={true}
                     />
-
-            <div style={{marginRight:'10px'}} >
+            </div>
+            <div style={{width:'auto'}}>
             <NavDropdown title={currentUser?.name} id="navbarScrollingDropdown">
                 <NavDropdown.Item className="no_wrap user_profile_diminished_name"
 
