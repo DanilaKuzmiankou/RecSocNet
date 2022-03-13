@@ -11,8 +11,10 @@ export const UserProfileDiminished = () =>  {
     const {user, getAccessTokenSilently, logout, isAuthenticated} = useAuth0()
     const dispatch = useDispatch()
     const currentUser = useSelector((state) => state.user.currentUser)
+    const[imageGetAttempt, setImageGetAttempt] = useState(0)
 
     useEffect(async () => {
+
         if(isAuthenticated && Object.keys(currentUser).length === 0) {
             console.log("updating user data...")
             const token = await getAccessTokenSilently()
@@ -35,6 +37,11 @@ export const UserProfileDiminished = () =>  {
                         height={50}
                         width={50}
                         roundedCircle={true}
+                        onError={({ currentTarget }) => {
+                            currentTarget.onerror = null;
+                            setImageGetAttempt(imageGetAttempt => imageGetAttempt+1)
+                            currentTarget.src = (imageGetAttempt < 10 ? currentUser.profilePictureUrl : process.env.PUBLIC_URL + "/blank_profile_picture.png")
+                        }}
                     />
             </div>
             <div style={{width:'auto'}}>

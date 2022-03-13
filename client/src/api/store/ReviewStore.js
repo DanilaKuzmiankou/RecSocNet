@@ -3,31 +3,33 @@ import {changeDateToUserTimezone, generateRandomString} from "../../utils/Utils"
 import firebase from "../../utils/Firebase";
 import {forEach} from "react-bootstrap/ElementChildren";
 
-export async function getUserReviews(authId: string, userId:number) {
+export async function getUserReviews(authId, userId) {
     let body = JSON.stringify({authId: authId, userId:userId})
     return await postRequest('/api/review/getAuthorReviews', body)
 }
 
-export async function getNewestReviews() {
-    return await postRequest('/api/review/newestReviews')
+
+export async function getNewestReviews(limit, offset, userId) {
+    let body = JSON.stringify({limit, offset, userId})
+    return await postRequest('/api/review/newestReviews', body)
 }
 
-export async function saveEditedReview(review: Object) {
+export async function saveEditedReview(review) {
     let body = JSON.stringify({review: review})
     return await postRequest('/api/review/edit', body)
 }
 
-export async function saveNewReview(authId: string, review: Object) {
+export async function saveNewReview(authId, review) {
     let body = JSON.stringify({authId: authId, review: review})
     return await postRequest('/api/review/create', body)
 }
 
-export async function deleteUserReview(authId: string, id: number) {
+export async function deleteUserReview(authId, id) {
     let body = JSON.stringify({authId: authId, id: id})
     return await postRequest('/api/review/delete', body)
 }
 
-export async function uploadImagesToFirebaseCloud(images: Array) {
+export async function uploadImagesToFirebaseCloud(images) {
     let imagesUrl = []
     let file
     let fileRef
@@ -50,7 +52,7 @@ export async function uploadImagesToFirebaseCloud(images: Array) {
     }
     return imagesUrl
 }
-export async function deleteImagesFromFirebaseCloud(pictures: Array) {
+export async function deleteImagesFromFirebaseCloud(pictures) {
     if(pictures && pictures.length) {
         const storage = firebase.storage()
         for (let i = 0; i < pictures?.length; i++) {
@@ -67,17 +69,17 @@ export async function deleteImagesFromFirebaseCloud(pictures: Array) {
     }
 }
 
-export async function addImagesToDatabase(picturesUrl: Array, reviewId: String) {
+export async function addImagesToDatabase(picturesUrl, reviewId) {
     picturesUrl?.forEach(pictureUrl => addImageToDatabase(pictureUrl, reviewId))
 }
 
 
-async function deleteImageFromDatabase(url: String) {
+async function deleteImageFromDatabase(url) {
     let body = JSON.stringify({url})
     return await postRequest('/api/review/deleteImage', body)
 }
 
-async function addImageToDatabase(url: String, reviewId: String) {
+async function addImageToDatabase(url, reviewId) {
     let body = JSON.stringify({url, reviewId})
     return await postRequest('/api/review/addImage', body)
 }

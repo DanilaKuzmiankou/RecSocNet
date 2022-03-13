@@ -27,12 +27,13 @@ const Review = sequelize.define('review', {
     authorScore: {type: DataTypes.INTEGER, allowNull:false},
     usersReviewScore: {type: DataTypes.INTEGER, defaultValue:0},
     usersContentScore: {type: DataTypes.INTEGER, defaultValue:0},
+    usersContentScoreCount: {type: DataTypes.INTEGER, defaultValue:0},
     createdAt: {type: DataTypes.DATE},
 })
 
 const ReviewImage = sequelize.define('review_image', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    imageLink: {type: DataTypes.STRING, allowNull:false},
+    imageLink: {type: DataTypes.TEXT, allowNull:false},
 }, { timestamps: false })
 
 
@@ -42,13 +43,11 @@ Review.belongsTo(User)
 User.hasMany(Rating)
 Rating.belongsTo(User)
 
-Review.hasMany(Rating)
+Review.hasMany(Rating, { as: { singular: 'rating', plural: 'ratings' }})
 Rating.belongsTo(Review)
 
-
-
 Review.hasMany(ReviewImage, { as: { singular: 'image', plural: 'images' }, onDelete: 'CASCADE'})
-ReviewImage.belongsTo(Review, )
+ReviewImage.belongsTo(Review)
 
 
 

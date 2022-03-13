@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import "../../App.css"
 import {
     Button, Col,
@@ -25,6 +25,7 @@ export const CustomNav = () => {
         let path = `/profile`;
         navigate(path);
     }
+
 
     return (
 

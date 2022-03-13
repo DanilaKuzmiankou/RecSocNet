@@ -71,7 +71,7 @@ export const ReviewShortened = (props) => {
                 </div>
 
                 <div onClick={() => {viewReview(props.review)}}>
-                <h1>{props.review?.title}</h1>
+                <h1>{props.review?.id}</h1>
 
                 <div style={{
                     paddingTop: "10px",
@@ -82,7 +82,6 @@ export const ReviewShortened = (props) => {
                     <label className="review_tags">{props.review?.tags}</label>
                     <div className="review_rating_container">
                         <StarRatings
-
                             rating={props.review?.authorScore}
                             starRatedColor="#ffd700"
                             numberOfStars={5}
@@ -104,7 +103,6 @@ export const ReviewShortened = (props) => {
             <div className="review_shortened_feedback_container">
                 <Feedback review={props.review}/>
             </div>
-
             <CustomModal
                 ref={reviewsModal}
             />

@@ -22,6 +22,7 @@ export const UserProfile = () => {
     const [validationMessage, setValidationMessage] = useState('')
     const [errorValidationMessage, setErrorValidationMessage] = useState('')
     const [isOverlayTriggerVisible, setIsOverlayTriggerVisible] = useState(false)
+    const[imageGetAttempt, setImageGetAttempt] = useState(0)
 
     const showOrHideForm = () => {
         setEdit(!edit)
@@ -74,6 +75,11 @@ export const UserProfile = () => {
                         src={browsedUser.profilePictureUrl}
                         height={150}
                         width={150}
+                        onError={({ currentTarget }) => {
+                            currentTarget.onerror = null;
+                            setImageGetAttempt(imageGetAttempt => imageGetAttempt+1)
+                            currentTarget.src = (imageGetAttempt < 10 ? currentUser.profilePictureUrl : process.env.PUBLIC_URL + "/blank_profile_picture.png")
+                        }}
                     />
                 </Col>
                 <Col xs={"auto"} md={"auto"}>

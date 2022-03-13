@@ -1,5 +1,8 @@
 const ApiError = require("../error/ApiError");
-const {Review, User, ReviewImage} = require("../models/Models");
+const {Review, User, ReviewImage, Rating} = require("../models/Models");
+const Sequelize = require("sequelize");
+const op = Sequelize.Op;
+
 
 var reviewController = this;
 
@@ -29,7 +32,7 @@ class ReviewController {
         return res.json([createdReview])
     }
 
-     async addReviewImages (createdReview, images){
+    async addReviewImages(createdReview, images) {
         let imagesDB = []
         let image
         for (const link of images) {
@@ -38,7 +41,7 @@ class ReviewController {
         }
         await createdReview.setImages(imagesDB)
         createdReview = await Review.findOne({
-            where: {id:createdReview.id},
+            where: {id: createdReview.id},
             include: [{
                 model: ReviewImage,
                 as: 'images',
@@ -58,36 +61,58 @@ class ReviewController {
             include: [{
                 model: ReviewImage,
                 as: 'images',
-                    attributes: ['imageLink']
+                attributes: ['imageLink']
             }]
         });
         return res.json(reviews)
     }
 
     async getNewestReviews(req, res, next) {
+        const {limit, offset, userId} = req.body
+        console.log('userID: ', userId)
+        console.log('offset: ', offset)
         let reviews = await Review.findAll({
-            order: [ [ 'createdAt', 'DESC' ]],
-            include: [{
-                model: ReviewImage,
-                as: 'images',
-                attributes: ['imageLink']
-            },
+            order: [['createdAt', 'DESC']],
+            include: [
+                {
+                    model: ReviewImage,
+                    as: 'images',
+                    attributes: ['imageLink']
+                },
                 {
                     model: User,
                     attributes: ['id', 'name']
+                },
+                {
+                    model: Rating,
+                    as: 'ratings',
+                    attributes: ['reviewScore', 'contentScore'],
+                    where: {
+                        userId: {
+                            [op.ne]: null,
+                            [op.eq]: userId
+                        }
+                    },
+                    required:false
                 }
             ],
-            limit: 10
+            limit: limit,
+            offset: offset
         });
         return res.json(reviews)
     }
 
 
-
     async saveReview(req, res, next) {
         const {review} = req.body
         const oldReview = await Review.findOne({where: {id: review.id}})
-        await oldReview.update({ title:review.title, text:review.text, tags:review.tags, category:review.category, authorScore:review.authorScore })
+        await oldReview.update({
+            title: review.title,
+            text: review.text,
+            tags: review.tags,
+            category: review.category,
+            authorScore: review.authorScore
+        })
         let newReview = await Review.findOne({
             where: {id: review.id},
             include: [{
@@ -112,8 +137,7 @@ class ReviewController {
                 where: {id}
             }))
             return res.status(200).json({message: 'Review was successfully deleted!'})
-        }
-        catch (e) {
+        } catch (e) {
             return res.status(500).json({message: 'An error occurred while review deleting: ', e})
         }
     }
@@ -125,8 +149,7 @@ class ReviewController {
                 where: {imageLink: url}
             });
             return res.status(200).json({message: 'Image was successfully deleted!'})
-        }
-        catch (e) {
+        } catch (e) {
             return res.status(500).json({message: 'An error occurred while image deleting: ', e})
         }
     }
@@ -134,8 +157,8 @@ class ReviewController {
     async addImage(req, res, next) {
         const {url, reviewId} = req.body
         await ReviewImage.create({
-            imageLink:url,
-            reviewId:reviewId
+            imageLink: url,
+            reviewId: reviewId
         })
         return res.status(200).json({message: 'Image was successfully added!'})
     }

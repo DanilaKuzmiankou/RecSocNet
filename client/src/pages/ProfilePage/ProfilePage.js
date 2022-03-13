@@ -34,9 +34,9 @@ export const ProfilePage = (props) => {
     const displayFilters = useSelector((state) => state.review.displayFilters)
     const selectedReview = useSelector((state) => state.review.selectedReview)
 
-    const {user, isAuthenticated, getAccessTokenSilently} = useAuth0()
+    const {user, isAuthenticated, getAccessTokenSilently, isLoading} = useAuth0()
 
-    const isLoading = useSelector((state) => state.loading.isLoading)
+    const isLoading1 = useSelector((state) => state.loading.isLoading)
 
 
     const routerParams = useParams();
@@ -45,11 +45,15 @@ export const ProfilePage = (props) => {
     const [filtersBtnText, setFiltersBtnText] = useState('Show filters')
 
     useEffect(async () => {
-        await checkPrivileges()
+        console.log('load', isAuthenticated)
+        console.log('load', isLoading)
 
+        if(!isLoading) {
+            await checkPrivileges()
+        }
         setTimeout(async () => {
             dispatch(setIsLoading(false))
-        }, 500);
+        }, 1000);
 
     }, [isAuthenticated, user])
 
@@ -217,7 +221,7 @@ export const ProfilePage = (props) => {
         <Container fluid className="profile_page_container">
 
             {
-                isLoading ?
+                isLoading1 ?
                     <LoadingComponent/>
                     :
 

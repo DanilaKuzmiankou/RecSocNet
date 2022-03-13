@@ -7,35 +7,40 @@ import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {faThumbsUp as likeLight} from "@fortawesome/free-regular-svg-icons";
 
 import Rating from "react-rating";
+import {changeReviewLikeState} from "../../api/store/RatingStore";
+import {useSelector} from "react-redux";
 
-export const Like = (props) => {
+export const Like = ({updateReview, review}) => {
 
     fontawesome.library.add(faHeart, heartLight, faThumbsUp, likeLight);
-    const[fullSymbol, setFullSymbol] = useState("black")
-    const[likes, setLikes] = useState(false)
+
+    const currentUser = useSelector((state) => state.user.currentUser)
+    const[like, setLike] = useState(false)
 
     useEffect( () =>{
         let isMounted = true
         if (isMounted){
-            setLikes(props?.likes)
+            if(review.ratings && review.ratings[0]?.reviewScore!==undefined) {
+                setLike(review.ratings[0]?.reviewScore)
+            }
         }
         return () => { isMounted = false }
-    }, [props])
+    }, [review])
 
 
 
-    const onLikeClick = () =>{
-        setLikes(!likes)
-        setFullSymbol("red")
-    }
-
-    const onLikeHover = (value) =>{
-        if(value)
+    const onLikeClick = async (value) => {
+        let result = await changeReviewLikeState(currentUser.authId, review.id)
+        if(result.status===200)
         {
-            setFullSymbol("black")
+            let newReview = Object.assign({}, review)
+            newReview.usersReviewScore = result.data.usersReviewScore
+            setLike(result.data.liked)
+            updateReview(newReview)
         }
-        else {
-            setFullSymbol("red")
+        else
+        {
+            alert(result.message)
         }
     }
 
@@ -44,9 +49,8 @@ export const Like = (props) => {
                     <Rating
                         start={0}
                         stop={1}
-                        initialRating={likes}
+                        initialRating={like}
                         onClick={onLikeClick}
-                        onHover={onLikeHover}
                         emptySymbol={
                             <FontAwesomeIcon icon="fa-regular fa-thumbs-up"
                                              color={"black"}
@@ -54,11 +58,11 @@ export const Like = (props) => {
                             />
                         }
                         fullSymbol={
-                        <FontAwesomeIcon icon="fa-solid fa-thumbs-up"
-                                         size="2x"
-                                         color={fullSymbol}
+                            <FontAwesomeIcon icon="fa-solid fa-thumbs-up"
+                                             size="2x"
+                                             color={'red'}
                             />
-                    }
+                        }
                     />
                 </div>
             );
