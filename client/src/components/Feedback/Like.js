@@ -1,69 +1,75 @@
 import {useEffect, useState} from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import fontawesome from '@fortawesome/fontawesome'
-import {faHeart} from "@fortawesome/free-solid-svg-icons";
-import {faHeart as heartLight} from "@fortawesome/free-regular-svg-icons";
-import {faThumbsUp} from "@fortawesome/free-solid-svg-icons";
-import {faThumbsUp as likeLight} from "@fortawesome/free-regular-svg-icons";
-
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faThumbsUp as faThumbsUpSolid} from "@fortawesome/free-solid-svg-icons";
+import {faThumbsUp} from "@fortawesome/free-regular-svg-icons";
 import Rating from "react-rating";
 import {changeReviewLikeState} from "../../api/store/RatingStore";
 import {useSelector} from "react-redux";
+import {useAuth0} from "@auth0/auth0-react";
 
 export const Like = ({updateReview, review}) => {
 
-    fontawesome.library.add(faHeart, heartLight, faThumbsUp, likeLight);
 
     const currentUser = useSelector((state) => state.user.currentUser)
-    const[like, setLike] = useState(false)
+    const [like, setLike] = useState(false)
 
-    useEffect( () =>{
+    const {isAuthenticated} = useAuth0()
+
+    useEffect(() => {
         let isMounted = true
-        if (isMounted){
-            if(review.ratings && review.ratings[0]?.reviewScore!==undefined) {
+        if (isMounted) {
+            if (review.ratings && review.ratings[0]?.reviewScore !== undefined) {
                 setLike(review.ratings[0]?.reviewScore)
             }
         }
-        return () => { isMounted = false }
+        return () => {
+            isMounted = false
+        }
     }, [review])
 
 
-
-    const onLikeClick = async (value) => {
-        let result = await changeReviewLikeState(currentUser.authId, review.id)
-        if(result.status===200)
-        {
-            let newReview = Object.assign({}, review)
-            newReview.usersReviewScore = result.data.usersReviewScore
-            setLike(result.data.liked)
-            updateReview(newReview)
-        }
-        else
-        {
-            alert(result.message)
+    const onLikeClick = async () => {
+        if (isAuthenticated) {
+            let result = await changeReviewLikeState(currentUser.authId, review.id)
+            if (result.status === 200) {
+                let newReview = Object.assign({}, review)
+                newReview.usersReviewScore = result.data.usersReviewScore
+                setLike(result.data.liked)
+                updateReview(newReview)
+            } else {
+                alert(result.message)
+            }
+        } else {
+            /* using this construction we know, that react will anyway update state,
+                even if prev value is equal to next value */
+            setLike(prevState => {
+                prevState = null
+                return {...prevState};
+            });
+            alert('Log in first!')
         }
     }
 
-            return (
-                <div>
-                    <Rating
-                        start={0}
-                        stop={1}
-                        initialRating={like}
-                        onClick={onLikeClick}
-                        emptySymbol={
-                            <FontAwesomeIcon icon="fa-regular fa-thumbs-up"
-                                             color={"black"}
-                                             size="2x"
-                            />
-                        }
-                        fullSymbol={
-                            <FontAwesomeIcon icon="fa-solid fa-thumbs-up"
-                                             size="2x"
-                                             color={'red'}
-                            />
-                        }
+    return (
+        <div>
+            <Rating
+                start={0}
+                stop={1}
+                initialRating={like}
+                onClick={onLikeClick}
+                emptySymbol={
+                    <FontAwesomeIcon icon={faThumbsUp}
+                                     color={"black"}
+                                     size="2x"
                     />
-                </div>
-            );
+                }
+                fullSymbol={
+                    <FontAwesomeIcon icon={faThumbsUpSolid}
+                                     size="2x"
+                                     color={'red'}
+                    />
+                }
+            />
+        </div>
+    );
 }

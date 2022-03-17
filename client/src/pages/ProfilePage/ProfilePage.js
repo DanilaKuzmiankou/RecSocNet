@@ -45,9 +45,6 @@ export const ProfilePage = (props) => {
     const [filtersBtnText, setFiltersBtnText] = useState('Show filters')
 
     useEffect(async () => {
-        console.log('load', isAuthenticated)
-        console.log('load', isLoading)
-
         if(!isLoading) {
             await checkPrivileges()
         }

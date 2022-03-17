@@ -58,14 +58,3 @@ export function rawPostRequest(url: string, body: string) {
         })
     return promise.then((response) => response);
 }
-
-export function postRequestToCloudinary(url: string, body: string) {
-    const promise = axios
-        .post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD}${url}`, body, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-    return promise.then((response) => response.data);
-}
-

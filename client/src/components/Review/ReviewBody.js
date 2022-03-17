@@ -3,14 +3,10 @@ import "../../App.css"
 import {Col, Container, Image, Row} from "react-bootstrap";
 import StarRatings from "react-star-ratings/build/star-ratings";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import fontawesome from '@fortawesome/fontawesome'
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import ReactQuill from "react-quill";
 
 export const ReviewBody = (props) => {
-
-    fontawesome.library.add(faArrowLeft);
-
 
     const closeModal = () => {
         props.closeModal()
@@ -19,7 +15,7 @@ export const ReviewBody = (props) => {
     return (
         <div>
             <FontAwesomeIcon size="lg"
-                             icon="fa-solid fa-arrow-left"
+                             icon={faArrowLeft}
                              onClick={closeModal}
             />
         <Container fluid>

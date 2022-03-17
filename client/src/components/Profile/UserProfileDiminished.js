@@ -5,6 +5,7 @@ import {useAuth0} from "@auth0/auth0-react";
 import {getUserByAuthId, registerNewUser} from "../../api/store/UserStore";
 import {useDispatch, useSelector} from "react-redux";
 import {setBrowsedUser, setCurrentUser} from "../../store/reducers/UserSlice";
+import {setIsLoading} from "../../store/reducers/LoadingSlice";
 
 export const UserProfileDiminished = () =>  {
 
@@ -38,9 +39,11 @@ export const UserProfileDiminished = () =>  {
                         width={50}
                         roundedCircle={true}
                         onError={({ currentTarget }) => {
-                            currentTarget.onerror = null;
-                            setImageGetAttempt(imageGetAttempt => imageGetAttempt+1)
-                            currentTarget.src = (imageGetAttempt < 10 ? currentUser.profilePictureUrl : process.env.PUBLIC_URL + "/blank_profile_picture.png")
+                            setTimeout(async () => {
+                                currentTarget.onerror = null;
+                                setImageGetAttempt(imageGetAttempt => imageGetAttempt+1)
+                                currentTarget.src = (imageGetAttempt < 10 ? currentUser.profilePictureUrl : process.env.PUBLIC_URL + "/blank_profile_picture.png")
+                            }, 50);
                         }}
                     />
             </div>

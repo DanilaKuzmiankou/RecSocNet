@@ -1,13 +1,10 @@
 import {useEffect, useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import fontawesome from '@fortawesome/fontawesome'
 import {faComment} from "@fortawesome/free-regular-svg-icons";
-import {faComment as solidComment} from "@fortawesome/free-solid-svg-icons";
+import {faComment as faCommentSolid} from "@fortawesome/free-solid-svg-icons";
 import Rating from "react-rating";
 
 export const Comments = (props) => {
-
-    fontawesome.library.add(faComment, solidComment);
 
     const[comments, setComments] = useState(false)
 
@@ -34,13 +31,13 @@ export const Comments = (props) => {
             initialRating={comments}
             onClick={onCommentsClick}
             emptySymbol={
-                <FontAwesomeIcon icon="fa-regular fa-comment"
+                <FontAwesomeIcon icon={faComment}
                                  color={"black"}
                                  size="2x"
                 />
             }
             fullSymbol={
-                <FontAwesomeIcon icon="fa-solid fa-comment"
+                <FontAwesomeIcon icon={faCommentSolid}
                                  size="2x"
                                  color={"black"}
                 />

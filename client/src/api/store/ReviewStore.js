@@ -1,4 +1,4 @@
-import {getRequest, postRequest, postRequestToCloudinary} from "../index.network";
+import {getRequest, postRequest} from "../index.network";
 import {changeDateToUserTimezone, generateRandomString} from "../../utils/Utils";
 import firebase from "../../utils/Firebase";
 import {forEach} from "react-bootstrap/ElementChildren";
