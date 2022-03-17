@@ -111,9 +111,11 @@ export const ReviewShortened = (props) => {
             <div className="review_shortened_feedback_container">
                 <Feedback review={props.review}/>
             </div>
+
             <CustomModal
                 ref={reviewsModal}
             />
+
         </div>
     )
 }

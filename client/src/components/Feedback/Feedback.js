@@ -20,7 +20,7 @@ export const Feedback = (props) => {
 
         let isMounted = true
         if (isMounted) {
-            let review = props.review
+            let review = Object.assign({}, props.review)
             review.usersContentScore = +review.usersContentScore.toFixed(2)
             setReview(review)
             if (review.ratings[0] && review.ratings[0].contentScore && review.ratings[0].contentScore !== undefined) {
