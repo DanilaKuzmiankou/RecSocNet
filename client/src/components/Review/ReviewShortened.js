@@ -56,9 +56,9 @@ export const ReviewShortened = (props) => {
         <div>
             <div
                 style={{
-                padding: "30px",
-                backgroundColor: "white"
-            }}
+                    padding: "30px",
+                    backgroundColor: "white"
+                }}
             >
                 <div className="form-group form-inline">
                     <label style={{fontSize: "13px", fontStyle: "italic"}}>by </label>
@@ -70,34 +70,42 @@ export const ReviewShortened = (props) => {
                     </a>
                 </div>
 
-                <div onClick={() => {viewReview(props.review)}}>
-                <h1>{props.review?.id}</h1>
+                <div onClick={() => {
+                    viewReview(props.review)
+                }}>
+                    <h1>{props.review?.id}</h1>
 
-                <div style={{
-                    paddingTop: "10px",
-                    paddingBottom: "20px",
-                }}
-                >
-                    <label className="review_category">{props.review?.category}</label>
-                    <label className="review_tags">{props.review?.tags}</label>
-                    <div className="review_rating_container">
-                        <StarRatings
-                            rating={props.review?.authorScore}
-                            starRatedColor="#ffd700"
-                            numberOfStars={5}
-                            starDimension="30px"
-                            name='rating'
+                    <Container fluid style={{
+                        paddingTop: "10px",
+                        paddingBottom: "20px",
+                    }}
+                    >
+                        <Row>
+                            <Col md={"auto"}>
+                                <label className="review_category">{props.review?.category}</label>
+                            </Col>
+                            <Col className="tags_container">
+                                <label className="review_tags">{props.review?.tags}</label>
+                            </Col>
+                            <Col md={"auto"} style={{whiteSpace: "nowrap"}} >
+                                    <StarRatings
+                                        rating={props.review?.authorScore}
+                                        starRatedColor="#ffd700"
+                                        numberOfStars={5}
+                                        starDimension="2rem"
+                                        name='rating'
+                                    />
+                            </Col>
+                        </Row>
+                    </Container>
+
+                    <div>
+                        <ReactQuill
+                            theme={null}
+                            readOnly={true}
+                            value={editorText}
                         />
                     </div>
-                </div>
-
-                <div>
-                    <ReactQuill
-                        theme={null}
-                        readOnly={true}
-                        value={editorText}
-                    />
-                </div>
                 </div>
             </div>
             <div className="review_shortened_feedback_container">
