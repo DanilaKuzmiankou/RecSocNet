@@ -67,40 +67,51 @@ export const SearchPage = () => {
                     <LoadingComponent/>
                     :
                     <div>
-                        <h1
-                            style={{marginLeft:"8rem", marginTop:"1rem", paddingBottom:"1rem"}}
-                        >
-                            Search result: </h1>
-                    <Container className="cont">
-                        <Row>
-                            <Col> </Col>
-                            <Col sm={8}>
-                                <InfiniteScroll
-                                    key={infiniteScrollKey}
-                                    dataLength={searchedReviews.length}
-                                    next={searchReviews}
-                                    hasMore={hasMoreReviews}
-                                    loader={<LoadingComponent/>}
-                                    endMessage={
-                                            <h3 style={{textAlign: "center"}}>There is no more suitable reviews...</h3>
-                                    }
+                        {searchedReviews && searchedReviews.length>0 ?
+                            <div>
+                                <h1
+                                    style={{marginLeft: "8rem", marginTop: "1rem", paddingBottom: "1rem"}}
                                 >
-                                    {searchedReviews.map((review, id) => (
-                                        <div
-                                            key={id}
-                                            className="review_shortened_container">
-                                            <ReviewShortened
-                                                key={id}
-                                                currentReview={review}
-                                                reviewId={id}
-                                            />
-                                        </div>
-                                    ))}
-                                </InfiniteScroll>
-                            </Col>
-                            <Col> </Col>
-                        </Row>
-                    </Container>
+                                    Search result: </h1>
+                                <Container className="cont">
+                                    <Row>
+                                        <Col> </Col>
+                                        <Col sm={8}>
+                                            <InfiniteScroll
+                                                key={infiniteScrollKey}
+                                                dataLength={searchedReviews.length}
+                                                next={searchReviews}
+                                                hasMore={hasMoreReviews}
+                                                loader={<LoadingComponent/>}
+                                                endMessage={
+                                                    <h3 style={{textAlign: "center"}}>There is no more suitable
+                                                        reviews...</h3>
+                                                }
+                                            >
+                                                {searchedReviews.map((review, id) => (
+                                                    <div
+                                                        key={id}
+                                                        className="review_shortened_container">
+                                                        <ReviewShortened
+                                                            key={id}
+                                                            currentReview={review}
+                                                            reviewId={id}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </InfiniteScroll>
+                                        </Col>
+                                        <Col> </Col>
+                                    </Row>
+                                </Container>
+                            </div>
+                            :
+                            <div className="center_without_content">
+                            <h1>Sorry, we have not found anything!</h1>
+                            </div>
+                        }
+
+
                     </div>
             }
         </div>
