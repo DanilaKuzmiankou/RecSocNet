@@ -49,11 +49,9 @@ export const CustomNav = () => {
                         style={{ maxHeight: '100px', gap: "1rem"}}>
                     </Nav>
 
-                    <div>
+                    <div >
                         <Container >
-
                             <Row >
-
                                 <Col style={{display:"flex", alignItems:"center"}} lg={"auto"} sm={12} className="nav_elements_margin ">
                                     <Form className="d-flex"
                                           onSubmit = {search}
@@ -69,7 +67,7 @@ export const CustomNav = () => {
                                         <Button style={{fontSize:'25px'}} type="submit" variant="outline-success">Search</Button>
                                     </Form>
                                 </Col>
-                                <Col lg={"auto"} sm={12} className="nav_elements_margin" >
+                                <Col lg={"auto"} sm={12} className="nav_elements_margin nav_elements_margin_right" >
                                     {isAuthenticated ?
                                         <UserProfileDiminished/>
                                         :

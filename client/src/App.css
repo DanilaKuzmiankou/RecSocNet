@@ -169,6 +169,11 @@ body {
         margin-bottom: 15px;
     }
 }
+@media screen and (min-width: 1020px) {
+    .nav_elements_margin_right{
+        margin-right: 120px;
+    }
+}
 
 
 .profile_username_field {

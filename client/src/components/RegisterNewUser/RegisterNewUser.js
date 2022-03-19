@@ -1,12 +1,12 @@
 import {useAuth0} from "@auth0/auth0-react";
 import {getUserByAuthId, registerNewUser} from "../../api/store/UserStore";
-import {setCurrentUser} from "../../store/reducers/UserSlice";
+import {setCurrentUser, setIsCurrentUserAdmin} from "../../store/reducers/UserSlice";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 export const RegisterNewUser = () => {
     const {user, getAccessTokenSilently, isAuthenticated} = useAuth0()
-    const {currentUser, isCurrentUserAdmin} = useSelector((state) => state.user)
+    const {currentUser} = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
 
@@ -18,6 +18,9 @@ export const RegisterNewUser = () => {
             let currentUser = await getUserByAuthId(token, user.sub)
             console.log('browsed: ', currentUser)
             dispatch(setCurrentUser(currentUser))
+            if(currentUser.role==="admin"){
+                dispatch(setIsCurrentUserAdmin(true))
+            }
         }
     }, [isAuthenticated])
     return null
