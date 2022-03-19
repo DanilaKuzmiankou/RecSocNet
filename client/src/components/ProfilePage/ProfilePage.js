@@ -44,28 +44,24 @@ export const ProfilePage = (props) => {
     const [filtersBtnText, setFiltersBtnText] = useState('Show filters')
 
     useEffect(async () => {
-        if(!isLoading) {
-            await checkPrivileges()
-        }
+        await checkPrivileges()
         setTimeout(async () => {
             dispatch(setIsLoading(false))
         }, 1000);
 
-    }, [isAuthenticated, user])
+    }, [isAuthenticated, currentUser])
 
 
     const checkPrivileges = async () => {
-        if (!isAuthenticated) {
-            if (!routerParams.id) {
-                console.log('1')
-                redirectToAuthPage()
-            } else {
-                console.log('2')
-                await setCurrentUserAsGuest()
-            }
-        } else {
+        console.log('1')
+        if (isAuthenticated) {
             console.log('3')
             await setCurrentUserAsAuthUser()
+        } else {
+            console.log('2')
+            if(routerParams.id) {
+                await setCurrentUserAsGuest()
+            }
         }
     }
 
@@ -78,19 +74,13 @@ export const ProfilePage = (props) => {
         dispatch(setReviews(reviews))
     }
 
-    const redirectToAuthPage = () => {
-        console.log('redirecting...')
-        /*let path = `/`;
-                navigate(path);*/
-        //loginWithRedirect()
-    }
 
-    const authUserInOtherUserProfile = async (mainUserSearched) => {
+    const authUserInOtherUserProfile = async () => {
         let userBrowsedProfile = await getUserById(routerParams.id)
         dispatch(setBrowsedUser(userBrowsedProfile))
         let reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id)
         dispatch(setReviews(reviews))
-        if (userBrowsedProfile.authId === mainUserSearched.authId) {
+        if (userBrowsedProfile.authId === currentUser.authId) {
             console.log('owner!')
             dispatch(setIsCurrentUserOwner(true))
         } else {
@@ -98,24 +88,20 @@ export const ProfilePage = (props) => {
         }
     }
 
-    const authUserInOwnProfile = async (mainUserSearched) => {
-        let newReviews = await getUserReviews(mainUserSearched.authId, mainUserSearched.id)
+    const authUserInOwnProfile = async () => {
+        let newReviews = await getUserReviews(currentUser.authId, currentUser.id)
         dispatch(setReviews(newReviews))
-        dispatch(setBrowsedUser(mainUserSearched))
+        dispatch(setBrowsedUser(currentUser))
         dispatch(setIsCurrentUserOwner(true))
     }
 
     const setCurrentUserAsAuthUser = async () => {
-        let token = await getAccessTokenSilently()
-        await registerNewUser(token, user.sub, user.name, user.picture)
-        let mainUserSearched = await getUserByAuthId(token, user.sub)
-        dispatch(setCurrentUser(mainUserSearched))
         if (routerParams.id) {
             console.log('4')
-            await authUserInOtherUserProfile(mainUserSearched)
+            await authUserInOtherUserProfile()
         } else {
             console.log('5')
-            await authUserInOwnProfile(mainUserSearched)
+            await authUserInOwnProfile()
         }
     }
 
@@ -259,7 +245,7 @@ export const ProfilePage = (props) => {
                                     :
 
                                     <div className="center_profile_page text-center">
-                                {isCurrentUserAdmin ?
+                                {isCurrentUserAdmin || isCurrentUserOwner ?
                                     <div className="no_wrap_on_normal_screen">
                                     <h2>Ooooops...It seems you have not reviews, click the
                                     button to create the first!</h2>

@@ -8,6 +8,7 @@ import {faEdit} from "@fortawesome/free-solid-svg-icons";
 import {faEdit as editLight} from "@fortawesome/free-regular-svg-icons";
 import {changeUserName} from "../../api/store/UserStore";
 import {setBrowsedUser, setCurrentUser} from "../../store/reducers/UserSlice";
+import {setIsLoading} from "../../store/reducers/LoadingSlice";
 
 export const UserProfile = () => {
 
@@ -49,6 +50,9 @@ export const UserProfile = () => {
                 dispatch(setCurrentUser(newCurrentUser))
             }
             setValidationMessage(answer.data.message)
+            setTimeout(async () => {
+                setDisplayForm('none')
+            }, 2000);
         }
         else {
             setErrorValidationMessage(answer.data.message)
@@ -92,7 +96,7 @@ export const UserProfile = () => {
                                                         overlay={<Tooltip id="tooltip-disabled">Change user
                                                             name</Tooltip>}>
                                             <div className="profile_username_edit_container">
-                                                <h4 className="no_wrap"> User name: {browsedUser.name} </h4>
+                                                <h4 className=""> User name: {browsedUser.name} </h4>
 
                                                 <Rating
                                                     className="profile_username_edit_icon"
@@ -117,9 +121,9 @@ export const UserProfile = () => {
                                             </div>
                                         </OverlayTrigger>
                                         :
-                                        <h4 className="no_wrap"> User name: {browsedUser.name} </h4>
+                                        <h4 className=""> User name: {browsedUser.name} </h4>
                                     }
-                                    <h4 className="no_wrap"> User likes: {browsedUser.likes} </h4>
+                                    <h4 className=""> User likes: {browsedUser.likes} </h4>
                                 </Col>
                                 <Col md={6} sm={12}>
                                     <Form

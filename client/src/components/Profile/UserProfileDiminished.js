@@ -9,24 +9,10 @@ import {setIsLoading} from "../../store/reducers/LoadingSlice";
 
 export const UserProfileDiminished = () =>  {
 
-    const {user, getAccessTokenSilently, logout, isAuthenticated} = useAuth0()
-    const dispatch = useDispatch()
+    const {logout} = useAuth0()
     const {currentUser, isCurrentUserAdmin} = useSelector((state) => state.user)
 
     const[imageGetAttempt, setImageGetAttempt] = useState(0)
-
-    useEffect(async () => {
-
-        if(isAuthenticated && Object.keys(currentUser).length === 0) {
-            console.log("updating user data...")
-            const token = await getAccessTokenSilently()
-            await registerNewUser(token, user.sub, user.name, user.picture)
-            let currentUser = await getUserByAuthId(token, user.sub)
-            console.log('browsed: ', currentUser)
-            dispatch(setCurrentUser(currentUser))
-        }
-        console.log(currentUser?.profilePictureUrl)
-    }, [isAuthenticated])
 
 
     return (
