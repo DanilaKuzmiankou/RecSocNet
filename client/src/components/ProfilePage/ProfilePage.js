@@ -7,7 +7,7 @@ import {
     CustomModal,
     LoadingComponent, LogInButton,
     UserProfile
-} from "../../components/index.components";
+} from "../index.components";
 import {getUserByAuthId, getUserById, registerNewUser} from "../../api/store/UserStore";
 import {useParams} from "react-router-dom";
 import {

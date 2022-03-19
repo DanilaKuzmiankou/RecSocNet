@@ -5,6 +5,7 @@ const reviewController = require('../controllers/ReviewController')
 
 router.post('/getAuthorReviews', reviewController.getAllAuthorReviews)
 router.post('/newestReviews', reviewController.getNewestReviews)
+router.post('/findReviews', reviewController.findReviews)
 router.post('/edit', reviewController.saveReview)
 router.post('/create', reviewController.addNewReview)
 router.post('/delete', reviewController.deleteReview)

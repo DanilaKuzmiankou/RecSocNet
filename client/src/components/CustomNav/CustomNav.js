@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import "../../App.css"
 import {
     Button, Col,
@@ -16,16 +16,20 @@ import {useNavigate} from "react-router-dom";
 import {AuthButton, LogInButton} from "../index.components"
 import {useAuth0} from "@auth0/auth0-react";
 import {UserProfileDiminished} from "../Profile/UserProfileDiminished";
+import {findReviews} from "../../api/store/ReviewStore";
 
 export const CustomNav = () => {
 
     const navigate = useNavigate()
     const {isAuthenticated} = useAuth0()
-    const routeChange = () => {
-        let path = `/profile`;
-        navigate(path);
-    }
+    const [searchData, setSearchData] = useState('')
 
+    const search = async (event) => {
+        event.preventDefault();
+        navigate('/search', {
+            state: searchData
+        })
+    }
 
     return (
 
@@ -50,14 +54,17 @@ export const CustomNav = () => {
                         <Container >
                             <Row >
                                 <Col lg={"auto"} sm={12} className="nav_elements_margin">
-                                    <Form className="d-flex">
+                                    <Form className="d-flex"
+                                          onSubmit = {search}
+                                    >
                                         <FormControl
                                             type="search"
                                             placeholder="Search reviews"
                                             className="me-2"
                                             aria-label="Search"
+                                            onChange={event => setSearchData(event.target.value)}
                                         />
-                                        <Button variant="outline-success">Search</Button>
+                                        <Button type="submit" variant="outline-success">Search</Button>
                                     </Form>
                                 </Col>
                                 <Col lg={"auto"} sm={12} className="nav_elements_margin" >

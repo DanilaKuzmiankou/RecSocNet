@@ -102,6 +102,24 @@ class ReviewController {
         return res.json(reviews)
     }
 
+    async findReviews(req, res, next){
+        let {searchedString} = req.body
+        searchedString = "'"+searchedString+"'";
+        console.log('search: ', searchedString)
+        const queryString =
+       `CREATE INDEX IF NOT EXISTS idx_fts_articles ON reviews
+        USING gin(make_tsvector(title, text));
+        SELECT * FROM reviews WHERE
+        make_tsvector(title, text) @@ to_tsquery(${searchedString})`;
+        try {
+            let data = await Review.sequelize.query(queryString);
+            console.log('success: ', data)
+            return res.json(data[0])
+        } catch (error) {
+            console.log('fts error: ', error)
+        }
+    }
+
 
     async saveReview(req, res, next) {
         const {review} = req.body

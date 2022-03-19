@@ -6,18 +6,22 @@ import {Feedback} from "../Feedback/Feedback";
 import {setEditedReview} from "../../store/reducers/ReviewSlice";
 import {setModalParams} from "../../store/reducers/ModalSlice";
 import {CustomModal} from "../CustomModal/CustomModal";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 export const ReviewShortened = (props) => {
 
     const dispatch = useDispatch()
+    const newestReviews = useSelector((state) => state.review.newestReviews)
+
     const [editorText, setEditorText] = useState('');
+    const [currentReview, setCurrentReview] = useState('');
     const reviewsModal = useRef();
 
     useEffect(async () => {
         let isMounted = true;
         if (isMounted) {
-            let shortenedText = formatText(props.review?.text)
+            setCurrentReview(newestReviews[props.reviewId])
+            let shortenedText = formatText(props.currentReview?.text)
             //let shortenedText = props.review?.text
             setEditorText(shortenedText)
         }
@@ -64,16 +68,16 @@ export const ReviewShortened = (props) => {
                     <label style={{fontSize: "13px", fontStyle: "italic"}}>by </label>
                     <a
                         className="review_shortened_profile_url"
-                        href={'/profile/' + props.review.user?.id}
+                        href={'/profile/' + currentReview.user?.id}
                     >
-                        {props.review.user?.name}
+                        {currentReview.user?.name}
                     </a>
                 </div>
 
                 <div onClick={() => {
-                    viewReview(props.review)
+                    viewReview(currentReview)
                 }}>
-                    <h1>{props.review?.id}</h1>
+                    <h1>{currentReview?.id}</h1>
 
                     <Container fluid style={{
                         paddingTop: "10px",
@@ -82,14 +86,14 @@ export const ReviewShortened = (props) => {
                     >
                         <Row>
                             <Col md={"auto"}>
-                                <label className="review_category">{props.review?.category}</label>
+                                <label className="review_category">{currentReview?.category}</label>
                             </Col>
                             <Col className="tags_container">
-                                <label className="review_tags">{props.review?.tags}</label>
+                                <label className="review_tags">{currentReview?.tags}</label>
                             </Col>
                             <Col md={"auto"} style={{whiteSpace: "nowrap"}} >
                                     <StarRatings
-                                        rating={props.review?.authorScore}
+                                        rating={currentReview?.authorScore}
                                         starRatedColor="#ffd700"
                                         numberOfStars={5}
                                         starDimension="2rem"
@@ -109,7 +113,7 @@ export const ReviewShortened = (props) => {
                 </div>
             </div>
             <div className="review_shortened_feedback_container">
-                <Feedback review={props.review}/>
+                <Feedback review={currentReview}/>
             </div>
 
             <CustomModal

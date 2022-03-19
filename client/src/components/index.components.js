@@ -1,3 +1,7 @@
+export {ProfilePage} from "./ProfilePage/ProfilePage"
+export {RecommendationsPage} from "./RecommendationsPage/RecommendationsPage"
+export {NotFoundPage} from "./NotFoundPage/NotFoundPage"
+export {SearchPage} from "./SearchPage/SearchPage"
 export {CustomNav} from "./CustomNav/CustomNav"
 export {CustomModal} from "./CustomModal/CustomModal"
 export {UserProfile} from "./Profile/UserProfile"

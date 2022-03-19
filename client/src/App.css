@@ -172,6 +172,14 @@ html {
     background-repeat: no-repeat
 }
 
+.not_found_page_container {
+    background-image: url("../public/error_404_background.jpg");
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat
+}
+
 .profile_page_container {
     background-image: url("../public/profile_page_background.jpg");
     min-height: 100vh;

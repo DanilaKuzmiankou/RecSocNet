@@ -1,4 +1,4 @@
-import {getRequest, postRequest} from "../index.network";
+import {getRequest, postRequest, rawPostRequest} from "../index.network";
 import {changeDateToUserTimezone, generateRandomString} from "../../utils/Utils";
 import firebase from "../../utils/Firebase";
 import {forEach} from "react-bootstrap/ElementChildren";
@@ -8,10 +8,14 @@ export async function getUserReviews(authId, userId) {
     return await postRequest('/api/review/getAuthorReviews', body)
 }
 
-
 export async function getNewestReviews(limit, offset, userId) {
     let body = JSON.stringify({limit, offset, userId})
     return await postRequest('/api/review/newestReviews', body)
+}
+
+export async function findReviews(searchedString) {
+    let body = JSON.stringify({searchedString})
+    return await postRequest('/api/review/findReviews', body)
 }
 
 export async function saveEditedReview(review) {

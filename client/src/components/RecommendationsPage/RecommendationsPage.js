@@ -2,9 +2,10 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import React, {useEffect, useLayoutEffect, useState} from "react";
 import {setIsLoading} from "../../store/reducers/LoadingSlice";
 import {useDispatch, useSelector} from "react-redux";
-import {LoadingComponent, ReviewShortened} from "../../components/index.components";
+import {LoadingComponent, ReviewShortened} from "../index.components";
 import {getNewestReviews} from "../../api/store/ReviewStore";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {setNewestReviews1} from "../../store/reducers/ReviewSlice";
 
 
 export const RecommendationsPage = () => {
@@ -32,12 +33,7 @@ export const RecommendationsPage = () => {
     }, [])
 
     useEffect(async () => {
-        let lenRev = newestReviews.length
-        if(lenRev>0 && Object.keys(currentUser).length !== 0){
-            const newestReviewsFromApi = await getNewestReviews(lenRev,0, currentUser.id)
-            setNewestReviews(newestReviewsFromApi)
-            setInfiniteScrollKey(Math.random())
-        }
+        await refreshInfiniteScroll()
     }, [currentUser])
 
     useLayoutEffect(() => {
@@ -46,12 +42,23 @@ export const RecommendationsPage = () => {
         }
     }, [])
 
+    const refreshInfiniteScroll = async () => {
+        let lenRev = newestReviews.length
+        if (lenRev > 0 && Object.keys(currentUser).length !== 0) {
+            const newestReviewsFromApi = await getNewestReviews(lenRev, 0, currentUser.id)
+            setNewestReviews(newestReviewsFromApi)
+            dispatch(setNewestReviews1(newestReviewsFromApi))
+            setInfiniteScrollKey(Math.random())
+        }
+    }
+
 
     const fetchNewestReviews = async () => {
         const newestReviewsFromApi = await getNewestReviews(10, rowSelectionRate * 10, currentUser.id)
         if (newestReviewsFromApi.length !== 0) {
             let resultNewestReviews = [...newestReviews, ...newestReviewsFromApi]
             setNewestReviews(resultNewestReviews)
+            dispatch(setNewestReviews1(resultNewestReviews))
             setRowSelectionRate(rowSelectionRate => rowSelectionRate + 1)
         } else {
             setHasMoreReviews(false)
@@ -87,7 +94,8 @@ export const RecommendationsPage = () => {
                                             className="review_shortened_container">
                                             <ReviewShortened
                                                 key={id}
-                                                review={review}
+                                                currentReview={review}
+                                                reviewId={id}
                                             />
                                         </div>
                                     ))}

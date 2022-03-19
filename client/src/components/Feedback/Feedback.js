@@ -4,12 +4,16 @@ import React, {useEffect, useState} from "react";
 import {Like} from "./Like";
 import {Comments} from "./Comments";
 import {changeReviewUsersContentScore} from "../../api/store/RatingStore";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import "../../App.css"
 import {useAuth0} from "@auth0/auth0-react";
+import {setModalParams} from "../../store/reducers/ModalSlice";
+import {setNewestReview} from "../../store/reducers/ReviewSlice";
 
 export const Feedback = (props) => {
 
+
+    const dispatch = useDispatch()
     const currentUser = useSelector((state) => state.user.currentUser)
     const {isAuthenticated} = useAuth0()
 
@@ -19,7 +23,7 @@ export const Feedback = (props) => {
     useEffect(() => {
 
         let isMounted = true
-        if (isMounted) {
+        if (isMounted && props.review) {
             let review = Object.assign({}, props.review)
             review.usersContentScore = +review.usersContentScore.toFixed(2)
             setReview(review)
@@ -32,14 +36,14 @@ export const Feedback = (props) => {
         }
     }, [props])
 
-    const changeRating = async (rating) => {
+    const changeRating = async (newRating) => {
         if (isAuthenticated) {
-            let response = await changeReviewUsersContentScore(currentUser.authId, props.review.id, rating)
+            let response = await changeReviewUsersContentScore(currentUser.authId, props.review.id, newRating)
             let reviewUsersContentScore = response.data.usersContentScore
             reviewUsersContentScore = +reviewUsersContentScore.toFixed(2)
             switch (response.status) {
                 case 200:
-                    setRating(rating)
+                    setRating(newRating)
                     break;
                 case 202:
                     setRating(0)
@@ -48,14 +52,37 @@ export const Feedback = (props) => {
                     alert("Error while changing rating! Reload Page please!")
                     break;
             }
-            setReview(prevState => (
-                {
-                    ...prevState,
-                    usersContentScore: reviewUsersContentScore
-                }))
+           saveEditedReview(reviewUsersContentScore, newRating)
         } else {
             alert('Log in first!')
         }
+    }
+
+    const saveEditedReview = (reviewUsersContentScore, newRating) =>{
+        setReview(prevState => (
+            {
+                ...prevState,
+                usersContentScore: reviewUsersContentScore
+            }))
+        let ratings = props.review.ratings
+        let newReview
+        if(ratings && ratings.length > 0) {
+            console.log('exist: ', ratings)
+        }
+        else {
+            let editedReviewFields = {
+                ratings: [
+                    {
+                        contentScore: newRating
+                    }
+                ]
+            }
+            newReview = Object.assign({}, props.review, editedReviewFields)
+            console.log('fields: ', newReview)
+        }
+        dispatch(setNewestReview({
+            editedReview: newReview
+        }))
     }
 
     return (

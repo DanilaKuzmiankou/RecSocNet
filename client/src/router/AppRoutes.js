@@ -1,5 +1,5 @@
 import {Route, Routes} from 'react-router-dom'
-import {RecommendationsPage, ProfilePage} from '../pages/index.pages'
+import {RecommendationsPage, ProfilePage, NotFoundPage, SearchPage} from '../components/index.components'
 import React from "react";
 
 
@@ -8,9 +8,10 @@ export const AppRoutes = () => (
     <Routes>
 
         <Route path='/' element={<RecommendationsPage/>}/>
-        <Route path="*" element={<RecommendationsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
         <Route path='/profile' element={<ProfilePage/>}/>>
         <Route path='/profile/:id' element={<ProfilePage /> }/>>
+        <Route path='/search' element={<SearchPage /> }/>>
     </Routes>
 
 )
