@@ -65,8 +65,9 @@ export const ReviewShortened = (props) => {
                 }}
             >
                 <div className="form-group form-inline">
-                    <label style={{fontSize: "13px", fontStyle: "italic"}}>by </label>
+                    <label style={{fontSize: "33px", fontStyle: "italic"}}>by </label>
                     <a
+                        style={{marginLeft:'10px', fontSize: "43px"}}
                         className="review_shortened_profile_url"
                         href={'/profile/' + currentReview?.user?.id}
                     >
@@ -77,7 +78,7 @@ export const ReviewShortened = (props) => {
                 <div onClick={() => {
                     viewReview(currentReview)
                 }}>
-                    <h1>{currentReview?.id}</h1>
+                    <div style={{fontSize: "43px"}}>{currentReview?.title}</div>
 
                     <Container fluid style={{
                         paddingTop: "10px",
