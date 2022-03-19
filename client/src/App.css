@@ -5,18 +5,26 @@ html {
 }
 */
 
+@font-face {
+    font-family: 'JosefinSansExtraLightItalic';
+    src: local('JosefinSans'), url(../public/fonts/JosefinSans-ExtraLightItalic.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'JosefinSansRegular';
+    src: local('JosefinSans'), url(../public/fonts/JosefinSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'JosefinSansMedium';
+    src: local('JosefinSans'), url(../public/fonts/JosefinSans-Medium.ttf) format('truetype');
+}
 
 body {
-    font-size: 22px;
-    font-family: Arial, serif;
-
+    font-family: JosefinSansMedium, Arial, serif;
+    font-weight: 500;
 }
 
-@media screen and (max-width: 750px) {
-    * {
-        font-size: 13px;
-    }
-}
+
 
 /* debug mode
 * {

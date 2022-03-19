@@ -48,7 +48,7 @@ export const UserProfileDiminished = () =>  {
                     />
             </div>
             <div style={{width:'auto'}}>
-            <NavDropdown title={currentUser?.name} id="navbarScrollingDropdown">
+            <NavDropdown style={{fontSize:'30px'}} title={currentUser?.name} id="navbarScrollingDropdown">
                 <NavDropdown.Item className="no_wrap user_profile_diminished_name"
 
                                   href={"/profile/" + currentUser?.id}>Profile</NavDropdown.Item>
