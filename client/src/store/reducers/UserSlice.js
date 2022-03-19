@@ -6,6 +6,7 @@ export const userSlice = createSlice({
         currentUser: {}, //current user - is the user who is currently performing actions in the application, auth0 user
         browsedUser: {},
         isCurrentUserAdmin: false,
+        isCurrentUserOwner: false,
     },
     reducers: {
         setCurrentUser: (state, action) => {
@@ -17,11 +18,13 @@ export const userSlice = createSlice({
         setIsCurrentUserAdmin: (state, action) => {
             state.isCurrentUserAdmin = action.payload
         },
-
+        setIsCurrentUserOwner: (state, action) => {
+            state.isCurrentUserOwner = action.payload
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { setCurrentUser, setBrowsedUser, setIsCurrentUserAdmin } = userSlice.actions
+export const { setCurrentUser, setBrowsedUser, setIsCurrentUserAdmin, setIsCurrentUserOwner } = userSlice.actions
 
 export default userSlice.reducer

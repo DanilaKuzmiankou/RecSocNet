@@ -13,10 +13,9 @@ import {
     Tooltip
 } from "react-bootstrap";
 import {createSearchParams, useNavigate} from "react-router-dom";
-import {AuthButton, LogInButton} from "../index.components"
+import {LogInButton} from "../index.components"
 import {useAuth0} from "@auth0/auth0-react";
 import {UserProfileDiminished} from "../Profile/UserProfileDiminished";
-import {findReviews} from "../../api/store/ReviewStore";
 
 export const CustomNav = () => {
 
@@ -52,7 +51,9 @@ export const CustomNav = () => {
 
                     <div>
                         <Container >
+
                             <Row >
+
                                 <Col style={{display:"flex", alignItems:"center"}} lg={"auto"} sm={12} className="nav_elements_margin ">
                                     <Form className="d-flex"
                                           onSubmit = {search}

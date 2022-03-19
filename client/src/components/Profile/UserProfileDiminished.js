@@ -11,7 +11,8 @@ export const UserProfileDiminished = () =>  {
 
     const {user, getAccessTokenSilently, logout, isAuthenticated} = useAuth0()
     const dispatch = useDispatch()
-    const currentUser = useSelector((state) => state.user.currentUser)
+    const {currentUser, isCurrentUserAdmin} = useSelector((state) => state.user)
+
     const[imageGetAttempt, setImageGetAttempt] = useState(0)
 
     useEffect(async () => {
@@ -49,10 +50,17 @@ export const UserProfileDiminished = () =>  {
             </div>
             <div style={{width:'auto'}}>
             <NavDropdown style={{fontSize:'30px'}} title={currentUser?.name} id="navbarScrollingDropdown">
-                <NavDropdown.Item className="no_wrap user_profile_diminished_name"
-
+                <NavDropdown.Item
                                   href={"/profile/" + currentUser?.id}>Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
+                {isCurrentUserAdmin &&
+                    <div>
+                    <NavDropdown.Item
+                        href={"/admin"}>Admin Page
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    </div>
+                }
                 <NavDropdown.Item onClick={logout}>
                     Log out
                 </NavDropdown.Item>

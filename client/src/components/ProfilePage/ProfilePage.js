@@ -18,7 +18,12 @@ import {
     saveNewReview
 } from "../../api/store/ReviewStore";
 import {useDispatch, useSelector} from "react-redux";
-import {setBrowsedUser, setCurrentUser, setIsCurrentUserAdmin} from "../../store/reducers/UserSlice";
+import {
+    setBrowsedUser,
+    setCurrentUser,
+    setIsCurrentUserAdmin,
+    setIsCurrentUserOwner
+} from "../../store/reducers/UserSlice";
 import {setDisplayFilters, setEditedReview, setReviews, setSelectedReview} from "../../store/reducers/ReviewSlice";
 import {setModalParams} from "../../store/reducers/ModalSlice";
 import {setIsLoading} from "../../store/reducers/LoadingSlice";
@@ -26,14 +31,8 @@ import {setIsLoading} from "../../store/reducers/LoadingSlice";
 export const ProfilePage = (props) => {
 
     const dispatch = useDispatch()
-
-    const browsedUser = useSelector((state) => state.user.browsedUser)
-    const currentUser = useSelector((state) => state.user.currentUser)
-    const reviews = useSelector((state) => state.review.reviews)
-    const isCurrentUserAdmin = useSelector((state) => state.user.isCurrentUserAdmin)
-    const displayFilters = useSelector((state) => state.review.displayFilters)
-    const selectedReview = useSelector((state) => state.review.selectedReview)
-
+    const {isCurrentUserAdmin, isCurrentUserOwner, currentUser, browsedUser} = useSelector((state) => state.user)
+    const {reviews, displayFilters, selectedReview} = useSelector((state) => state.review)
     const {user, isAuthenticated, getAccessTokenSilently, isLoading} = useAuth0()
 
     const isLoading1 = useSelector((state) => state.loading.isLoading)
@@ -91,11 +90,11 @@ export const ProfilePage = (props) => {
         dispatch(setBrowsedUser(userBrowsedProfile))
         let reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id)
         dispatch(setReviews(reviews))
-        if (userBrowsedProfile.authId === mainUserSearched.authId || mainUserSearched.role === "admin") {
-            console.log('admin!')
-            dispatch(setIsCurrentUserAdmin(true))
+        if (userBrowsedProfile.authId === mainUserSearched.authId) {
+            console.log('owner!')
+            dispatch(setIsCurrentUserOwner(true))
         } else {
-            dispatch(setIsCurrentUserAdmin(false))
+            dispatch(setIsCurrentUserOwner(false))
         }
     }
 
@@ -103,7 +102,7 @@ export const ProfilePage = (props) => {
         let newReviews = await getUserReviews(mainUserSearched.authId, mainUserSearched.id)
         dispatch(setReviews(newReviews))
         dispatch(setBrowsedUser(mainUserSearched))
-        dispatch(setIsCurrentUserAdmin(true))
+        dispatch(setIsCurrentUserOwner(true))
     }
 
     const setCurrentUserAsAuthUser = async () => {
@@ -241,7 +240,7 @@ export const ProfilePage = (props) => {
                                                 <Button variant="success" className="reviews_table_button"
                                                         onClick={viewReview}>View</Button>
                                             </div>
-                                            {isCurrentUserAdmin &&
+                                            {isCurrentUserAdmin || isCurrentUserOwner &&
                                                 <div className="reviews_table_container">
                                                     <Button variant="success" className="reviews_table_button"
                                                             onClick={createReview}>Create</Button>

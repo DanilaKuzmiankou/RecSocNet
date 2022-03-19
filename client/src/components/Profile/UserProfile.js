@@ -12,9 +12,7 @@ import {setBrowsedUser, setCurrentUser} from "../../store/reducers/UserSlice";
 export const UserProfile = () => {
 
     const dispatch = useDispatch()
-    const currentUser = useSelector((state) => state.user.currentUser)
-    const browsedUser = useSelector((state) => state.user.browsedUser)
-    const isCurrentUserAdmin = useSelector((state) => state.user.isCurrentUserAdmin)
+    const {currentUser, browsedUser, isCurrentUserAdmin, isCurrentUserOwner} = useSelector((state) => state.user)
     const [edit, setEdit] = useState(false)
     const [editUsername, setEditUsername] = useState('')
     const [username, setUsername] = useState(browsedUser?.name)
@@ -87,36 +85,40 @@ export const UserProfile = () => {
                         <div className="profile_username_edit_container">
                             <Row>
                                 <Col xs={"auto"} md={'auto'} sm={12}>
+                                    {isCurrentUserAdmin || isCurrentUserOwner ?
+                                        <OverlayTrigger placement="right" delay={{show: 75, hide: 200}}
+                                                        onToggle={autoCloseTooltip}
+                                                        show={isOverlayTriggerVisible}
+                                                        overlay={<Tooltip id="tooltip-disabled">Change user
+                                                            name</Tooltip>}>
+                                            <div className="profile_username_edit_container">
+                                                <h4 className="no_wrap"> User name: {browsedUser.name} </h4>
 
-                                    <OverlayTrigger placement="right" delay={{show: 75, hide: 200}}
-                                                    onToggle={autoCloseTooltip}
-                                                    show={isOverlayTriggerVisible}
-                                                    overlay={<Tooltip id="tooltip-disabled">Change user name</Tooltip>}>
-                                    <div className="profile_username_edit_container">
+                                                <Rating
+                                                    className="profile_username_edit_icon"
+                                                    start={0}
+                                                    stop={1}
+                                                    initialRating={edit}
+                                                    onClick={showOrHideForm}
+                                                    emptySymbol={
+                                                        <FontAwesomeIcon icon={editLight}
+                                                                         color={"black"}
+                                                                         size="1x"
+                                                        />
+                                                    }
+                                                    fullSymbol={
+                                                        <FontAwesomeIcon icon={faEdit}
+                                                                         size="1x"
+                                                                         color={"black"}
+                                                        />
+                                                    }
+                                                />
+
+                                            </div>
+                                        </OverlayTrigger>
+                                        :
                                         <h4 className="no_wrap"> User name: {browsedUser.name} </h4>
-                                        {isCurrentUserAdmin &&
-                                            <Rating
-                                                className="profile_username_edit_icon"
-                                                start={0}
-                                                stop={1}
-                                                initialRating={edit}
-                                                onClick={showOrHideForm}
-                                                emptySymbol={
-                                                    <FontAwesomeIcon icon={editLight}
-                                                                     color={"black"}
-                                                                     size="1x"
-                                                    />
-                                                }
-                                                fullSymbol={
-                                                    <FontAwesomeIcon icon={faEdit}
-                                                                     size="1x"
-                                                                     color={"black"}
-                                                    />
-                                                }
-                                            />
-                                        }
-                                    </div>
-                                    </OverlayTrigger>
+                                    }
                                     <h4 className="no_wrap"> User likes: {browsedUser.likes} </h4>
                                 </Col>
                                 <Col md={6} sm={12}>
