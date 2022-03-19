@@ -127,6 +127,20 @@ body {
 
 }
 
+
+.search_page_title{
+    font-size: 50px;
+}
+
+@media screen and (min-width: 750px) {
+    .search_page_title{
+    font-size: 70px;
+    margin-left: 8rem;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    }
+}
+
 @media screen and (min-width: 1450px) {
     .no_wrap_on_normal_screen {
         white-space: nowrap;

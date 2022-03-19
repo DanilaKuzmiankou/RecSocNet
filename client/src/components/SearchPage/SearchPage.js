@@ -70,7 +70,7 @@ export const SearchPage = () => {
                         {searchedReviews && searchedReviews.length>0 ?
                             <div>
                                 <div
-                                    style={{fontSize:'70px', marginLeft: "8rem", marginTop: "1rem", paddingBottom: "1rem"}}
+                                    className="search_page_title"
                                 >
                                     Search result: </div>
                                 <Container className="cont">
