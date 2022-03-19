@@ -93,7 +93,7 @@ export const UserProfile = () => {
                                                     show={isOverlayTriggerVisible}
                                                     overlay={<Tooltip id="tooltip-disabled">Change user name</Tooltip>}>
                                     <div className="profile_username_edit_container">
-                                        <h4 className="no_wrap"> User name: {username} </h4>
+                                        <h4 className="no_wrap"> User name: {browsedUser.name} </h4>
                                         {isCurrentUserAdmin &&
                                             <Rating
                                                 className="profile_username_edit_icon"

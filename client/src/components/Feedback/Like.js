@@ -18,7 +18,7 @@ export const Like = ({updateReview, review}) => {
     useEffect(() => {
         let isMounted = true
         if (isMounted) {
-            if (review.ratings && review.ratings[0]?.reviewScore !== undefined) {
+            if (review?.ratings && review?.ratings[0]?.reviewScore !== undefined) {
                 setLike(review.ratings[0]?.reviewScore)
             }
         }

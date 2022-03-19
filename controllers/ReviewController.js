@@ -1,6 +1,7 @@
 const ApiError = require("../error/ApiError");
 const {Review, User, ReviewImage, Rating} = require("../models/Models");
 const Sequelize = require("sequelize");
+const sequelize = require("sequelize");
 const op = Sequelize.Op;
 
 
@@ -67,12 +68,10 @@ class ReviewController {
         return res.json(reviews)
     }
 
-    async getNewestReviews(req, res, next) {
-        const {limit, offset, userId} = req.body
-        console.log('userID: ', userId)
-        console.log('offset: ', offset)
-        let reviews = await Review.findAll({
+    async getReviews(limit, offset, userId, whereParams) {
+        return await Review.findAll({
             order: [['createdAt', 'DESC']],
+            where: whereParams,
             include: [
                 {
                     model: ReviewImage,
@@ -93,31 +92,35 @@ class ReviewController {
                             [op.eq]: userId
                         }
                     },
-                    required:false
+                    required: false
                 }
             ],
             limit: limit,
             offset: offset
         });
+    }
+
+    async getNewestReviews(req, res, next) {
+        const {limit, offset, userId} = req.body
+        let reviews = await reviewController.getReviews(limit, offset, userId, {})
         return res.json(reviews)
     }
 
-    async findReviews(req, res, next){
-        let {searchedString} = req.body
-        searchedString = "'"+searchedString+"'";
-        console.log('search: ', searchedString)
-        const queryString =
-       `CREATE INDEX IF NOT EXISTS idx_fts_articles ON reviews
-        USING gin(make_tsvector(title, text));
-        SELECT * FROM reviews WHERE
-        make_tsvector(title, text) @@ to_tsquery(${searchedString})`;
-        try {
-            let data = await Review.sequelize.query(queryString);
-            console.log('success: ', data)
-            return res.json(data[0])
-        } catch (error) {
-            console.log('fts error: ', error)
+    async findReviews(req, res, next) {
+        let {limit, offset, searchedString, userId} = req.body
+        searchedString = "'" + searchedString + "'";
+        const updateIndexes =
+            `CREATE INDEX IF NOT EXISTS idx_fts_articles ON reviews
+            USING gin(make_tsvector(title, text));`
+        await Review.sequelize.query(updateIndexes);
+        const whereQueryString = {
+            [op.and]: [
+                sequelize.literal(`make_tsvector(title, text) @@ to_tsquery(${searchedString})`)
+            ]
         }
+        let reviews = await reviewController.getReviews(limit, offset, userId, whereQueryString)
+        console.log('res: ', reviews)
+        return res.json(reviews)
     }
 
 

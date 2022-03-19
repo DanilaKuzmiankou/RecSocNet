@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {LoadingComponent, ReviewShortened} from "../index.components";
 import {getNewestReviews} from "../../api/store/ReviewStore";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {setNewestReviews1} from "../../store/reducers/ReviewSlice";
+import {setReviews} from "../../store/reducers/ReviewSlice";
 
 
 export const RecommendationsPage = () => {
@@ -23,9 +23,8 @@ export const RecommendationsPage = () => {
     const [hasMoreReviews, setHasMoreReviews] = useState(true)
 
 
-
     useEffect(async () => {
-            await  fetchNewestReviews()
+        await fetchNewestReviews()
         setTimeout(async () => {
             dispatch(setIsLoading(false))
         }, 500);
@@ -47,18 +46,21 @@ export const RecommendationsPage = () => {
         if (lenRev > 0 && Object.keys(currentUser).length !== 0) {
             const newestReviewsFromApi = await getNewestReviews(lenRev, 0, currentUser.id)
             setNewestReviews(newestReviewsFromApi)
-            dispatch(setNewestReviews1(newestReviewsFromApi))
+            dispatch(setReviews(newestReviewsFromApi))
             setInfiniteScrollKey(Math.random())
         }
     }
 
 
     const fetchNewestReviews = async () => {
+        console.log('current user: ', currentUser)
         const newestReviewsFromApi = await getNewestReviews(10, rowSelectionRate * 10, currentUser.id)
+        console.log('newest rev: ', newestReviewsFromApi)
         if (newestReviewsFromApi.length !== 0) {
             let resultNewestReviews = [...newestReviews, ...newestReviewsFromApi]
+            console.log('result rev: ', resultNewestReviews)
             setNewestReviews(resultNewestReviews)
-            dispatch(setNewestReviews1(resultNewestReviews))
+            dispatch(setReviews(resultNewestReviews))
             setRowSelectionRate(rowSelectionRate => rowSelectionRate + 1)
         } else {
             setHasMoreReviews(false)

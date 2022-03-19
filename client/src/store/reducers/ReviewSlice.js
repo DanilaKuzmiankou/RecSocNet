@@ -6,8 +6,7 @@ export const reviewSlice = createSlice({
         reviews: [],
         selectedReview: {},
         displayFilters: "none",
-        editedReview: {},
-        newestReviews: []
+        editedReview: {}
     },
     reducers: {
         setReviews: (state, action) => {
@@ -22,19 +21,7 @@ export const reviewSlice = createSlice({
         setEditedReview: (state, action) => {
             state.editedReview = action.payload
         },
-        setNewestReviews1: (state, action) => {
-            state.newestReviews = action.payload
-        },
-        setNewestReview: (state, action) => {
-            let editedReviewIndex = state.newestReviews.findIndex(review => review.id === action.payload.editedReview.id)
-            console.log('nice: ', editedReviewIndex)
-            state.newestReviews = [
-        ...state.newestReviews.slice(0, editedReviewIndex), // everything before current post
-                action.payload.editedReview,
-        ...state.newestReviews.slice(editedReviewIndex + 1), // everything after current post
-        ]
 
-        },
 
     },
 })
@@ -45,8 +32,7 @@ export const {
     setDisplayFilters,
     setSelectedReview,
     setEditedReview,
-    setNewestReviews1,
-    setNewestReview
+
 
 } = reviewSlice.actions
 

@@ -11,7 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 export const ReviewShortened = (props) => {
 
     const dispatch = useDispatch()
-    const newestReviews = useSelector((state) => state.review.newestReviews)
+    const reviews = useSelector((state) => state.review.reviews)
 
     const [editorText, setEditorText] = useState('');
     const [currentReview, setCurrentReview] = useState('');
@@ -20,7 +20,7 @@ export const ReviewShortened = (props) => {
     useEffect(async () => {
         let isMounted = true;
         if (isMounted) {
-            setCurrentReview(newestReviews[props.reviewId])
+            setCurrentReview(reviews[props.reviewId])
             let shortenedText = formatText(props.currentReview?.text)
             //let shortenedText = props.review?.text
             setEditorText(shortenedText)
@@ -28,7 +28,7 @@ export const ReviewShortened = (props) => {
         return () => {
             isMounted = false
         };
-    }, []);
+    }, [reviews]);
 
     const formatText = (text) => {
         text = text.substring(0, process.env.REACT_APP_MAX_TABLE_TEXT_LENGTH)
@@ -68,9 +68,9 @@ export const ReviewShortened = (props) => {
                     <label style={{fontSize: "13px", fontStyle: "italic"}}>by </label>
                     <a
                         className="review_shortened_profile_url"
-                        href={'/profile/' + currentReview.user?.id}
+                        href={'/profile/' + currentReview?.user?.id}
                     >
-                        {currentReview.user?.name}
+                        {currentReview?.user?.name}
                     </a>
                 </div>
 

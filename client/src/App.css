@@ -163,7 +163,6 @@ html {
 }
 
 .recommendations_page_container {
-
     padding-top: 20px;
     background-color: rgba(218,224,230,255);
     min-height: 100vh;
@@ -181,6 +180,14 @@ html {
 }
 
 .profile_page_container {
+    background-image: url("../public/profile_page_background.jpg");
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat
+}
+
+.search_page_container {
     background-image: url("../public/profile_page_background.jpg");
     min-height: 100vh;
     background-position: center;

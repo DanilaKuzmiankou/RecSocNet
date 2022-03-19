@@ -12,7 +12,7 @@ import {
     Row,
     Tooltip
 } from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {createSearchParams, useNavigate} from "react-router-dom";
 import {AuthButton, LogInButton} from "../index.components"
 import {useAuth0} from "@auth0/auth0-react";
 import {UserProfileDiminished} from "../Profile/UserProfileDiminished";
@@ -20,15 +20,17 @@ import {findReviews} from "../../api/store/ReviewStore";
 
 export const CustomNav = () => {
 
+
     const navigate = useNavigate()
     const {isAuthenticated} = useAuth0()
     const [searchData, setSearchData] = useState('')
 
     const search = async (event) => {
         event.preventDefault();
-        navigate('/search', {
-            state: searchData
-        })
+
+        let searchParams = createSearchParams({search: searchData})
+        let pathname = '/search'
+        navigate(`${pathname}?${searchParams}`)
     }
 
     return (

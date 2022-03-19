@@ -13,8 +13,8 @@ export async function getNewestReviews(limit, offset, userId) {
     return await postRequest('/api/review/newestReviews', body)
 }
 
-export async function findReviews(searchedString) {
-    let body = JSON.stringify({searchedString})
+export async function findReviews(limit, offset, searchedString, userId) {
+    let body = JSON.stringify({limit, offset, searchedString, userId})
     return await postRequest('/api/review/findReviews', body)
 }
 

@@ -8,7 +8,6 @@ import {useDispatch, useSelector} from "react-redux";
 import "../../App.css"
 import {useAuth0} from "@auth0/auth0-react";
 import {setModalParams} from "../../store/reducers/ModalSlice";
-import {setNewestReview} from "../../store/reducers/ReviewSlice";
 
 export const Feedback = (props) => {
 
@@ -27,7 +26,7 @@ export const Feedback = (props) => {
             let review = Object.assign({}, props.review)
             review.usersContentScore = +review.usersContentScore.toFixed(2)
             setReview(review)
-            if (review.ratings[0] && review.ratings[0].contentScore && review.ratings[0].contentScore !== undefined) {
+            if (review.ratings && review.ratings[0] && review.ratings[0].contentScore && review.ratings[0].contentScore !== undefined) {
                 setRating(review.ratings[0].contentScore)
             }
         }
@@ -64,25 +63,6 @@ export const Feedback = (props) => {
                 ...prevState,
                 usersContentScore: reviewUsersContentScore
             }))
-        let ratings = props.review.ratings
-        let newReview
-        if(ratings && ratings.length > 0) {
-            console.log('exist: ', ratings)
-        }
-        else {
-            let editedReviewFields = {
-                ratings: [
-                    {
-                        contentScore: newRating
-                    }
-                ]
-            }
-            newReview = Object.assign({}, props.review, editedReviewFields)
-            console.log('fields: ', newReview)
-        }
-        dispatch(setNewestReview({
-            editedReview: newReview
-        }))
     }
 
     return (
