@@ -1,22 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {BrowserRouter} from "react-router-dom";
-import Auth0ProviderWithNavigate from "./auth/Auth0ProviderWithNavigate";
+import React, {useEffect, useMemo, useState} from "react";
 import {AppRoutes} from './router/AppRoutes'
-import {CustomNav, RegisterNewUser} from "./components/index.components"
+import {CustomNav, LoadingComponent} from "./components/index.components"
+import {useRegisterNewUser} from "./auth/useRegisterNewUser";
 
 
-function App() {
+const App = () => {
 
-
+    const {isLoadingCompleted} = useRegisterNewUser()
 
     return (
-      <BrowserRouter>
-              <Auth0ProviderWithNavigate>
-                  <RegisterNewUser/>
+      <div>
+          {isLoadingCompleted ?
+          <div>
                   <CustomNav/>
                   <AppRoutes/>
-              </Auth0ProviderWithNavigate>
-      </BrowserRouter>
+          </div>
+              :
+              <LoadingComponent />
+              }
+      </div>
   );
 }
 

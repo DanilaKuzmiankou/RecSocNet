@@ -16,7 +16,6 @@ export const RecommendationsPage = () => {
     const currentUser = useSelector((state) => state.user.currentUser)
 
     const [newestReviews, setNewestReviews] = useState([])
-    const [infiniteScrollKey, setInfiniteScrollKey] = useState(0)
 
 
     const [rowSelectionRate, setRowSelectionRate] = useState(0)
@@ -25,31 +24,8 @@ export const RecommendationsPage = () => {
 
     useEffect(async () => {
         await fetchNewestReviews()
-        setTimeout(async () => {
-            dispatch(setIsLoading(false))
-        }, 500);
-
+        dispatch(setIsLoading(false))
     }, [])
-
-    useEffect(async () => {
-        await refreshInfiniteScroll()
-    }, [currentUser])
-
-    useLayoutEffect(() => {
-        return () => {
-            dispatch(setIsLoading(true))
-        }
-    }, [])
-
-    const refreshInfiniteScroll = async () => {
-        let lenRev = newestReviews.length
-        if (lenRev > 0 && Object.keys(currentUser).length !== 0) {
-            const newestReviewsFromApi = await getNewestReviews(lenRev, 0, currentUser.id)
-            setNewestReviews(newestReviewsFromApi)
-            dispatch(setReviews(newestReviewsFromApi))
-            setInfiniteScrollKey(Math.random())
-        }
-    }
 
 
     const fetchNewestReviews = async () => {
@@ -79,7 +55,6 @@ export const RecommendationsPage = () => {
                             <Col> </Col>
                             <Col sm={8}>
                                 <InfiniteScroll
-                                    key={infiniteScrollKey}
                                     dataLength={newestReviews.length}
                                     next={fetchNewestReviews}
                                     hasMore={hasMoreReviews}

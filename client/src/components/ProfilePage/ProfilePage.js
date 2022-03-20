@@ -44,12 +44,13 @@ export const ProfilePage = (props) => {
     const [filtersBtnText, setFiltersBtnText] = useState('Show filters')
 
     useEffect(async () => {
+        console.log('au', isAuthenticated)
         await checkPrivileges()
         setTimeout(async () => {
             dispatch(setIsLoading(false))
         }, 1000);
 
-    }, [isAuthenticated, currentUser])
+    }, [isAuthenticated])
 
 
     const checkPrivileges = async () => {
