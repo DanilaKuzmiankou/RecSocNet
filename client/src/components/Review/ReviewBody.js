@@ -21,17 +21,18 @@ export const ReviewBody = (props) => {
         <Container fluid>
 
                     <div className="review_container">
-                        <div className="form-group form-inline">
-                            <label style={{fontSize: "13px", fontStyle: "italic"}}>by </label>
-                            <label style={{
-                                fontSize: "22px",
-                                display: 'inline-block',
-                                marginLeft: "7px"
-                            }}>
-                                {props.review.user?.name}
-                            </label>
-                        </div>
-
+                        {props.review.user?.name &&
+                            <div className="form-group form-inline">
+                                <label style={{fontSize: "13px", fontStyle: "italic"}}>by </label>
+                                <label style={{
+                                    fontSize: "22px",
+                                    display: 'inline-block',
+                                    marginLeft: "7px"
+                                }}>
+                                    {props.review.user.name}
+                                </label>
+                            </div>
+                        }
                         <h1>{props.review?.title}</h1>
 
                         <div style={{

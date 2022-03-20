@@ -12,9 +12,22 @@ import 'react-quill/dist/quill.snow.css';
 
 export const ReviewCreateBody = forwardRef((props, ref) => {
 
+
+        let tagsArray =
+            [
+                "world war",
+                "fantasy",
+                "scam",
+                "politics",
+            ]
+
+
         const [selectedTags, setSelectedTags] = useState([])
+        const [tags, setTags] = useState(tagsArray)
+        const [isEmptyTagExist, setIsEmptyTagExist] = useState(false)
 
         const [editorText, setEditorText] = useState('');
+        const [currentTag, setCurrentTag] = useState('');
         const dispatch = useDispatch()
 
         let currentReview = Object.assign({}, props.review)
@@ -39,26 +52,17 @@ export const ReviewCreateBody = forwardRef((props, ref) => {
         }, []);
 
 
-
-
         useImperativeHandle(ref, () => ({
             save() {
+                currentReview.tags = selectedTags.join(',')
                 console.log('cur before ', currentReview)
-                //currentReview.text = editorText
+                console.log('sel before ', selectedTags)
                 dispatch(setEditedReview(currentReview))
                 console.log('sending..', currentReview)
                 return currentReview
             }
         }));
 
-
-        let tags =
-            [
-                "world war",
-                "fantasy",
-                "scam",
-                "politics"
-            ]
 
         let category =
             [
@@ -68,12 +72,49 @@ export const ReviewCreateBody = forwardRef((props, ref) => {
                 "lifestyle"
             ]
 
-        function onSelect(selectedList, selectedItem) {
-            currentReview.tags = selectedList.join(',')
+        function onMultiselectSelect(selectedList, selectedItem) {
+            if (selectedItem && selectedTags.indexOf(selectedItem) === -1 && selectedItem.trim()) {
+                let newTagsList = [...selectedTags, selectedItem]
+                setSelectedTags(newTagsList)
+            }
         }
 
-        function onRemove(selectedList, removedItem) {
-            currentReview.tags = selectedList.join(',')
+        function onMultiselectRemove(selectedList, removedItem) {
+            let newTagsList = selectedTags
+            if(typeof removedItem === "number"){
+                newTagsList.splice(removedItem, 1)
+            }
+            else {
+                newTagsList = selectedTags.filter(tag => tag !== removedItem)
+            }
+            setSelectedTags(newTagsList)
+        }
+
+        function onMultiselectSearch(searchedTag) {
+            setCurrentTag(searchedTag)
+            if (isEmptyTagExist) {
+                deleteLastTag()
+            }
+            if (tags.find(tag => tag === searchedTag) === undefined) {
+                setTags(tags => [...tags, searchedTag])
+                setIsEmptyTagExist(true)
+            } else {
+                deleteLastTag()
+            }
+        }
+
+        function deleteLastTag() {
+            let newTags = [...tags]
+            newTags.pop()
+            setTags(newTags)
+        }
+
+        function onMultiselectKeyPress(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                onMultiselectSelect([], currentTag)
+                setCurrentTag()
+            }
         }
 
         function updateImages(images) {
@@ -168,12 +209,11 @@ export const ReviewCreateBody = forwardRef((props, ref) => {
                             <Multiselect
                                 isObject={false}
                                 selectedValues={selectedTags}
-                                onKeyPressFn={function noRefCheck() {
-                                }}
-                                onRemove={onRemove}
-                                onSearch={function noRefCheck() {
-                                }}
-                                onSelect={onSelect}
+                                avoidHighlightFirstOption={true}
+                                onKeyPressFn={onMultiselectKeyPress}
+                                onRemove={onMultiselectRemove}
+                                onSearch={onMultiselectSearch}
+                                onSelect={onMultiselectSelect}
                                 options={tags}
                                 placeholder="Enter tags"
                             />
@@ -198,7 +238,7 @@ export const ReviewCreateBody = forwardRef((props, ref) => {
                     <div className='editor'>
                         <Form.Label>Text</Form.Label>
                         <ReactQuill
-                           className="ql-editor"
+                            className="ql-editor"
                             theme="snow"
                             value={editorText}
                             onChange={value => {

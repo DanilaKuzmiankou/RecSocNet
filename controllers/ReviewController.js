@@ -70,6 +70,7 @@ class ReviewController {
 
     async getReviews(limit, offset, userId, whereParams) {
         return await Review.findAll({
+            subQuery: false,
             order: [['createdAt', 'DESC']],
             where: whereParams,
             include: [
@@ -80,6 +81,7 @@ class ReviewController {
                 },
                 {
                     model: User,
+                    as: 'user',
                     attributes: ['id', 'name']
                 },
                 {
@@ -111,12 +113,17 @@ class ReviewController {
         searchedString = "'" + searchedString + "'";
         const updateIndexes =
             `CREATE INDEX IF NOT EXISTS idx_fts_articles ON reviews
-            USING gin(make_tsvector(title, text));`
+             USING gin(make_tsvector(title, text, tags));
+            
+            CREATE INDEX IF NOT EXISTS idx_fts_users ON users
+            USING gin(make_tsvector(name));`
         await Review.sequelize.query(updateIndexes);
         const whereQueryString = {
-            [op.and]: [
-                sequelize.literal(`make_tsvector(title, text) @@ to_tsquery(${searchedString})`)
-            ]
+
+                [op.and]: [
+                    sequelize.literal(`make_tsvector(title, text, tags, "user".name) @@ plainto_tsquery(${searchedString})`)
+                ]
+
         }
         let reviews = await reviewController.getReviews(limit, offset, userId, whereQueryString)
         console.log('res: ', reviews)
