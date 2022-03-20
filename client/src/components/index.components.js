@@ -1,17 +1,16 @@
-export {ProfilePage} from "./ProfilePage/ProfilePage"
-export {RecommendationsPage} from "./RecommendationsPage/RecommendationsPage"
-export {NotFoundPage} from "./NotFoundPage/NotFoundPage"
-export {SearchPage} from "./SearchPage/SearchPage"
-export {AdminPage} from "./AdminPage/AdminPage"
-export {CustomNav} from "./CustomNav/CustomNav"
-export {CustomModal} from "./CustomModal/CustomModal"
-export {UserProfile} from "./Profile/UserProfile"
-export {CustomBootstrapTable} from "./CustomBootstrapTable/CustomBootstrapTable"
-export {UploadImage} from "./UploadImage/UploadImage";
-export {LoadingComponent} from "./LoadingComponent/LoadingComponent";
-export {AuthButton} from "./AuthUI/AuthButton/AuthButton";
-export {LogInButton} from "./AuthUI/LogInButton/LogInButton";
-export {Feedback} from "./Feedback/Feedback";
-export {ReviewBody} from "./Review/ReviewBody";
-export {ReviewShortened} from "./Review/ReviewShortened";
-export {ReviewCreateBody} from "./Review/ReviewCreateBody";
+export { ProfilePage } from './ProfilePage/ProfilePage';
+export { RecommendationsPage } from './RecommendationsPage/RecommendationsPage';
+export { NotFoundPage } from './NotFoundPage/NotFoundPage';
+export { SearchPage } from './SearchPage/SearchPage';
+export { AdminPage } from './AdminPage/AdminPage';
+export { CustomNav } from './CustomNav/CustomNav';
+export { CustomModal } from './CustomModal/CustomModal';
+export { UserProfile } from './Profile/UserProfile';
+export { CustomBootstrapTable } from './CustomBootstrapTable/CustomBootstrapTable';
+export { UploadImage } from './UploadImage/UploadImage';
+export { LoadingComponent } from './LoadingComponent/LoadingComponent';
+export { LogInButton } from './AuthUI/LogInButton/LogInButton';
+export { Feedback } from './Feedback/Feedback';
+export { ReviewBody } from './Review/ReviewBody';
+export { ReviewShortened } from './Review/ReviewShortened';
+export { ReviewCreateBody } from './Review/ReviewCreateBody';

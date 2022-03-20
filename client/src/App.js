@@ -1,24 +1,23 @@
-import React from "react";
-import {AppRoutes} from './router/AppRoutes'
-import {CustomNav, LoadingComponent} from "./components/index.components"
-import {useRegisterNewUser} from "./auth/useRegisterNewUser";
+import React from 'react';
+import { AppRoutes } from './router/AppRoutes';
+import { CustomNav, LoadingComponent } from './components/index.components';
+import { useRegisterNewUser } from './auth/useRegisterNewUser';
 
 const App = () => {
+  const { isLoadingCompleted } = useRegisterNewUser();
 
-    const {isLoadingCompleted} = useRegisterNewUser()
-
-    return (
+  return (
+    <div>
+      {isLoadingCompleted ? (
         <div>
-            {isLoadingCompleted ?
-                <div>
-                    <CustomNav/>
-                    <AppRoutes/>
-                </div>
-                :
-                <LoadingComponent/>
-            }
+          <CustomNav />
+          <AppRoutes />
         </div>
-    );
-}
+      ) : (
+        <LoadingComponent />
+      )}
+    </div>
+  );
+};
 
 export default App;
