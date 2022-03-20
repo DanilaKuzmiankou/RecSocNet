@@ -5,5 +5,6 @@ node_modules
 /models/index.js
 
 client/.env
+client/.eslintrc.json
 client/node_modules
 config
