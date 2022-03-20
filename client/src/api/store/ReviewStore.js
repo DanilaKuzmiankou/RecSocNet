@@ -1,7 +1,6 @@
-import {getRequest, postRequest, rawPostRequest} from "../index.network";
-import {changeDateToUserTimezone, generateRandomString} from "../../utils/Utils";
+import {postRequest} from "../index.network";
+import {generateRandomString} from "../../utils/Utils";
 import firebase from "../../utils/Firebase";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 export async function getUserReviews(authId, userId) {
     let body = JSON.stringify({authId: authId, userId:userId})

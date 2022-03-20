@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import "../../App.css"
-import {Col, Container, Image, Row} from "react-bootstrap";
+import {Container, Image} from "react-bootstrap";
 import StarRatings from "react-star-ratings/build/star-ratings";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";

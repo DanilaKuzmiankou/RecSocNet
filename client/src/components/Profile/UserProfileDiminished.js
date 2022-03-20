@@ -1,11 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "../../App.css"
 import {Image, NavDropdown} from "react-bootstrap";
 import {useAuth0} from "@auth0/auth0-react";
-import {getUserByAuthId, registerNewUser} from "../../api/store/UserStore";
-import {useDispatch, useSelector} from "react-redux";
-import {setBrowsedUser, setCurrentUser} from "../../store/reducers/UserSlice";
-import {setIsLoading} from "../../store/reducers/LoadingSlice";
+import {useSelector} from "react-redux";
 
 export const UserProfileDiminished = () =>  {
 

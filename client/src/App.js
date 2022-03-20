@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React from "react";
 import {AppRoutes} from './router/AppRoutes'
 import {CustomNav, LoadingComponent} from "./components/index.components"
 import {useRegisterNewUser} from "./auth/useRegisterNewUser";

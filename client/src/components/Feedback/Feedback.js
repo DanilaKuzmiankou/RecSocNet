@@ -1,4 +1,4 @@
-import {Button, Col, Container, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import StarRatings from "react-star-ratings/build/star-ratings";
 import React, {useEffect, useState} from "react";
 import {Like} from "./Like";
@@ -7,7 +7,6 @@ import {changeReviewUsersContentScore} from "../../api/store/RatingStore";
 import {useDispatch, useSelector} from "react-redux";
 import "../../App.css"
 import {useAuth0} from "@auth0/auth0-react";
-import {setModalParams} from "../../store/reducers/ModalSlice";
 
 export const Feedback = (props) => {
 

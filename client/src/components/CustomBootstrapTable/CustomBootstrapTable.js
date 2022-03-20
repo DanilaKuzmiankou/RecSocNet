@@ -1,6 +1,6 @@
 import BootstrapTable from 'react-bootstrap-table-next';
 import React from 'react';
-import {Container, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import "../../App.css"
 import filterFactory, {Comparator, dateFilter, numberFilter, textFilter} from 'react-bootstrap-table2-filter';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';

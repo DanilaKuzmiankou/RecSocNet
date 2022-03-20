@@ -1,5 +1,5 @@
-import {Button, Col, Container, Row} from "react-bootstrap";
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import {Col, Container, Row} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
 import {setIsLoading} from "../../store/reducers/LoadingSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {LoadingComponent, ReviewShortened} from "../index.components";

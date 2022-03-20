@@ -1,6 +1,6 @@
-import {useLocation, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import React, {useEffect, useLayoutEffect, useState} from "react";
-import {findReviews, getNewestReviews} from "../../api/store/ReviewStore";
+import {findReviews} from "../../api/store/ReviewStore";
 import {Col, Container, Row} from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {LoadingComponent, ReviewShortened} from "../index.components";
@@ -53,9 +53,10 @@ export const SearchPage = () => {
             setSearchedReviews(resultNewestReviews)
             dispatch(setReviews(resultNewestReviews))
             setRowSelectionRate(rowSelectionRate => rowSelectionRate + 1)
-        } else {
-            console.log('end!')
-            setHasMoreReviews(false)
+            if(searchedReviewsFromApi.length<10){
+                console.log('end!')
+                setHasMoreReviews(false)
+            }
         }
 
     }

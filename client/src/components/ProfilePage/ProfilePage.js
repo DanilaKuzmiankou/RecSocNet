@@ -1,14 +1,8 @@
 import {useAuth0} from '@auth0/auth0-react'
 import React, {Fragment, useEffect, useRef, useState} from "react";
-import {Button, Col, Container, Row} from "react-bootstrap";
-import {
-    AuthButton,
-    CustomBootstrapTable,
-    CustomModal,
-    LoadingComponent, LogInButton,
-    UserProfile
-} from "../index.components";
-import {getUserByAuthId, getUserById, registerNewUser} from "../../api/store/UserStore";
+import {Button, Container} from "react-bootstrap";
+import {CustomBootstrapTable, CustomModal, LoadingComponent, LogInButton, UserProfile} from "../index.components";
+import {getUserById} from "../../api/store/UserStore";
 import {useParams} from "react-router-dom";
 import {
     deleteImagesFromFirebaseCloud,
@@ -18,12 +12,7 @@ import {
     saveNewReview
 } from "../../api/store/ReviewStore";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    setBrowsedUser,
-    setCurrentUser,
-    setIsCurrentUserAdmin,
-    setIsCurrentUserOwner
-} from "../../store/reducers/UserSlice";
+import {setBrowsedUser, setIsCurrentUserAdmin, setIsCurrentUserOwner} from "../../store/reducers/UserSlice";
 import {setDisplayFilters, setEditedReview, setReviews, setSelectedReview} from "../../store/reducers/ReviewSlice";
 import {setModalParams} from "../../store/reducers/ModalSlice";
 import {setIsLoading} from "../../store/reducers/LoadingSlice";

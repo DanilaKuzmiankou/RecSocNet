@@ -8,7 +8,7 @@ import {
     uploadImagesToFirebaseCloud
 } from "../../api/store/ReviewStore";
 import {useDispatch, useSelector} from "react-redux";
-import {LoadingComponent, Feedback} from "../index.components";
+import {LoadingComponent} from "../index.components";
 import {setIsLoading} from "../../store/reducers/LoadingSlice";
 import {ReviewBody} from "../Review/ReviewBody";
 

@@ -8,7 +8,6 @@ import {faEdit} from "@fortawesome/free-solid-svg-icons";
 import {faEdit as editLight} from "@fortawesome/free-regular-svg-icons";
 import {changeUserName} from "../../api/store/UserStore";
 import {setBrowsedUser, setCurrentUser} from "../../store/reducers/UserSlice";
-import {setIsLoading} from "../../store/reducers/LoadingSlice";
 
 export const UserProfile = () => {
 

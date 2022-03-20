@@ -1,4 +1,4 @@
-import {postRequest, rawPostRequest} from "../index.network";
+import {rawPostRequest} from "../index.network";
 
 export async function changeReviewLikeState(authId, reviewId){
     const body = JSON.stringify({authId, reviewId})

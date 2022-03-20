@@ -1,5 +1,5 @@
 import {Route, Routes} from 'react-router-dom'
-import {RecommendationsPage, ProfilePage, NotFoundPage, SearchPage, AdminPage} from '../components/index.components'
+import {AdminPage, NotFoundPage, ProfilePage, RecommendationsPage, SearchPage} from '../components/index.components'
 import React from "react";
 
 

@@ -1,17 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "../../App.css"
-import {
-    Button, Col,
-    Container,
-    Form,
-    FormControl,
-    Nav,
-    Navbar,
-    NavDropdown,
-    OverlayTrigger,
-    Row,
-    Tooltip
-} from "react-bootstrap";
+import {Button, Col, Container, Form, FormControl, Nav, Navbar, OverlayTrigger, Row, Tooltip} from "react-bootstrap";
 import {createSearchParams, useNavigate} from "react-router-dom";
 import {LogInButton} from "../index.components"
 import {useAuth0} from "@auth0/auth0-react";

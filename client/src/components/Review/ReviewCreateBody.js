@@ -1,9 +1,9 @@
-import React, {forwardRef, Fragment, useEffect, useImperativeHandle, useRef, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useState} from "react";
 import "../../App.css"
-import {Button, Col, Container, Form, Image, Row} from "react-bootstrap";
+import {Col, Form, Row} from "react-bootstrap";
 import {Multiselect} from "multiselect-react-dropdown";
 import {UploadImage} from "../../components/index.components";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {setEditedReview} from "../../store/reducers/ReviewSlice";
 
 import ReactQuill from 'react-quill';
