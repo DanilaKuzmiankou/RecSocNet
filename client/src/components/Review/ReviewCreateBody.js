@@ -81,10 +81,9 @@ export const ReviewCreateBody = forwardRef((props, ref) => {
 
         function onMultiselectRemove(selectedList, removedItem) {
             let newTagsList = selectedTags
-            if(typeof removedItem === "number"){
+            if (typeof removedItem === "number") {
                 newTagsList.splice(removedItem, 1)
-            }
-            else {
+            } else {
                 newTagsList = selectedTags.filter(tag => tag !== removedItem)
             }
             setSelectedTags(newTagsList)

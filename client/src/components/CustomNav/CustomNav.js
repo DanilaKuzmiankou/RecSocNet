@@ -27,7 +27,8 @@ export const CustomNav = () => {
             <Container fluid>
                 <OverlayTrigger placement="bottom" delay={{show: 250, hide: 400}}
                                 overlay={<Tooltip id="tooltip-disabled">To Home!</Tooltip>}>
-                    <a style={{fontSize:'50px'}} href="/" className=" justify-content-start navbar_home_button">Home</a>
+                    <a style={{fontSize: '50px'}} href="/"
+                       className=" justify-content-start navbar_home_button">Home</a>
                 </OverlayTrigger>
 
 
@@ -35,28 +36,30 @@ export const CustomNav = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav
                         className="me-auto my-2 my-lg-0"
-                        style={{ maxHeight: '100px', gap: "1rem"}}>
+                        style={{maxHeight: '100px', gap: "1rem"}}>
                     </Nav>
 
-                    <div >
-                        <Container >
-                            <Row >
-                                <Col style={{display:"flex", alignItems:"center"}} lg={"auto"} sm={12} className="nav_elements_margin ">
+                    <div>
+                        <Container>
+                            <Row>
+                                <Col style={{display: "flex", alignItems: "center"}} lg={"auto"} sm={12}
+                                     className="nav_elements_margin ">
                                     <Form className="d-flex"
-                                          onSubmit = {search}
+                                          onSubmit={search}
                                     >
                                         <FormControl
-                                            style={{fontSize:'25px'}}
+                                            style={{fontSize: '25px'}}
                                             type="search"
                                             placeholder="Search reviews"
                                             className="me-2"
                                             aria-label="Search"
                                             onChange={event => setSearchData(event.target.value)}
                                         />
-                                        <Button style={{fontSize:'25px'}} type="submit" variant="outline-success">Search</Button>
+                                        <Button style={{fontSize: '25px'}} type="submit"
+                                                variant="outline-success">Search</Button>
                                     </Form>
                                 </Col>
-                                <Col lg={"auto"} sm={12} className="nav_elements_margin nav_elements_margin_right" >
+                                <Col lg={"auto"} sm={12} className="nav_elements_margin nav_elements_margin_right">
                                     {isAuthenticated ?
                                         <UserProfileDiminished/>
                                         :

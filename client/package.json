@@ -36,14 +36,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint --ext .js,.jsx src --fix",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ]
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 100
   },
   "browserslist": {
     "production": [
@@ -58,6 +57,13 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^7.32.0"
+    "eslint": "^8.11.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^2.6.0"
   }
 }

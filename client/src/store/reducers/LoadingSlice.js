@@ -11,10 +11,9 @@ export const loadingSlice = createSlice({
     reducers: {
         setIsLoading: (state, action) => {
             state.isLoading = action.payload
-            if(state.pointerEvents===""){
+            if (state.pointerEvents === "") {
                 state.pointerEvents = "none"
-            }
-            else {
+            } else {
                 state.pointerEvents = ""
             }
         },
@@ -22,6 +21,6 @@ export const loadingSlice = createSlice({
     },
 })
 
-export const { setIsLoading } = loadingSlice.actions
+export const {setIsLoading} = loadingSlice.actions
 
 export default loadingSlice.reducer

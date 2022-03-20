@@ -194,7 +194,7 @@ export const CustomModal = forwardRef((props, ref) => {
                 </Modal.Footer>
 
 
-              {/*  <Modal.Footer style={{display: params.displayModalFeedback, backgroundColor: "#EEF1F0"}}>
+                {/*  <Modal.Footer style={{display: params.displayModalFeedback, backgroundColor: "#EEF1F0"}}>
                     <Feedback review={editedReview}/>
                 </Modal.Footer>*/}
 

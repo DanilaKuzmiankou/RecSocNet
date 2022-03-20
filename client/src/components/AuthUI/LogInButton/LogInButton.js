@@ -5,7 +5,7 @@ import {OverlayTrigger, Tooltip} from "react-bootstrap";
 
 export const LogInButton = (props) => {
     const {loginWithRedirect} = useAuth0();
-    if(props.size==="big") {
+    if (props.size === "big") {
         return (
             <OverlayTrigger delay={{show: 250, hide: 400}} placement="bottom"
                             overlay={<Tooltip id="tooltip-disabled">Log in!</Tooltip>}>
@@ -18,8 +18,7 @@ export const LogInButton = (props) => {
                 </button>
             </OverlayTrigger>
         );
-    }
-    else
+    } else
         return (
             <OverlayTrigger delay={{show: 250, hide: 400}} placement="bottom"
                             overlay={<Tooltip id="tooltip-disabled">Log in!</Tooltip>}>
@@ -30,7 +29,7 @@ export const LogInButton = (props) => {
                     Log In
                 </button>
             </OverlayTrigger>
-    );
+        );
 };
 
 export default LogInButton;

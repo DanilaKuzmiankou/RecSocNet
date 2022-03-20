@@ -88,8 +88,7 @@ export const UploadImage = ({updateImages, filesUrl}) => {
                 }
                 setFiles(newFiles)
             }
-        }
-        else {
+        } else {
             files.forEach(file => URL.revokeObjectURL(file.preview));
         }
 

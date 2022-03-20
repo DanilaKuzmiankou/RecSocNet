@@ -1,5 +1,4 @@
-
-export const AdminPage = () =>{
+export const AdminPage = () => {
 
 
     return (

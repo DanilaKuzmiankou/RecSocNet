@@ -17,7 +17,7 @@ export const useRegisterNewUser = () => {
 
     const register = async () => {
         //console.log("checking user data...", isAuthenticated)
-        if(isLoading === false) {
+        if (isLoading === false) {
             if (isAuthenticated && Object.keys(currentUser).length === 0) {
                 //console.log("updating user data...")
                 const token = await getAccessTokenSilently()

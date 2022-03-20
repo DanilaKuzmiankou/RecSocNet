@@ -120,9 +120,9 @@ class ReviewController {
         await Review.sequelize.query(updateIndexes);
         const whereQueryString = {
 
-                [op.and]: [
-                    sequelize.literal(`make_tsvector(title, text, tags, "user".name) @@ plainto_tsquery(${searchedString})`)
-                ]
+            [op.and]: [
+                sequelize.literal(`make_tsvector(title, text, tags, "user".name) @@ plainto_tsquery(${searchedString})`)
+            ]
 
         }
         let reviews = await reviewController.getReviews(limit, offset, userId, whereQueryString)

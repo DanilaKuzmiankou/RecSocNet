@@ -20,7 +20,7 @@ export const SearchPage = () => {
     let [searchParams] = useSearchParams();
 
     useEffect(async () => {
-        if(searchParams) {
+        if (searchParams) {
             await searchReviews(true)
             setInfiniteScrollKey(Math.random())
         }
@@ -38,7 +38,7 @@ export const SearchPage = () => {
     const searchReviews = async (reRenderFlag) => {
         let rowSelection = rowSelectionRate
         let prevReviews = searchedReviews
-        if(reRenderFlag){
+        if (reRenderFlag) {
             rowSelection = 0
             prevReviews = []
             setRowSelectionRate(rowSelection)
@@ -53,7 +53,7 @@ export const SearchPage = () => {
             setSearchedReviews(resultNewestReviews)
             dispatch(setReviews(resultNewestReviews))
             setRowSelectionRate(rowSelectionRate => rowSelectionRate + 1)
-            if(searchedReviewsFromApi.length<10){
+            if (searchedReviewsFromApi.length < 10) {
                 console.log('end!')
                 setHasMoreReviews(false)
             }
@@ -68,12 +68,13 @@ export const SearchPage = () => {
                     <LoadingComponent/>
                     :
                     <div>
-                        {searchedReviews && searchedReviews.length>0 ?
+                        {searchedReviews && searchedReviews.length > 0 ?
                             <div>
                                 <div
                                     className="search_page_title"
                                 >
-                                    Search result: </div>
+                                    Search result:
+                                </div>
                                 <Container className="cont">
                                     <Row>
                                         <Col> </Col>
@@ -108,7 +109,7 @@ export const SearchPage = () => {
                             </div>
                             :
                             <div className="center_without_content">
-                            <h1>Sorry, we have not found anything!</h1>
+                                <h1>Sorry, we have not found anything!</h1>
                             </div>
                         }
 

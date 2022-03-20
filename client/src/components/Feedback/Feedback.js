@@ -50,13 +50,13 @@ export const Feedback = (props) => {
                     alert("Error while changing rating! Reload Page please!")
                     break;
             }
-           saveEditedReview(reviewUsersContentScore, newRating)
+            saveEditedReview(reviewUsersContentScore, newRating)
         } else {
             alert('Log in first!')
         }
     }
 
-    const saveEditedReview = (reviewUsersContentScore, newRating) =>{
+    const saveEditedReview = (reviewUsersContentScore, newRating) => {
         setReview(prevState => (
             {
                 ...prevState,

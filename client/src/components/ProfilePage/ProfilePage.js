@@ -49,7 +49,7 @@ export const ProfilePage = (props) => {
             await setCurrentUserAsAuthUser()
         } else {
             console.log('2')
-            if(routerParams.id) {
+            if (routerParams.id) {
                 await setCurrentUserAsGuest()
             }
         }
@@ -212,7 +212,8 @@ export const ProfilePage = (props) => {
 
                                         <Fragment>
                                             <div className="reviews_table_container">
-                                                <Button variant="success" onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
+                                                <Button variant="success"
+                                                        onClick={changeDisplayFiltersState}>{filtersBtnText}</Button>
                                                 <Button variant="success" className="reviews_table_button"
                                                         onClick={viewReview}>View</Button>
                                             </div>
@@ -230,26 +231,26 @@ export const ProfilePage = (props) => {
                                         </Fragment>
 
 
-                                    <CustomBootstrapTable/>
+                                        <CustomBootstrapTable/>
                                     </div>
                                     :
 
                                     <div className="center_profile_page text-center">
-                                {isCurrentUserAdmin || isCurrentUserOwner ?
-                                    <div className="no_wrap_on_normal_screen">
-                                    <h2>Ooooops...It seems you have not reviews, click the
-                                    button to create the first!</h2>
-                                    <div className="profile_button_container">
-                                    <Button className="profile_button" variant="danger"
-                                    onClick={createReview}>Tap
-                                    me!</Button>
-                                    </div>
-                                    </div>
-                                    :
-                                    <div className="no_wrap_on_big_screen">
-                                    <h2>This user has no reviews at the moment!</h2>
-                                    </div>
-                                }
+                                        {isCurrentUserAdmin || isCurrentUserOwner ?
+                                            <div className="no_wrap_on_normal_screen">
+                                                <h2>Ooooops...It seems you have not reviews, click the
+                                                    button to create the first!</h2>
+                                                <div className="profile_button_container">
+                                                    <Button className="profile_button" variant="danger"
+                                                            onClick={createReview}>Tap
+                                                        me!</Button>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="no_wrap_on_big_screen">
+                                                <h2>This user has no reviews at the moment!</h2>
+                                            </div>
+                                        }
 
                                     </div>
                                 }

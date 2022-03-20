@@ -4,7 +4,7 @@ const initialState = {
     params: {
         title: "",
         displayModalSaveCancelButtons: "none",
-        displayModalFeedback:"none",
+        displayModalFeedback: "none",
         displayCreateForm: false,
         displayEditForm: false,
         displayViewForm: false,
@@ -33,6 +33,6 @@ export const modalSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setModalParams } = modalSlice.actions
+export const {setModalParams} = modalSlice.actions
 
 export default modalSlice.reducer

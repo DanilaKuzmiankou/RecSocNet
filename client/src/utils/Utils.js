@@ -16,8 +16,8 @@ export async function changeDateToUserTimezone(array: Array) {
 }
 
 export function changeSingleDateToUserTimezone(str: String) {
-        let clientTimeZone = dayjs.tz.guess()
-        str = formatTime(new Date(str), clientTimeZone)
+    let clientTimeZone = dayjs.tz.guess()
+    str = formatTime(new Date(str), clientTimeZone)
     return str
 }
 

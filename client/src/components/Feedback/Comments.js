@@ -6,43 +6,44 @@ import Rating from "react-rating";
 
 export const Comments = (props) => {
 
-    const[comments, setComments] = useState(false)
+    const [comments, setComments] = useState(false)
 
-    useEffect( () =>{
+    useEffect(() => {
         let isMounted = true
-        if (isMounted){
+        if (isMounted) {
             //setLikes(props?.likes)
         }
-        return () => { isMounted = false }
+        return () => {
+            isMounted = false
+        }
     }, [props])
 
 
-
-    const onCommentsClick = () =>{
+    const onCommentsClick = () => {
         setComments(!comments)
         console.log('opening comments...')
     }
 
     return (
-    <div>
-        <Rating
-            start={0}
-            stop={1}
-            initialRating={comments}
-            onClick={onCommentsClick}
-            emptySymbol={
-                <FontAwesomeIcon icon={faComment}
-                                 color={"black"}
-                                 size="2x"
-                />
-            }
-            fullSymbol={
-                <FontAwesomeIcon icon={faCommentSolid}
-                                 size="2x"
-                                 color={"black"}
-                />
-            }
-        />
-    </div>
+        <div>
+            <Rating
+                start={0}
+                stop={1}
+                initialRating={comments}
+                onClick={onCommentsClick}
+                emptySymbol={
+                    <FontAwesomeIcon icon={faComment}
+                                     color={"black"}
+                                     size="2x"
+                    />
+                }
+                fullSymbol={
+                    <FontAwesomeIcon icon={faCommentSolid}
+                                     size="2x"
+                                     color={"black"}
+                    />
+                }
+            />
+        </div>
     );
 }

@@ -9,11 +9,11 @@ class UserController {
         userController = this
     }
 
-    async registration (req, res, next) {
+    async registration(req, res, next) {
         const {authId, name, picture} = req.body
         let username = name
-        if(!name || name ===""){
-            username='New user'
+        if (!name || name === "") {
+            username = 'New user'
         }
         console.log('user.sub, user.name, user.picture ', authId, username, picture)
         if (!authId) {
@@ -24,17 +24,17 @@ class UserController {
             return res.status(200).json({message: 'User was successfully logged in!'})
         }
         console.log('pic', picture)
-        const user = await User.create({authId, name:username, profilePictureUrl:picture})
+        const user = await User.create({authId, name: username, profilePictureUrl: picture})
         return res.status(200).json({message: 'User was successfully registered!'})
     }
 
     async changeName(req, res, next) {
         const {authId, newUserName} = req.body
         let answer = await userController.validateUserName(newUserName)
-        if(answer===""){
+        if (answer === "") {
             const candidate = await User.findOne({where: {authId}})
-            if(candidate){
-                await candidate.update({ name: newUserName })
+            if (candidate) {
+                await candidate.update({name: newUserName})
                 return res.status(200).json({message: 'User name was successfully changed!'})
             }
             return res.status(202).json({message: 'User was not found'})
@@ -45,7 +45,7 @@ class UserController {
     async validateUserName(username) {
         if (username && !(/\s/).test(username)) {
             const candidate = await User.findOne({where: {name: username}})
-            if(!candidate){
+            if (!candidate) {
                 return ""
             }
             return "This username is already taken!"

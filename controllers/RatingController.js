@@ -30,12 +30,10 @@ class RatingController {
             if (ratings[0]) {
                 likedStatus = !ratings[0].reviewScore
                 ratings[0].update({reviewScore: likedStatus})
-                if(likedStatus)
-                {
+                if (likedStatus) {
                     likes++
                     usersReviewScore++
-                }
-                else {
+                } else {
                     likes--
                     usersReviewScore--
                 }
@@ -69,17 +67,15 @@ class RatingController {
             let resStatus = 200
             if (ratings.length > 0) {
                 let prevContentScore = ratings[0].contentScore
-                if(prevContentScore===null || prevContentScore ===0){
+                if (prevContentScore === null || prevContentScore === 0) {
                     newUsersContentScore = ratingController.calculateNewAverageWithAddition(usersContentScore, usersContentScoreCount, contentScore)
                     newUsersContentScoreCount = usersContentScoreCount + 1
-                }
-                else if(prevContentScore === contentScore) {
+                } else if (prevContentScore === contentScore) {
                     newUsersContentScore = ratingController.getAverageBeforeAddition(usersContentScore, usersContentScoreCount, contentScore, prevContentScore)
                     newUsersContentScoreCount = usersContentScoreCount - 1
                     contentScore = null
                     resStatus = 202
-                }
-                else {
+                } else {
                     newUsersContentScore = ratingController.calculateNewAverageWithSubtraction(usersContentScore, usersContentScoreCount, contentScore, prevContentScore)
                     newUsersContentScoreCount = usersContentScoreCount
                 }
@@ -113,7 +109,7 @@ class RatingController {
         return ratingController.calculateNewAverageWithAddition(averageBeforeAddition, numbersCount - 1, newNumber)
     }
 
-    getAverageBeforeAddition(prevAverage, numbersCount, newNumber, prevNumber){
+    getAverageBeforeAddition(prevAverage, numbersCount, newNumber, prevNumber) {
         let averageBeforeAddition = (prevAverage * numbersCount - prevNumber) / (numbersCount - 1)
         averageBeforeAddition = averageBeforeAddition || 0  //if averageBeforeAddition===NaN(or other false value) it will be converted to 0
         return averageBeforeAddition

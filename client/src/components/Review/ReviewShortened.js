@@ -67,7 +67,7 @@ export const ReviewShortened = (props) => {
                 <div className="form-group form-inline">
                     <label style={{fontSize: "33px", fontStyle: "italic"}}>by </label>
                     <a
-                        style={{marginLeft:'10px', fontSize: "43px"}}
+                        style={{marginLeft: '10px', fontSize: "43px"}}
                         className="review_shortened_profile_url"
                         href={'/profile/' + currentReview?.user?.id}
                     >
@@ -92,14 +92,14 @@ export const ReviewShortened = (props) => {
                             <Col className="tags_container">
                                 <label className="review_tags">{currentReview?.tags}</label>
                             </Col>
-                            <Col md={"auto"} style={{whiteSpace: "nowrap"}} >
-                                    <StarRatings
-                                        rating={currentReview?.authorScore}
-                                        starRatedColor="#ffd700"
-                                        numberOfStars={5}
-                                        starDimension="2rem"
-                                        name='rating'
-                                    />
+                            <Col md={"auto"} style={{whiteSpace: "nowrap"}}>
+                                <StarRatings
+                                    rating={currentReview?.authorScore}
+                                    starRatedColor="#ffd700"
+                                    numberOfStars={5}
+                                    starDimension="2rem"
+                                    name='rating'
+                                />
                             </Col>
                         </Row>
                     </Container>

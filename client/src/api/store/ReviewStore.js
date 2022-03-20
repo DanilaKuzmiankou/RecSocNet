@@ -3,7 +3,7 @@ import {generateRandomString} from "../../utils/Utils";
 import firebase from "../../utils/Firebase";
 
 export async function getUserReviews(authId, userId) {
-    let body = JSON.stringify({authId: authId, userId:userId})
+    let body = JSON.stringify({authId: authId, userId: userId})
     return await postRequest('/api/review/getAuthorReviews', body)
 }
 
@@ -55,8 +55,9 @@ export async function uploadImagesToFirebaseCloud(images) {
     }
     return imagesUrl
 }
+
 export async function deleteImagesFromFirebaseCloud(pictures) {
-    if(pictures && pictures.length) {
+    if (pictures && pictures.length) {
         const storage = firebase.storage()
         for (let i = 0; i < pictures?.length; i++) {
             try {

@@ -2,11 +2,11 @@ import {Auth0Provider} from '@auth0/auth0-react'
 import {useNavigate} from "react-router-dom";
 
 
-const Auth0ProviderWithNavigate = ({children}: React.ReactNode ) => {
+const Auth0ProviderWithNavigate = ({children}: React.ReactNode) => {
     const navigate = useNavigate()
 
 
-    const onRedirectCallback =  (appState: { returnTo?: string }) => {
+    const onRedirectCallback = (appState: { returnTo?: string }) => {
         //the path to redirect is specified in the `returnTo` property
         // by default the user is returned to the current page
         navigate(appState?.returnTo || window.location.pathname)
