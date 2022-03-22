@@ -11,6 +11,6 @@ export { UploadImage } from './UploadImage/UploadImage';
 export { LoadingComponent } from './LoadingComponent/LoadingComponent';
 export { LogInButton } from './AuthUI/LogInButton/LogInButton';
 export { Feedback } from './Feedback/Feedback';
-export { ReviewBody } from './Review/ReviewBody';
+export { Review } from './Review/Review';
 export { ReviewShortened } from './Review/ReviewShortened';
-export { ReviewCreateBody } from './Review/ReviewCreateBody';
+export { CreateOrEditReviewForm } from './Review/CreateOrEditReviewForm';

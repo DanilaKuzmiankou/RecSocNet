@@ -14,14 +14,7 @@ class ReviewController {
   async addNewReview(req, res, next) {
     const { authId, review } = req.body;
     console.log("req.body: ", req.body);
-    if (
-      !authId ||
-      !review.authorScore ||
-      !review.tags ||
-      !review.category ||
-      !review.title ||
-      !review.text
-    ) {
+    if (!authId || !review.authorScore || !review.category || !review.title) {
       return next(ApiError.badRequest("Enter all required fields"));
     }
     let user = await User.findOne({ where: { authId } });

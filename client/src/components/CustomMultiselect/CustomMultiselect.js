@@ -21,7 +21,7 @@ export const CustomMultiselect = ({ field, tagsArray, form, ...props }) => {
     } else {
       newTagsList = newTagsList.filter((tag) => tag !== removedItem);
     }
-    form.setFieldValue(newTagsList);
+    form.setFieldValue(fieldName, newTagsList);
   };
 
   const onMultiselectSearch = (searchedTag) => {
@@ -55,6 +55,7 @@ export const CustomMultiselect = ({ field, tagsArray, form, ...props }) => {
     <div>
       <Multiselect
         isObject={false}
+        className='customMultiselect'
         selectedValues={field.value}
         avoidHighlightFirstOption={true}
         onKeyPressFn={onMultiselectKeyPress}

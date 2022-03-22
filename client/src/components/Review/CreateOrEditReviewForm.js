@@ -24,7 +24,7 @@ import { setIsLoading } from '../../store/reducers/LoadingSlice';
 import LoadingComponent from '../LoadingComponent/LoadingComponent';
 
 // eslint-disable-next-line react/display-name
-export const ReviewCreateBody = (props) => {
+export const CreateOrEditReviewForm = (props) => {
   const tagsArray = ['world war', 'fantasy', 'scam', 'politics'];
 
   const isLoading = useSelector((state) => state.loading.isLoading);
@@ -138,7 +138,7 @@ export const ReviewCreateBody = (props) => {
         innerRef={props.formRef}
         initialValues={{
           title: props?.review?.title || '',
-          authorScore: props?.review?.authorScore || 0,
+          authorScore: props?.review?.authorScore || '',
           tags: props?.review?.tags?.split(',') || [],
           text: props?.review?.text || '',
           images: props?.review?.images || [],
@@ -151,21 +151,21 @@ export const ReviewCreateBody = (props) => {
             .min(1, 'Must be in range from 1 to 5')
             .required('Required'),
           category: Yup.string().matches('^(?!Select category$)', 'Required').required('Required'),
-          text: Yup.string().required('Required'),
+          text: Yup.string(),
           tags: Yup.array().required('Required'),
           images: Yup.array(),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          return new Promise((resolve, reject) => {
+          return new Promise(async (resolve, reject) => {
             setSubmitting(true);
             console.log('submit...');
             resetForm();
             setSubmitting(false);
-            formSubmit(values, resolve);
+            await formSubmit(values, resolve);
           });
         }}
       >
-        {(props) => (
+        {({ errors, touched }) => (
           <Form id='reviewForm'>
             <label htmlFor='title'>Title</label>
             <Field
@@ -173,16 +173,18 @@ export const ReviewCreateBody = (props) => {
               style={{ width: '100%' }}
               name='title'
               type='text'
+              className={touched.title && errors.title ? 'error' : null}
             />
-            <ErrorMessage name='title' />
+            <ErrorMessage component='div' className='custom_error_message' name='title' />
 
-            <Row>
-              <Col style={{ marginBottom: '10px' }} xs={4}>
+            <Row style={{ marginBottom: '10px', marginTop: '10px' }}>
+              <Col xs={4}>
                 <label style={{ whiteSpace: 'nowrap' }} htmlFor='category'>
                   Category
                 </label>
                 <Field
-                  style={{ width: '100%', height: '45px' }}
+                  className={touched.category && errors.category ? 'error' : null}
+                  style={{ width: '100%', height: '55px' }}
                   name='category'
                   as='select'
                   aria-label='Category'
@@ -190,24 +192,38 @@ export const ReviewCreateBody = (props) => {
                   <option>Select category</option>
                   {options}
                 </Field>
-                <ErrorMessage name='category' />
+                <ErrorMessage component='div' className='custom_error_message' name='category' />
               </Col>
 
               <Col xs={6}>
                 <label style={{ whiteSpace: 'nowrap' }} htmlFor='tags'>
                   Tags
                 </label>
-                <Field name='tags' component={CustomMultiselect} tagsArray={tagsArray} />
-                <ErrorMessage name='tags' />
+                <Field
+                  name='tags'
+                  className={touched.tags && errors.tags ? 'error' : null}
+                  component={CustomMultiselect}
+                  tagsArray={tagsArray}
+                />
+                <ErrorMessage component='div' className='custom_error_message' name='tags' />
               </Col>
 
               <Col xs={2}>
                 <label htmlFor='authorScore'>Score</label>
-                <Field style={{ width: '100%' }} name='authorScore' type='number' max='5' min='1' />
-                <ErrorMessage name='authorScore' />
+                <Field
+                  className={touched.authorScore && errors.authorScore ? 'error' : null}
+                  style={{ width: '100%', height: '55px' }}
+                  name='authorScore'
+                  type='number'
+                  max='5'
+                  min='1'
+                />
+                <ErrorMessage component='div' className='custom_error_message' name='authorScore' />
               </Col>
 
-              <label htmlFor='text'>Text</label>
+              <label style={{ paddingTop: '15px' }} htmlFor='text'>
+                Text
+              </label>
               <Field name='text' type='text'>
                 {({ field, form }) => (
                   <ReactQuill
@@ -221,10 +237,13 @@ export const ReviewCreateBody = (props) => {
                   />
                 )}
               </Field>
-              <ErrorMessage name='text' />
 
               <label htmlFor='images'>Pictures</label>
-              <Field name='images' component={UploadImage} />
+              <Field
+                className={touched.title && errors.title ? 'error' : null}
+                name='images'
+                component={UploadImage}
+              />
             </Row>
           </Form>
         )}

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import ReactQuill from 'react-quill';
 
-export const ReviewBody = (props) => {
+export const Review = (props) => {
   const closeModal = () => {
     props.closeModal();
   };

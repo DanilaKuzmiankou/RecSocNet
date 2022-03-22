@@ -2,7 +2,7 @@
 import { Button, Container, Modal } from 'react-bootstrap';
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import '../../App.css';
-import { ReviewCreateBody } from '../Review/ReviewCreateBody';
+import { CreateOrEditReviewForm } from '../Review/CreateOrEditReviewForm';
 import {
   addImagesToDatabase,
   deleteImagesFromFirebaseCloud,
@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingComponent } from '../index.components';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
-import { ReviewBody } from '../Review/ReviewBody';
+import { Review } from '../Review/Review';
 
 // eslint-disable-next-line react/display-name
 export const CustomModal = forwardRef((props, ref) => {
@@ -65,11 +65,13 @@ export const CustomModal = forwardRef((props, ref) => {
         <Modal.Body>
           <Container>
             {params.displayEditForm && (
-              <ReviewCreateBody formRef={formRef} review={editedReview} modeCreate={false} />
+              <CreateOrEditReviewForm formRef={formRef} review={editedReview} modeCreate={false} />
             )}
-            {params.displayCreateForm && <ReviewCreateBody formRef={formRef} modeCreate={true} />}
+            {params.displayCreateForm && (
+              <CreateOrEditReviewForm formRef={formRef} modeCreate={true} />
+            )}
             {params.displayViewForm && (
-              <ReviewBody user={user} review={editedReview} closeModal={closeModal} />
+              <Review user={user} review={editedReview} closeModal={closeModal} />
             )}
           </Container>
         </Modal.Body>
