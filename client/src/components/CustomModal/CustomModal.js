@@ -1,24 +1,13 @@
-/* eslint-disable */
 import { Button, Container, Modal } from 'react-bootstrap';
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import '../../App.css';
 import { CreateOrEditReviewForm } from '../Review/CreateOrEditReviewForm';
-import {
-  addImagesToDatabase,
-  deleteImagesFromFirebaseCloud,
-  uploadImagesToFirebaseCloud,
-} from '../../api/store/ReviewStore';
-import { useDispatch, useSelector } from 'react-redux';
-import { LoadingComponent } from '../index.components';
-import { setIsLoading } from '../../store/reducers/LoadingSlice';
+import { useSelector } from 'react-redux';
 import { Review } from '../Review/Review';
 
 // eslint-disable-next-line react/display-name
 export const CustomModal = forwardRef((props, ref) => {
-  const editedReview = useSelector((state) => state.review.editedReview);
-  const isLoading = useSelector((state) => state.loading.isLoading);
   const params = useSelector((state) => state.modal.params);
-  const user = useSelector((state) => state.user.browsedUser);
 
   const formRef = useRef();
 
@@ -27,8 +16,7 @@ export const CustomModal = forwardRef((props, ref) => {
   const handleModalSaveChanges = async () => {
     if (formRef.current && formRef) {
       console.log(formRef.current);
-      let result = await formRef.current.submitForm();
-      console.log('result got', result);
+      const result = await formRef.current.submitForm();
       if (result) {
         closeModal();
       }
@@ -47,7 +35,6 @@ export const CustomModal = forwardRef((props, ref) => {
 
   return (
     <div>
-      {isLoading && <LoadingComponent />}
       <Modal
         show={showModal}
         aria-labelledby='contained-modal-title-vcenter'
@@ -64,15 +51,8 @@ export const CustomModal = forwardRef((props, ref) => {
         </Modal.Header>
         <Modal.Body>
           <Container>
-            {params.displayEditForm && (
-              <CreateOrEditReviewForm formRef={formRef} review={editedReview} modeCreate={false} />
-            )}
-            {params.displayCreateForm && (
-              <CreateOrEditReviewForm formRef={formRef} modeCreate={true} />
-            )}
-            {params.displayViewForm && (
-              <Review user={user} review={editedReview} closeModal={closeModal} />
-            )}
+            {params.displayEditForm && <CreateOrEditReviewForm formRef={formRef} />}
+            {params.displayViewForm && <Review closeModal={closeModal} />}
           </Container>
         </Modal.Body>
 

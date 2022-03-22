@@ -5,7 +5,6 @@ const initialState = {
     title: '',
     displayModalSaveCancelButtons: 'none',
     displayModalFeedback: 'none',
-    displayCreateForm: false,
     displayEditForm: false,
     displayViewForm: false,
     displayHeader: '',
@@ -20,7 +19,6 @@ export const modalSlice = createSlice({
     setModalParams: (state, action) => {
       state.params.title = action.payload.title;
       state.params.displayModalButtons = action.payload.displayModalButtons;
-      state.params.displayCreateForm = action.payload.displayCreateForm;
       state.params.displayEditForm = action.payload.displayEditForm;
       state.params.displayViewForm = action.payload.displayViewForm;
       state.params.displayHeader = action.payload.displayHeader;

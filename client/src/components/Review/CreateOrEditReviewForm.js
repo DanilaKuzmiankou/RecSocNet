@@ -1,17 +1,14 @@
-/* eslint-disable */
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import React, { useEffect } from 'react';
 import '../../App.css';
-// import { Col, Form, Row } from 'react-bootstrap';
-import { Multiselect } from 'multiselect-react-dropdown';
 import { UploadImage } from '../UploadImage/UploadImage';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEditedReview, setReviews, setSelectedReview } from '../../store/reducers/ReviewSlice';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { setReviews, setSelectedReview } from '../../store/reducers/ReviewSlice';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { CustomMultiselect } from '../CustomMultiselect/CustomMultiselect';
 import {
   addImagesToDatabase,
@@ -22,8 +19,8 @@ import {
 } from '../../api/store/ReviewStore';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
 import LoadingComponent from '../LoadingComponent/LoadingComponent';
+import { modules, options } from '../../utils/Storage';
 
-// eslint-disable-next-line react/display-name
 export const CreateOrEditReviewForm = (props) => {
   const tagsArray = ['world war', 'fantasy', 'scam', 'politics'];
 
@@ -32,45 +29,14 @@ export const CreateOrEditReviewForm = (props) => {
   const dispatch = useDispatch();
   const { browsedUser } = useSelector((state) => state.user);
   const { reviews, editedReview } = useSelector((state) => state.review);
-
-  const category = ['books', 'games', 'music', 'lifestyle'];
-
-  const options = category.map((item) => {
-    return (
-      <option key={item} value={item}>
-        {item}
-      </option>
-    );
-  });
+  const currentReview = Object.assign({}, editedReview);
 
   useEffect(() => {}, [dispatch]);
-
-  const modules = {
-    toolbar: [
-      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-      ['blockquote', 'code-block'],
-
-      [{ header: 1 }, { header: 2 }], // custom button values
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
-      [{ indent: '-1' }, { indent: '+1' }],
-      [{ direction: 'rtl' }], // text direction
-
-      [{ size: ['small', 'large'] }], // custom dropdown
-      [{ header: [1, 2, 3, 4, 5, 6] }],
-
-      [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-      [{ font: [] }],
-      [{ align: [] }],
-
-      ['clean'], // remove formatting button
-    ],
-  };
 
   const handleToUpdate = async (newReview) => {
     await uploadOrDeletePictures(newReview);
     Object.assign(newReview, {
-      id: props.review.id,
+      id: editedReview.id,
     });
     const reviewFromApi = await saveEditedReview(newReview);
     const newArr = reviews.map((item) => (item.id === reviewFromApi.id ? reviewFromApi : item));
@@ -118,9 +84,9 @@ export const CreateOrEditReviewForm = (props) => {
 
   const formSubmit = async (values, resolve) => {
     dispatch(setIsLoading(true));
-    let redactedReview = values;
+    const redactedReview = values;
     redactedReview.tags = redactedReview.tags.join(',');
-    if (props?.review) {
+    if (Object.keys(currentReview).length !== 0) {
       console.log('old', redactedReview);
       await handleToUpdate(redactedReview);
     } else {
@@ -137,12 +103,12 @@ export const CreateOrEditReviewForm = (props) => {
       <Formik
         innerRef={props.formRef}
         initialValues={{
-          title: props?.review?.title || '',
-          authorScore: props?.review?.authorScore || '',
-          tags: props?.review?.tags?.split(',') || [],
-          text: props?.review?.text || '',
-          images: props?.review?.images || [],
-          category: props?.review?.category || '',
+          title: currentReview?.title || '',
+          authorScore: currentReview?.authorScore || '',
+          tags: currentReview?.tags?.split(',') || [],
+          text: currentReview?.text || '',
+          images: currentReview?.images || [],
+          category: currentReview?.category || '',
         }}
         validationSchema={Yup.object({
           title: Yup.string().max(100, 'Must be 100 characters or less').required('Required'),

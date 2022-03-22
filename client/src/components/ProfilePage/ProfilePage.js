@@ -107,13 +107,13 @@ export const ProfilePage = (props) => {
   };
 
   const createReview = () => {
+    dispatch(setEditedReview({}));
     dispatch(
       setModalParams({
         title: 'Review Creating',
         displayModalButtons: '',
         displayModalFeedback: 'none',
-        displayCreateForm: true,
-        displayEditForm: false,
+        displayEditForm: true,
         displayViewForm: false,
         displayHeader: '',
         backdrop: 'static',
@@ -130,7 +130,6 @@ export const ProfilePage = (props) => {
           title: 'Review View',
           displayModalButtons: 'none',
           displayModalFeedback: '',
-          displayCreateForm: false,
           displayEditForm: false,
           displayViewForm: true,
           displayHeader: 'none',
@@ -149,7 +148,6 @@ export const ProfilePage = (props) => {
           title: 'Review Editing',
           displayModalButtons: '',
           displayModalFeedback: 'none',
-          displayCreateForm: false,
           displayEditForm: true,
           displayViewForm: false,
           displayHeader: '',

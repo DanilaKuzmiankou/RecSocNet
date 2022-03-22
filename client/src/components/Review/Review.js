@@ -5,8 +5,11 @@ import StarRatings from 'react-star-ratings/build/star-ratings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import ReactQuill from 'react-quill';
+import { useSelector } from 'react-redux';
 
 export const Review = (props) => {
+  const { editedReview } = useSelector((state) => state.review);
+
   const closeModal = () => {
     props.closeModal();
   };
@@ -16,7 +19,7 @@ export const Review = (props) => {
       <FontAwesomeIcon size='lg' icon={faArrowLeft} onClick={closeModal} />
       <Container fluid>
         <div className='review_container'>
-          {props.review.user?.name && (
+          {editedReview.user?.name && (
             <div className='form-group form-inline'>
               <label style={{ fontSize: '13px', fontStyle: 'italic' }}>by </label>
               <label
@@ -26,11 +29,11 @@ export const Review = (props) => {
                   marginLeft: '7px',
                 }}
               >
-                {props.review.user.name}
+                {editedReview.user.name}
               </label>
             </div>
           )}
-          <h1>{props.review?.title}</h1>
+          <h1>{editedReview.title}</h1>
 
           <div
             style={{
@@ -38,11 +41,11 @@ export const Review = (props) => {
               paddingBottom: '20px',
             }}
           >
-            <label className='review_category'>{props.review?.category}</label>
-            <label className='review_tags'>{props.review?.tags}</label>
+            <label className='review_category'>{editedReview.category}</label>
+            <label className='review_tags'>{editedReview.tags}</label>
             <div className='review_rating_container'>
               <StarRatings
-                rating={props.review?.authorScore}
+                rating={editedReview.authorScore}
                 starRatedColor='#ffd700'
                 numberOfStars={5}
                 starDimension='30px'
@@ -52,10 +55,10 @@ export const Review = (props) => {
           </div>
 
           <div>
-            <ReactQuill theme={null} readOnly={true} defaultValue={props.review?.text} />
+            <ReactQuill theme={null} readOnly={true} defaultValue={editedReview.text} />
           </div>
 
-          {props.review?.images?.map((image, index) => (
+          {editedReview.images?.map((image, index) => (
             <div className='thumb' key={index}>
               <div className='thumbInner'>
                 <Image src={image.imageLink} className='review_img' />

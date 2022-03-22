@@ -46,7 +46,6 @@ export const ReviewShortened = (props) => {
           title: 'Review View',
           displayModalButtons: 'none',
           displayModalFeedback: '',
-          displayCreateForm: false,
           displayEditForm: false,
           displayViewForm: true,
           displayHeader: 'none',
