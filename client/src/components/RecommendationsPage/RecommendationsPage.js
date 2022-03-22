@@ -39,11 +39,11 @@ export const RecommendationsPage = () => {
   };
 
   return (
-    <div className="recommendations_page_container">
+    <div className='recommendations_page_container'>
       {isLoading ? (
         <LoadingComponent />
       ) : (
-        <Container className="cont">
+        <Container className='cont'>
           <Row>
             <Col> </Col>
             <Col sm={8}>
@@ -59,7 +59,7 @@ export const RecommendationsPage = () => {
                 }
               >
                 {newestReviews.map((review, id) => (
-                  <div key={id} className="review_shortened_container">
+                  <div key={id} className='review_shortened_container'>
                     <ReviewShortened key={id} currentReview={review} reviewId={id} />
                   </div>
                 ))}

@@ -201,54 +201,54 @@ export const ProfilePage = (props) => {
   };
 
   return (
-    <Container fluid className="profile_page_container">
+    <Container fluid className='profile_page_container'>
       {isLoading1 ? (
         <LoadingComponent />
       ) : (
         <div>
           {routerParams.id || isAuthenticated ? (
             <div>
-              <h1 className="small_margin_left no_select"> User Profile </h1>
-              <div className="user_profile">
+              <h1 className='small_margin_left no_select'> User Profile </h1>
+              <div className='user_profile'>
                 <UserProfile />
               </div>
 
               {reviews && reviews.length > 0 ? (
                 <div>
-                  <h1 className="text-center">Reviews</h1>
+                  <h1 className='text-center'>Reviews</h1>
 
                   <Fragment>
-                    <div className="reviews_table_container">
-                      <Button variant="success" onClick={changeDisplayFiltersState}>
+                    <div className='reviews_table_container'>
+                      <Button variant='success' onClick={changeDisplayFiltersState}>
                         {filtersBtnText}
                       </Button>
                       <Button
-                        variant="success"
-                        className="reviews_table_button"
+                        variant='success'
+                        className='reviews_table_button'
                         onClick={viewReview}
                       >
                         View
                       </Button>
                     </div>
                     {isCurrentUserAdmin || isCurrentUserOwner ? (
-                      <div className="reviews_table_container">
+                      <div className='reviews_table_container'>
                         <Button
-                          variant="success"
-                          className="reviews_table_button"
+                          variant='success'
+                          className='reviews_table_button'
                           onClick={createReview}
                         >
                           Create
                         </Button>
                         <Button
-                          variant="success"
-                          className="reviews_table_button"
+                          variant='success'
+                          className='reviews_table_button'
                           onClick={editReview}
                         >
                           Edit
                         </Button>
                         <Button
-                          variant="success"
-                          className="reviews_table_button"
+                          variant='success'
+                          className='reviews_table_button'
                           onClick={deleteReview}
                         >
                           Delete
@@ -260,21 +260,21 @@ export const ProfilePage = (props) => {
                   <CustomBootstrapTable />
                 </div>
               ) : (
-                <div className="center_profile_page text-center">
+                <div className='center_profile_page text-center'>
                   {isCurrentUserAdmin || isCurrentUserOwner ? (
-                    <div className="no_wrap_on_normal_screen">
+                    <div className='no_wrap_on_normal_screen'>
                       <h2>
                         Ooooops...It seems you have not reviews, click the button to create the
                         first!
                       </h2>
-                      <div className="profile_button_container">
-                        <Button className="profile_button" variant="danger" onClick={createReview}>
+                      <div className='profile_button_container'>
+                        <Button className='profile_button' variant='danger' onClick={createReview}>
                           Tap me!
                         </Button>
                       </div>
                     </div>
                   ) : (
-                    <div className="no_wrap_on_big_screen">
+                    <div className='no_wrap_on_big_screen'>
                       <h2>This user has no reviews at the moment!</h2>
                     </div>
                   )}
@@ -282,7 +282,7 @@ export const ProfilePage = (props) => {
               )}
             </div>
           ) : (
-            <div className="no_wrap_on_normal_screen center_without_content text-center">
+            <div className='no_wrap_on_normal_screen center_without_content text-center'>
               <div>
                 <h2>Log in to create your first review!</h2>
                 <LogInButton size={'big'} />

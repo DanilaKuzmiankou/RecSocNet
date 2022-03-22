@@ -13,11 +13,11 @@ export const ReviewBody = (props) => {
 
   return (
     <div>
-      <FontAwesomeIcon size="lg" icon={faArrowLeft} onClick={closeModal} />
+      <FontAwesomeIcon size='lg' icon={faArrowLeft} onClick={closeModal} />
       <Container fluid>
-        <div className="review_container">
+        <div className='review_container'>
           {props.review.user?.name && (
-            <div className="form-group form-inline">
+            <div className='form-group form-inline'>
               <label style={{ fontSize: '13px', fontStyle: 'italic' }}>by </label>
               <label
                 style={{
@@ -38,15 +38,15 @@ export const ReviewBody = (props) => {
               paddingBottom: '20px',
             }}
           >
-            <label className="review_category">{props.review?.category}</label>
-            <label className="review_tags">{props.review?.tags}</label>
-            <div className="review_rating_container">
+            <label className='review_category'>{props.review?.category}</label>
+            <label className='review_tags'>{props.review?.tags}</label>
+            <div className='review_rating_container'>
               <StarRatings
                 rating={props.review?.authorScore}
-                starRatedColor="#ffd700"
+                starRatedColor='#ffd700'
                 numberOfStars={5}
-                starDimension="30px"
-                name="rating"
+                starDimension='30px'
+                name='rating'
               />
             </div>
           </div>
@@ -56,9 +56,9 @@ export const ReviewBody = (props) => {
           </div>
 
           {props.review?.images?.map((image, index) => (
-            <div className="thumb" key={index}>
-              <div className="thumbInner">
-                <Image src={image.imageLink} className="review_img" />
+            <div className='thumb' key={index}>
+              <div className='thumbInner'>
+                <Image src={image.imageLink} className='review_img' />
               </div>
             </div>
           ))}

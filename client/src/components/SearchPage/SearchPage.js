@@ -73,15 +73,15 @@ export const SearchPage = () => {
   };
 
   return (
-    <div className="search_page_container">
+    <div className='search_page_container'>
       {isLoading ? (
         <LoadingComponent />
       ) : (
         <div>
           {searchedReviews && searchedReviews.length > 0 ? (
             <div>
-              <div className="search_page_title">Search result:</div>
-              <Container className="cont">
+              <div className='search_page_title'>Search result:</div>
+              <Container className='cont'>
                 <Row>
                   <Col> </Col>
                   <Col sm={8}>
@@ -98,7 +98,7 @@ export const SearchPage = () => {
                       }
                     >
                       {searchedReviews.map((review, id) => (
-                        <div key={id} className="review_shortened_container">
+                        <div key={id} className='review_shortened_container'>
                           <ReviewShortened key={id} currentReview={review} reviewId={id} />
                         </div>
                       ))}
@@ -109,7 +109,7 @@ export const SearchPage = () => {
               </Container>
             </div>
           ) : (
-            <div className="center_without_content">
+            <div className='center_without_content'>
               <h1>Sorry, we have not found anything!</h1>
             </div>
           )}

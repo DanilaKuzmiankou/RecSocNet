@@ -69,7 +69,7 @@ export const Feedback = (props) => {
   };
 
   return (
-    <div className="d-flex align-items-end justify-content-around">
+    <div className='d-flex align-items-end justify-content-around'>
       <span style={{ fontSize: '1.4rem' }}>
         {review.usersReviewScore}
         &nbsp;
@@ -79,21 +79,21 @@ export const Feedback = (props) => {
       <Comments />
       <span>&nbsp;&nbsp;</span>
       <OverlayTrigger
-        placement="top"
+        placement='top'
         delay={{ show: 150, hide: 200 }}
         overlay={
-          <Tooltip id="tooltip-disabled">Average content score: {review.usersContentScore}</Tooltip>
+          <Tooltip id='tooltip-disabled'>Average content score: {review.usersContentScore}</Tooltip>
         }
       >
-        <div className="feedback_rating">
+        <div className='feedback_rating'>
           <StarRatings
             rating={rating}
-            starRatedColor="#ffd700"
-            starHoverColor="#ffd700"
+            starRatedColor='#ffd700'
+            starHoverColor='#ffd700'
             numberOfStars={5}
-            starDimension="2rem"
+            starDimension='2rem'
             changeRating={changeRating}
-            name="rating"
+            name='rating'
           />
         </div>
       </OverlayTrigger>

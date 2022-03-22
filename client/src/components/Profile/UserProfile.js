@@ -48,7 +48,6 @@ export const UserProfile = () => {
     event.preventDefault();
     const answer = await changeUserName(browsedUser.authId, editUsername);
     if (answer?.status === 200) {
-      setUsername(editUsername);
       const newBrowsedUser = Object.assign({}, browsedUser);
       newBrowsedUser.name = editUsername;
       dispatch(setBrowsedUser(newBrowsedUser));
@@ -59,6 +58,7 @@ export const UserProfile = () => {
       }
       setValidationMessage(answer.data.message);
       setTimeout(async () => {
+        setEditUsername('');
         setDisplayForm('none');
       }, 2000);
     } else {
@@ -76,7 +76,7 @@ export const UserProfile = () => {
   };
 
   return (
-    <Container fluid className="no_select">
+    <Container fluid className='no_select'>
       <Row>
         <Col xs={'auto'} md={'auto'}>
           <Image
@@ -94,52 +94,52 @@ export const UserProfile = () => {
           />
         </Col>
         <Col xs={'auto'} md={'auto'}>
-          <div className="small_margin_top">
-            <div className="profile_username_edit_container">
+          <div className='small_margin_top'>
+            <div className='profile_username_edit_container'>
               <Row>
                 <Col xs={'auto'} md={'auto'} sm={12}>
                   {isCurrentUserAdmin || isCurrentUserOwner ? (
                     <OverlayTrigger
-                      placement="right"
+                      placement='right'
                       delay={{ show: 75, hide: 200 }}
                       onToggle={autoCloseTooltip}
                       show={isOverlayTriggerVisible}
-                      overlay={<Tooltip id="tooltip-disabled">Change user name</Tooltip>}
+                      overlay={<Tooltip id='tooltip-disabled'>Change user name</Tooltip>}
                     >
-                      <div className="profile_username_edit_container">
-                        <h4 className=""> User name: {browsedUser.name} </h4>
+                      <div className='profile_username_edit_container'>
+                        <h4 className=''> User name: {browsedUser.name} </h4>
 
                         <Rating
-                          className="profile_username_edit_icon"
+                          className='profile_username_edit_icon'
                           start={0}
                           stop={1}
                           initialRating={edit}
                           onClick={showOrHideForm}
                           emptySymbol={
-                            <FontAwesomeIcon icon={editLight} color={'black'} size="1x" />
+                            <FontAwesomeIcon icon={editLight} color={'black'} size='1x' />
                           }
-                          fullSymbol={<FontAwesomeIcon icon={faEdit} size="1x" color={'black'} />}
+                          fullSymbol={<FontAwesomeIcon icon={faEdit} size='1x' color={'black'} />}
                         />
                       </div>
                     </OverlayTrigger>
                   ) : (
-                    <h4 className=""> User name: {browsedUser.name} </h4>
+                    <h4 className=''> User name: {browsedUser.name} </h4>
                   )}
-                  <h4 className=""> User likes: {browsedUser.likes} </h4>
+                  <h4 className=''> User likes: {browsedUser.likes} </h4>
                 </Col>
                 <Col md={6} sm={12}>
                   <Form
                     onSubmit={handleSubmit}
                     style={{ display: displayForm }}
-                    className="profile_username_edit_container"
+                    className='profile_username_edit_container'
                   >
-                    <Form.Group className="profile_username_field">
+                    <Form.Group className='profile_username_field'>
                       <InputGroup hasValidation>
                         <Form.Control
                           required
                           value={editUsername}
-                          id="inlineFormInputName"
-                          placeholder="Enter new user name"
+                          id='inlineFormInputName'
+                          placeholder='Enter new user name'
                           isInvalid={errorValidationMessage}
                           isValid={validationMessage}
                           onChange={(e) => {
@@ -148,18 +148,18 @@ export const UserProfile = () => {
                             setEditUsername(e.target.value);
                           }}
                         />
-                        <Form.Control.Feedback type="valid">
+                        <Form.Control.Feedback type='valid'>
                           {validationMessage}
                         </Form.Control.Feedback>
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback type='invalid'>
                           {errorValidationMessage}
                         </Form.Control.Feedback>
                       </InputGroup>
                     </Form.Group>
                     <Button
-                      className="profile_username_submit_button"
-                      type="submit"
-                      variant="success"
+                      className='profile_username_submit_button'
+                      type='submit'
+                      variant='success'
                     >
                       Submit
                     </Button>

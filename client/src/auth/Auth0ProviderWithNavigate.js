@@ -6,9 +6,7 @@ const Auth0ProviderWithNavigate = ({ children }) => {
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState) => {
-    // the path to redirect is specified in the `returnTo` property
-    // by default the user is returned to the current page
-    navigate(appState || window.location.pathname);
+    navigate(appState?.returnTo || '/profile');
   };
 
   return (

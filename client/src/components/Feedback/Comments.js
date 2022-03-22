@@ -29,8 +29,8 @@ export const Comments = (props) => {
         stop={1}
         initialRating={comments}
         onClick={onCommentsClick}
-        emptySymbol={<FontAwesomeIcon icon={faComment} color={'black'} size="2x" />}
-        fullSymbol={<FontAwesomeIcon icon={faCommentSolid} size="2x" color={'black'} />}
+        emptySymbol={<FontAwesomeIcon icon={faComment} color={'black'} size='2x' />}
+        fullSymbol={<FontAwesomeIcon icon={faCommentSolid} size='2x' color={'black'} />}
       />
     </div>
   );

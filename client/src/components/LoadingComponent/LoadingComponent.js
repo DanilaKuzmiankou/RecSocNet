@@ -5,13 +5,13 @@ export const LoadingComponent = () => {
   return (
     <div>
       <RotatingSquare
-        wrapperClass="custom_spinner"
-        ariaLabel="rotating-square"
+        wrapperClass='custom_spinner'
+        ariaLabel='rotating-square'
         visible={true}
-        color="grey"
-        strokeWidth="10"
+        color='grey'
+        strokeWidth='10'
       />
-      <div className="overlay"></div>
+      <div className='overlay'></div>
     </div>
   );
 };

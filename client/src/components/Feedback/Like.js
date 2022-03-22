@@ -54,8 +54,8 @@ export const Like = ({ updateReview, review }) => {
         stop={1}
         initialRating={like}
         onClick={onLikeClick}
-        emptySymbol={<FontAwesomeIcon icon={faThumbsUp} color={'black'} size="2x" />}
-        fullSymbol={<FontAwesomeIcon icon={faThumbsUpSolid} size="2x" color={'red'} />}
+        emptySymbol={<FontAwesomeIcon icon={faThumbsUp} color={'black'} size='2x' />}
+        fullSymbol={<FontAwesomeIcon icon={faThumbsUpSolid} size='2x' color={'red'} />}
       />
     </div>
   );

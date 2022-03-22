@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-export const UploadImage = ({ updateImages, filesUrl }) => {
+export const UploadImage = ({ field, form, ...props }) => {
+  const fieldName = 'images';
   const baseStyle = {
     flex: 1,
     display: 'flex',
@@ -44,7 +45,7 @@ export const UploadImage = ({ updateImages, filesUrl }) => {
       );
       let prev = [...files];
       prev = prev.concat(newFiles);
-      updateImages(prev);
+      form.setFieldValue(fieldName, prev);
       setFiles(prev);
     },
   });
@@ -61,13 +62,13 @@ export const UploadImage = ({ updateImages, filesUrl }) => {
 
   const thumbs = files.map(function (file, index) {
     return (
-      <div className="thumb" key={index}>
-        <div className="thumbInner">
+      <div className='thumb' key={index}>
+        <div className='thumbInner'>
           <OverlayTrigger
             delay={{ show: 150, hide: 300 }}
-            overlay={<Tooltip id="tooltip-disabled">Click to remove picture</Tooltip>}
+            overlay={<Tooltip id='tooltip-disabled'>Click to remove picture</Tooltip>}
           >
-            <Image onClick={() => removePicture(file)} src={file.preview} className="review_img" />
+            <Image onClick={() => removePicture(file)} src={file.preview} className='review_img' />
           </OverlayTrigger>
         </div>
       </div>
@@ -77,11 +78,11 @@ export const UploadImage = ({ updateImages, filesUrl }) => {
   useEffect(async () => {
     let isMounted = true;
     if (isMounted) {
-      if (filesUrl && filesUrl.length) {
+      if (field.value && field.value.length) {
         const newFiles = [...files];
-        for (let i = 0; i < filesUrl.length; i++) {
+        for (let i = 0; i < field.value.length; i++) {
           const obj = {
-            preview: filesUrl[i].imageLink,
+            preview: field.value[i].imageLink,
           };
           newFiles.push(obj);
         }
@@ -94,23 +95,23 @@ export const UploadImage = ({ updateImages, filesUrl }) => {
     return () => {
       isMounted = false;
     };
-  }, [filesUrl]);
+  }, [field.value]);
 
   const removePicture = async (file) => {
     let newFiles = [...files];
     newFiles = newFiles.filter((iteratedFile) => iteratedFile.preview !== file.preview);
     setFiles(newFiles);
-    updateImages(newFiles);
+    form.setFieldValue(fieldName, newFiles);
   };
 
   return (
-    <section className="container">
+    <section className='container'>
       <div {...dropzone.getRootProps({ style })}>
         <input {...dropzone.getInputProps()} />
         <p>Drag &apos;n&apos; drop pictures here, or click to select</p>
       </div>
-      {files && files.length > 0 && <h6 className="small_margin_top">Pictures to upload</h6>}
-      <aside className="thumbsContainer">{thumbs}</aside>
+      {files && files.length > 0 && <h6 className='small_margin_top'>Pictures to upload</h6>}
+      <aside className='thumbsContainer'>{thumbs}</aside>
     </section>
   );
 };

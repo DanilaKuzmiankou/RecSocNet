@@ -9,11 +9,11 @@ export const LogInButton = (props) => {
     return (
       <OverlayTrigger
         delay={{ show: 250, hide: 400 }}
-        placement="bottom"
-        overlay={<Tooltip id="tooltip-disabled">Log in!</Tooltip>}
+        placement='bottom'
+        overlay={<Tooltip id='tooltip-disabled'>Log in!</Tooltip>}
       >
         <button
-          className="btn btn-primary btn-block big_log_in_button"
+          className='btn btn-primary btn-block big_log_in_button'
           onClick={() => loginWithRedirect()}
         >
           Log In
@@ -24,11 +24,11 @@ export const LogInButton = (props) => {
     return (
       <OverlayTrigger
         delay={{ show: 250, hide: 400 }}
-        placement="bottom"
-        overlay={<Tooltip id="tooltip-disabled">Log in!</Tooltip>}
+        placement='bottom'
+        overlay={<Tooltip id='tooltip-disabled'>Log in!</Tooltip>}
       >
         <button
-          className="btn btn-primary btn-block log_in_button"
+          className='btn btn-primary btn-block log_in_button'
           onClick={() => loginWithRedirect()}
         >
           Log In

@@ -30,7 +30,7 @@ export const CustomBootstrapTable = () => {
         <OverlayTrigger
           placement={tooltipPlacement}
           delay={{ show: 150, hide: 200 }}
-          overlay={<Tooltip id="tooltip-disabled">Click to sort!</Tooltip>}
+          overlay={<Tooltip id='tooltip-disabled'>Click to sort!</Tooltip>}
         >
           <h5>{column.text}</h5>
         </OverlayTrigger>
@@ -171,12 +171,12 @@ export const CustomBootstrapTable = () => {
   return (
     <BootstrapTable
       bordered={false}
-      wrapperClasses="table responsive-table"
-      keyField="id"
+      wrapperClasses='table responsive-table'
+      keyField='id'
       data={reviews}
       columns={columns}
       filter={filterFactory()}
-      filterPosition="top"
+      filterPosition='top'
       selectRow={{
         mode: 'radio',
         clickToSelect: true,

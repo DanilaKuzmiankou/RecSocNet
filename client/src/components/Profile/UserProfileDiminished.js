@@ -13,7 +13,7 @@ export const UserProfileDiminished = () => {
   return (
     <div>
       {currentUser && (
-        <div className="no_select user_profile_diminished_container">
+        <div className='no_select user_profile_diminished_container'>
           <div>
             <Image
               src={currentUser?.profilePictureUrl}
@@ -36,7 +36,7 @@ export const UserProfileDiminished = () => {
             <NavDropdown
               style={{ fontSize: '30px' }}
               title={currentUser?.name}
-              id="navbarScrollingDropdown"
+              id='navbarScrollingDropdown'
             >
               <NavDropdown.Item href={'/profile/' + currentUser?.id}>Profile</NavDropdown.Item>
               <NavDropdown.Divider />

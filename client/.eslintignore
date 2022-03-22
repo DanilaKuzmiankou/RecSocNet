@@ -1,0 +1,10 @@
+../config
+../controllers
+../error
+../migrations
+../models
+../routes
+../seeders
+../utils
+../DB.js
+../index.js
