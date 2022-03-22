@@ -12,6 +12,11 @@ export async function getNewestReviews(limit, offset, userId) {
   return await postRequest('/api/review/newestReviews', body);
 }
 
+export async function getMostLikedReviews(limit, offset, userId) {
+  const body = JSON.stringify({ limit, offset, userId });
+  return await postRequest('/api/review/mostLikedReviews', body);
+}
+
 export async function findReviews(limit, offset, searchedString, userId) {
   const body = JSON.stringify({ limit, offset, searchedString, userId });
   return await postRequest('/api/review/findReviews', body);

@@ -101,6 +101,18 @@ body {
     margin: 0 0 30px 0;
 }
 
+.tools_container_div{
+    display: flex;
+    justify-content: center;
+}
+
+.recommendations_page_tools_container{
+    padding: 20px 0 ;
+    border: black 2px solid;
+    margin: 0 0 30px 0;
+    background-color: white;
+}
+
 .review_shortened_feedback_container {
     background-color: #EEF1F0;
     min-height: 70px;

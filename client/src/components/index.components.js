@@ -1,8 +1,3 @@
-export { ProfilePage } from './ProfilePage/ProfilePage';
-export { RecommendationsPage } from './RecommendationsPage/RecommendationsPage';
-export { NotFoundPage } from './NotFoundPage/NotFoundPage';
-export { SearchPage } from './SearchPage/SearchPage';
-export { AdminPage } from './AdminPage/AdminPage';
 export { CustomNav } from './CustomNav/CustomNav';
 export { CustomModal } from './CustomModal/CustomModal';
 export { UserProfile } from './Profile/UserProfile';
@@ -14,3 +9,4 @@ export { Feedback } from './Feedback/Feedback';
 export { Review } from './Review/Review';
 export { ReviewShortened } from './Review/ReviewShortened';
 export { CreateOrEditReviewForm } from './Review/CreateOrEditReviewForm';
+export { ToolsContainer } from './ToolsContainer/ToolsContainer';

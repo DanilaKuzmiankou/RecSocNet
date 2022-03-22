@@ -52,8 +52,7 @@ export const CreateOrEditReviewForm = (props) => {
 
   const uploadImagesToFirebase = async (pictures) => {
     if (pictures && pictures.length > 0) {
-      const urls = await uploadImagesToFirebaseCloud(pictures);
-      return urls;
+      return await uploadImagesToFirebaseCloud(pictures);
     }
   };
 
@@ -87,10 +86,8 @@ export const CreateOrEditReviewForm = (props) => {
     const redactedReview = values;
     redactedReview.tags = redactedReview.tags.join(',');
     if (Object.keys(currentReview).length !== 0) {
-      console.log('old', redactedReview);
       await handleToUpdate(redactedReview);
     } else {
-      console.log('new', redactedReview);
       await handleToCreate(redactedReview);
     }
     dispatch(setIsLoading(false));

@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { findReviews } from '../../api/store/ReviewStore';
 import { Col, Container, Row } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { LoadingComponent, ReviewShortened } from '../index.components';
+import { LoadingComponent, ReviewShortened } from '../../components/index.components';
 import { useDispatch, useSelector } from 'react-redux';
 import { setReviews } from '../../store/reducers/ReviewSlice';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';

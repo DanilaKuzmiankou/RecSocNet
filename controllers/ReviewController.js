@@ -76,10 +76,10 @@ class ReviewController {
     return res.json(reviews);
   }
 
-  async getReviews(limit, offset, userId, whereParams) {
+  async getReviews(limit, offset, userId, whereParams, orderParams) {
     return await Review.findAll({
       subQuery: false,
-      order: [["createdAt", "DESC"]],
+      order: [orderParams],
       where: whereParams,
       include: [
         {
@@ -112,7 +112,19 @@ class ReviewController {
 
   async getNewestReviews(req, res, next) {
     const { limit, offset, userId } = req.body;
-    let reviews = await reviewController.getReviews(limit, offset, userId, {});
+    let reviews = await reviewController.getReviews(limit, offset, userId, {}, [
+      "createdAt",
+      "DESC",
+    ]);
+    return res.json(reviews);
+  }
+
+  async getMostLikedReviews(req, res, next) {
+    const { limit, offset, userId } = req.body;
+    let reviews = await reviewController.getReviews(limit, offset, userId, {}, [
+      "usersReviewScore",
+      "DESC",
+    ]);
     return res.json(reviews);
   }
 
@@ -136,7 +148,8 @@ class ReviewController {
       limit,
       offset,
       userId,
-      whereQueryString
+      whereQueryString,
+      ["createdAt", "DESC"]
     );
     console.log("res: ", reviews);
     return res.json(reviews);

@@ -5,7 +5,7 @@ import {
   ProfilePage,
   RecommendationsPage,
   SearchPage,
-} from '../components/index.components';
+} from '../pages/index.pages';
 import React from 'react';
 
 export const AppRoutes = () => (

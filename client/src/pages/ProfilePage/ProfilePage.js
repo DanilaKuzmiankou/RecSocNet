@@ -7,7 +7,7 @@ import {
   LoadingComponent,
   LogInButton,
   UserProfile,
-} from '../index.components';
+} from '../../components/index.components';
 import { getUserById } from '../../api/store/UserStore';
 import { useParams } from 'react-router-dom';
 import {
