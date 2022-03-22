@@ -21,7 +21,6 @@ export const CustomModal = forwardRef((props, ref) => {
   const user = useSelector((state) => state.user.browsedUser);
 
   const formRef = useRef();
-  const modal = useRef();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -66,16 +65,9 @@ export const CustomModal = forwardRef((props, ref) => {
         <Modal.Body>
           <Container>
             {params.displayEditForm && (
-              <ReviewCreateBody
-                formRef={formRef}
-                review={editedReview}
-                modeCreate={false}
-                ref={modal}
-              />
+              <ReviewCreateBody formRef={formRef} review={editedReview} modeCreate={false} />
             )}
-            {params.displayCreateForm && (
-              <ReviewCreateBody formRef={formRef} modeCreate={true} ref={modal} />
-            )}
+            {params.displayCreateForm && <ReviewCreateBody formRef={formRef} modeCreate={true} />}
             {params.displayViewForm && (
               <ReviewBody user={user} review={editedReview} closeModal={closeModal} />
             )}

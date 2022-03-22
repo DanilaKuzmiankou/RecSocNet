@@ -42,15 +42,17 @@ export async function uploadImagesToFirebaseCloud(images) {
   const storageRef = firebase.storage().ref();
   for (let i = 0; i < images.length; i++) {
     file = images[i];
-    fileName = generateRandomString();
-    try {
-      fileRef = storageRef.child('reviews_images/' + fileName);
-      uploadTaskSnapshot = await fileRef.put(file);
-      downloadUrl = await uploadTaskSnapshot.ref.getDownloadURL();
-      imagesUrl[i] = downloadUrl;
-    } catch (error) {
-      console.log('ERR ===', error);
-      alert('Image uploading failed!');
+    if (file.preview) {
+      fileName = generateRandomString();
+      try {
+        fileRef = storageRef.child('reviews_images/' + fileName);
+        uploadTaskSnapshot = await fileRef.put(file);
+        downloadUrl = await uploadTaskSnapshot.ref.getDownloadURL();
+        imagesUrl[i] = downloadUrl;
+      } catch (error) {
+        console.log('ERR ===', error);
+        alert('Image uploading failed!');
+      }
     }
   }
   return imagesUrl;

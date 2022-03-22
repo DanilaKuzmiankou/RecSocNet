@@ -46,8 +46,10 @@ class ReviewController {
     let imagesDB = [];
     let image;
     for (const link of images) {
-      let image = await ReviewImage.create({ imageLink: link });
-      imagesDB.push(image);
+      if (link) {
+        image = await ReviewImage.create({ imageLink: link });
+        imagesDB.push(image);
+      }
     }
     await createdReview.setImages(imagesDB);
     createdReview = await Review.findOne({

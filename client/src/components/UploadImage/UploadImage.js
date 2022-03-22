@@ -62,15 +62,23 @@ export const UploadImage = ({ field, form, ...props }) => {
 
   const thumbs = files.map(function (file, index) {
     return (
-      <div className='thumb' key={index}>
-        <div className='thumbInner'>
-          <OverlayTrigger
-            delay={{ show: 150, hide: 300 }}
-            overlay={<Tooltip id='tooltip-disabled'>Click to remove picture</Tooltip>}
-          >
-            <Image onClick={() => removePicture(file)} src={file.preview} className='review_img' />
-          </OverlayTrigger>
-        </div>
+      <div key={index}>
+        {file.preview ? (
+          <div className='thumb'>
+            <div className='thumbInner'>
+              <OverlayTrigger
+                delay={{ show: 150, hide: 300 }}
+                overlay={<Tooltip id='tooltip-disabled'>Click to remove picture</Tooltip>}
+              >
+                <Image
+                  onClick={() => removePicture(file)}
+                  src={file.preview}
+                  className='review_img'
+                />
+              </OverlayTrigger>
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   });

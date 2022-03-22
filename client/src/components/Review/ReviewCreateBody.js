@@ -110,10 +110,6 @@ export const ReviewCreateBody = (props) => {
             redactedPicture.preview === prevPicture.imageLink
         ) === undefined
     );
-    /* console.log('all: ', allPictures);
-    console.log('upload: ', picturesToUpload);
-    console.log('delete: ', picturesToDelete);
-    console.log('selectedReview: ', editedReview.images);*/
 
     await deleteImagesFromFirebaseCloud(picturesToDelete);
     const picturesUrl = await uploadImagesToFirebase(picturesToUpload);
@@ -163,9 +159,9 @@ export const ReviewCreateBody = (props) => {
           return new Promise((resolve, reject) => {
             setSubmitting(true);
             console.log('submit...');
-            formSubmit(values, resolve);
             resetForm();
             setSubmitting(false);
+            formSubmit(values, resolve);
           });
         }}
       >
