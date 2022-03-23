@@ -172,7 +172,7 @@ class ReviewController {
       offset,
       userId,
       whereQueryString,
-      ["createdAt", "DESC"]
+      [["createdAt", "DESC"]]
     );
     console.log("res: ", reviews);
     return res.json(reviews);
