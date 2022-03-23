@@ -7,9 +7,19 @@ import {
   ReviewShortened,
   ToolsContainer,
 } from '../../components/index.components';
-import { getMostLikedReviews, getNewestReviews } from '../../api/store/ReviewStore';
+import {
+  getMostLikedReviews,
+  getNewestReviews,
+  getTagReviews,
+  getTags,
+} from '../../api/store/ReviewStore';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { setReviews } from '../../store/reducers/ReviewSlice';
+import {
+  setIsNewReviewsClicked,
+  setIsTopReviewsClicked,
+  setReviews,
+} from '../../store/reducers/ReviewSlice';
+import { TagCloud } from 'react-tagcloud';
 
 export const RecommendationsPage = () => {
   const dispatch = useDispatch();
@@ -22,10 +32,18 @@ export const RecommendationsPage = () => {
   const [fetchFunction, setFetchFunction] = useState('fetchNewestReviews');
 
   const [rowSelectionRate, setRowSelectionRate] = useState(0);
+
   const [hasMoreReviews, setHasMoreReviews] = useState(true);
+
+  const [tags, setTags] = useState([]);
+  const [tag, setTag] = useState('');
 
   useEffect(async () => {
     await fetchNewestReviews();
+    const tags = await getTags();
+    const tagsObj = [];
+    tags.map((tag) => tagsObj.push(Object.create({ value: tag, count: Math.random() * 100 })));
+    setTags(tagsObj);
     dispatch(setIsLoading(false));
   }, []);
 
@@ -63,26 +81,48 @@ export const RecommendationsPage = () => {
     }
   };
 
+  const fetchTagReviews = async () => {
+    const tagReviewsFromApi = await getTagReviews(10, rowSelectionRate * 10, currentUser.id, tag);
+    console.log('tagReviewsFromApi rev: ', tagReviewsFromApi);
+    if (tagReviewsFromApi.length !== 0) {
+      const resultTagReviews = [...currentReviews, ...tagReviewsFromApi];
+      console.log('result rev: ', resultTagReviews);
+      setCurrentReviews(resultTagReviews);
+      dispatch(setReviews(resultTagReviews));
+      setRowSelectionRate((rowSelectionRate) => rowSelectionRate + 1);
+    } else {
+      setHasMoreReviews(false);
+    }
+  };
+
+  const refreshInfiniteScroll = (reviews) => {
+    setRowSelectionRate((rate) => 1);
+    setCurrentReviews(reviews);
+    dispatch(setReviews(reviews));
+    setInfiniteScrollKey(Math.random());
+    dispatch(setIsLoading(false));
+  };
+
   const refreshNewestReviews = async () => {
     dispatch(setIsLoading(true));
     setFetchFunction((fetchFunction) => 'fetchNewestReviews');
-    setRowSelectionRate((rate) => 0);
     const newestReviewsFromApi = await getNewestReviews(10, 0, currentUser.id);
-    setCurrentReviews(newestReviewsFromApi);
-    dispatch(setReviews(newestReviewsFromApi));
-    setInfiniteScrollKey(Math.random());
-    dispatch(setIsLoading(false));
+    refreshInfiniteScroll(newestReviewsFromApi);
   };
 
   const refreshMostLikedReviews = async () => {
     dispatch(setIsLoading(true));
     setFetchFunction((fetchFunction) => 'fetchMostLikedReviews');
-    setRowSelectionRate((rate) => 1);
     const mostLikedReviewsFromApi = await getMostLikedReviews(10, 0, currentUser.id);
-    setCurrentReviews(mostLikedReviewsFromApi);
-    dispatch(setReviews(mostLikedReviewsFromApi));
-    setInfiniteScrollKey(Math.random());
-    dispatch(setIsLoading(false));
+    refreshInfiniteScroll(mostLikedReviewsFromApi);
+  };
+
+  const refreshTagReviews = async (tag) => {
+    console.log('tag', tag);
+    dispatch(setIsLoading(true));
+    setFetchFunction((fetchFunction) => 'fetchTagReviews');
+    const tagReviewsFromApi = await getTagReviews(10, 0, currentUser.id, tag);
+    refreshInfiniteScroll(tagReviewsFromApi);
   };
 
   const fetchReviews = () => {
@@ -93,7 +133,18 @@ export const RecommendationsPage = () => {
       case 'fetchMostLikedReviews':
         fetchMostLikedReviews();
         break;
+      case 'fetchTagReviews':
+        fetchTagReviews();
+        break;
     }
+  };
+
+  const findTagReviews = (tag) => {
+    console.log('tag', tag.value);
+    dispatch(setIsNewReviewsClicked(false));
+    dispatch(setIsTopReviewsClicked(false));
+    setTag(tag);
+    refreshTagReviews(tag);
   };
 
   return (
@@ -105,6 +156,14 @@ export const RecommendationsPage = () => {
           <Row>
             <Col> </Col>
             <Col sm={8}>
+              <div className='tags_cloud_container'>
+                <TagCloud
+                  minSize={30}
+                  maxSize={75}
+                  tags={tags}
+                  onClick={(tag) => findTagReviews(tag.value)}
+                />
+              </div>
               <ToolsContainer
                 refreshNewestReviews={refreshNewestReviews}
                 refreshMostLikedReviews={refreshMostLikedReviews}

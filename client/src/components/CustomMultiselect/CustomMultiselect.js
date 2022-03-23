@@ -11,7 +11,6 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
 
   useEffect(async () => {
     const tags = await getTags();
-    console.log('default tags: ', tags);
     setTags(tags);
   }, []);
 

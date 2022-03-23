@@ -122,11 +122,33 @@ class ReviewController {
 
   async getMostLikedReviews(req, res, next) {
     const { limit, offset, userId } = req.body;
-    let reviews = await reviewController.getReviews(limit, offset, userId, {}, [
-      ["usersReviewScore", "DESC"],
-      ["createdAt", "DESC"],
-    ]);
+    const reviews = await reviewController.getReviews(
+      limit,
+      offset,
+      userId,
+      {},
+      [
+        ["usersReviewScore", "DESC"],
+        ["createdAt", "DESC"],
+      ]
+    );
     return res.json(reviews);
+  }
+
+  async getTagReviews(req, res, next) {
+    const { tag, limit, offset, userId } = req.body;
+    const reviews = await reviewController.getReviews(
+      limit,
+      offset,
+      userId,
+      {
+        tags: {
+          [op.substring]: tag,
+        },
+      },
+      [["createdAt", "DESC"]]
+    );
+    res.json(reviews);
   }
 
   async findReviews(req, res, next) {

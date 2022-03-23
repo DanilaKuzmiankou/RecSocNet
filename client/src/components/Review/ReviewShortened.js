@@ -65,8 +65,8 @@ export const ReviewShortened = (props) => {
           backgroundColor: 'white',
         }}
       >
-        <div>
-          <div style={{ float: 'left', width: '50%' }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ display: 'flex', flexShrink: '0' }}>
             <label style={{ fontSize: '33px', fontStyle: 'italic' }}>by </label>
             <a
               style={{ marginLeft: '10px', fontSize: '43px' }}
@@ -76,16 +76,14 @@ export const ReviewShortened = (props) => {
               {currentReview?.user?.name}
             </a>
           </div>
-          <div style={{ float: 'left', width: '50%', display: 'flex', justifyContent: 'end' }}>
+          <div style={{ display: 'flex', flex: '1' }}> </div>
+          <div style={{ display: 'flex', flexShrink: '0' }}>
             <label style={{ fontSize: '23px' }}>
               {changeSingleDateToUserTimezone(currentReview?.createdAt)}
             </label>
           </div>
         </div>
 
-        <div>
-          <span>&nbsp;</span>{' '}
-        </div>
         <div
           onClick={() => {
             viewReview(currentReview);

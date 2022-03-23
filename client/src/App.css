@@ -67,6 +67,13 @@ body {
 
  */
 
+.tags_cloud_container{
+    background-color: white;
+    margin-bottom: 30px;
+    border: black 1px solid;
+    border-radius: 100px;
+    padding: 30px;
+}
 
 .nav-link {
     padding: 6px;
