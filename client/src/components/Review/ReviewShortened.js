@@ -7,6 +7,7 @@ import { setEditedReview } from '../../store/reducers/ReviewSlice';
 import { setModalParams } from '../../store/reducers/ModalSlice';
 import { CustomModal } from '../CustomModal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
+import { changeSingleDateToUserTimezone } from '../../utils/Utils';
 
 export const ReviewShortened = (props) => {
   const dispatch = useDispatch();
@@ -64,23 +65,33 @@ export const ReviewShortened = (props) => {
           backgroundColor: 'white',
         }}
       >
-        <div className='form-group form-inline'>
-          <label style={{ fontSize: '33px', fontStyle: 'italic' }}>by </label>
-          <a
-            style={{ marginLeft: '10px', fontSize: '43px' }}
-            className='review_shortened_profile_url'
-            href={'/profile/' + currentReview?.user?.id}
-          >
-            {currentReview?.user?.name}
-          </a>
+        <div>
+          <div style={{ float: 'left', width: '50%' }}>
+            <label style={{ fontSize: '33px', fontStyle: 'italic' }}>by </label>
+            <a
+              style={{ marginLeft: '10px', fontSize: '43px' }}
+              className='review_shortened_profile_url'
+              href={'/profile/' + currentReview?.user?.id}
+            >
+              {currentReview?.user?.name}
+            </a>
+          </div>
+          <div style={{ float: 'left', width: '50%', display: 'flex', justifyContent: 'end' }}>
+            <label style={{ fontSize: '23px' }}>
+              {changeSingleDateToUserTimezone(currentReview?.createdAt)}
+            </label>
+          </div>
         </div>
 
+        <div>
+          <span>&nbsp;</span>{' '}
+        </div>
         <div
           onClick={() => {
             viewReview(currentReview);
           }}
         >
-          <div style={{ fontSize: '43px' }}>{currentReview?.title}</div>
+          <div style={{ fontSize: '43px' }}>{currentReview?.id}</div>
 
           <Container
             fluid

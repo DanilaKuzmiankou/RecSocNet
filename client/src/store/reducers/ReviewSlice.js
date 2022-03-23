@@ -7,6 +7,8 @@ export const reviewSlice = createSlice({
     selectedReview: {},
     displayFilters: 'none',
     editedReview: {},
+    isNewReviewsClicked: true,
+    isTopReviewsClicked: false,
   },
   reducers: {
     setReviews: (state, action) => {
@@ -21,11 +23,23 @@ export const reviewSlice = createSlice({
     setEditedReview: (state, action) => {
       state.editedReview = action.payload;
     },
+    setIsNewReviewsClicked: (state, action) => {
+      state.isNewReviewsClicked = action.payload;
+    },
+    setIsTopReviewsClicked: (state, action) => {
+      state.isTopReviewsClicked = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setReviews, setDisplayFilters, setSelectedReview, setEditedReview } =
-  reviewSlice.actions;
+export const {
+  setReviews,
+  setDisplayFilters,
+  setSelectedReview,
+  setEditedReview,
+  setIsNewReviewsClicked,
+  setIsTopReviewsClicked,
+} = reviewSlice.actions;
 
 export default reviewSlice.reducer;

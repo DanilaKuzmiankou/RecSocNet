@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faHeart } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -7,23 +7,23 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Rating from 'react-rating';
 import { Col, Container, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsNewReviewsClicked, setIsTopReviewsClicked } from '../../store/reducers/ReviewSlice';
 
 export const ToolsContainer = (props) => {
-  const [isNewReviewsClicked, setIsNewReviewsClicked] = useState(false);
-  const [isTopReviewsClicked, setIsTopReviewsClicked] = useState(false);
+  const dispatch = useDispatch();
+
+  const { isNewReviewsClicked, isTopReviewsClicked } = useSelector((state) => state.review);
   const onNewReviewsClick = () => {
-    setIsNewReviewsClicked((isNewReviewsClicked) => !isNewReviewsClicked);
+    dispatch(setIsTopReviewsClicked(false));
+    dispatch(setIsNewReviewsClicked(true));
     props.refreshNewestReviews();
-    setTimeout(async () => {
-      setIsNewReviewsClicked((isNewReviewsClicked) => !isNewReviewsClicked);
-    }, 250);
   };
   const onTopReviewsClick = () => {
-    setIsTopReviewsClicked((isTopReviewsClicked) => !isTopReviewsClicked);
-    props.fetchMostLikedReviews();
-    setTimeout(async () => {
-      setIsTopReviewsClicked((isTopReviewsClicked) => !isTopReviewsClicked);
-    }, 250);
+    // console.log('')
+    dispatch(setIsNewReviewsClicked(false));
+    dispatch(setIsTopReviewsClicked(true));
+    props.refreshMostLikedReviews();
   };
   return (
     <Container fluid className='recommendations_page_tools_container'>

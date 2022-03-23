@@ -45,8 +45,12 @@ export const RecommendationsPage = () => {
   };
 
   const fetchMostLikedReviews = async () => {
-    console.log('current user: ', currentUser);
-    const mostLikedReviewsFromApi = await getMostLikedReviews(10, 0, currentUser.id);
+    console.log('rate: ', rowSelectionRate);
+    const mostLikedReviewsFromApi = await getMostLikedReviews(
+      10,
+      rowSelectionRate * 10,
+      currentUser.id
+    );
     console.log('mostLikedReviewsFromApi rev: ', mostLikedReviewsFromApi);
     if (mostLikedReviewsFromApi.length !== 0) {
       const resultMostLikedReviews = [...currentReviews, ...mostLikedReviewsFromApi];
@@ -73,6 +77,7 @@ export const RecommendationsPage = () => {
   const refreshMostLikedReviews = async () => {
     dispatch(setIsLoading(true));
     setFetchFunction((fetchFunction) => 'fetchMostLikedReviews');
+    setRowSelectionRate((rate) => 1);
     const mostLikedReviewsFromApi = await getMostLikedReviews(10, 0, currentUser.id);
     setCurrentReviews(mostLikedReviewsFromApi);
     dispatch(setReviews(mostLikedReviewsFromApi));
@@ -102,7 +107,7 @@ export const RecommendationsPage = () => {
             <Col sm={8}>
               <ToolsContainer
                 refreshNewestReviews={refreshNewestReviews}
-                fetchMostLikedReviews={refreshMostLikedReviews}
+                refreshMostLikedReviews={refreshMostLikedReviews}
               />
               <InfiniteScroll
                 key={infiniteScrollKey}

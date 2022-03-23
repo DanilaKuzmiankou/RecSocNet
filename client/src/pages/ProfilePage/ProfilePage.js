@@ -14,8 +14,6 @@ import {
   deleteImagesFromFirebaseCloud,
   deleteUserReview,
   getUserReviews,
-  saveEditedReview,
-  saveNewReview,
 } from '../../api/store/ReviewStore';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -23,12 +21,7 @@ import {
   setIsCurrentUserAdmin,
   setIsCurrentUserOwner,
 } from '../../store/reducers/UserSlice';
-import {
-  setDisplayFilters,
-  setEditedReview,
-  setReviews,
-  setSelectedReview,
-} from '../../store/reducers/ReviewSlice';
+import { setDisplayFilters, setEditedReview, setReviews } from '../../store/reducers/ReviewSlice';
 import { setModalParams } from '../../store/reducers/ModalSlice';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
 
@@ -172,22 +165,6 @@ export const ProfilePage = (props) => {
     }
   };
 
-  const handleToUpdate = async (newReview) => {
-    const reviewFromApi = await saveEditedReview(newReview);
-    const newArr = reviews.map((item) => (item.id === reviewFromApi.id ? reviewFromApi : item));
-    dispatch(setReviews(newArr));
-    dispatch(setSelectedReview(reviewFromApi));
-  };
-
-  const handleToCreate = async (newReview) => {
-    const createdReview = await saveNewReview(browsedUser.authId, newReview);
-    console.log('new', createdReview);
-    console.log('others', reviews);
-    const newReviews = [...reviews];
-    newReviews.push(createdReview[0]);
-    dispatch(setReviews(newReviews));
-  };
-
   const changeDisplayFiltersState = (e) => {
     if (!displayFilters) {
       dispatch(setDisplayFilters('none'));
@@ -288,11 +265,7 @@ export const ProfilePage = (props) => {
             </div>
           )}
 
-          <CustomModal
-            ref={reviewsModal}
-            handleToUpdate={handleToUpdate}
-            handleToCreate={handleToCreate}
-          />
+          <CustomModal ref={reviewsModal} />
         </div>
       )}
     </Container>
