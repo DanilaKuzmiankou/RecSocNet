@@ -100,6 +100,7 @@ export const RecommendationsPage = () => {
     setCurrentReviews(reviews);
     dispatch(setReviews(reviews));
     setInfiniteScrollKey(Math.random());
+    setHasMoreReviews(true);
     dispatch(setIsLoading(false));
   };
 
@@ -140,7 +141,6 @@ export const RecommendationsPage = () => {
   };
 
   const findTagReviews = (tag) => {
-    console.log('tag', tag.value);
     dispatch(setIsNewReviewsClicked(false));
     dispatch(setIsTopReviewsClicked(false));
     setTag(tag);

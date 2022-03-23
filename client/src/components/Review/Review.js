@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import ReactQuill from 'react-quill';
 import { useSelector } from 'react-redux';
+import { changeSingleDateToUserTimezone } from '../../utils/Utils';
 
 export const Review = (props) => {
   const { editedReview } = useSelector((state) => state.review);
@@ -19,20 +20,21 @@ export const Review = (props) => {
       <FontAwesomeIcon size='lg' icon={faArrowLeft} onClick={closeModal} />
       <Container fluid>
         <div className='review_container'>
-          {editedReview.user?.name && (
-            <div className='form-group form-inline'>
-              <label style={{ fontSize: '13px', fontStyle: 'italic' }}>by </label>
-              <label
-                style={{
-                  fontSize: '22px',
-                  display: 'inline-block',
-                  marginLeft: '7px',
-                }}
-              >
-                {editedReview.user.name}
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            {editedReview.user?.name && (
+              <div style={{ display: 'flex', flexShrink: '0' }}>
+                <label style={{ fontSize: '33px', fontStyle: 'italic' }}>
+                  by {editedReview.user?.name}
+                </label>
+              </div>
+            )}
+            <div style={{ display: 'flex', flex: '1' }}> </div>
+            <div style={{ display: 'flex', flexShrink: '0' }}>
+              <label style={{ fontSize: '23px' }}>
+                {changeSingleDateToUserTimezone(editedReview?.createdAt)}
               </label>
             </div>
-          )}
+          </div>
           <h1>{editedReview.title}</h1>
 
           <div
