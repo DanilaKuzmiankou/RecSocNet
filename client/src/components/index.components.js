@@ -10,3 +10,4 @@ export { Review } from './Review/Review';
 export { ReviewShortened } from './Review/ReviewShortened';
 export { CreateOrEditReviewForm } from './Review/CreateOrEditReviewForm';
 export { ToolsContainer } from './ToolsContainer/ToolsContainer';
+export { NavBarToolsPanel } from './NavBarToolsPanel/NavBarToolsPanel';

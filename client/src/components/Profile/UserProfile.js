@@ -18,9 +18,11 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faEdit as editLight } from '@fortawesome/free-regular-svg-icons';
 import { changeUserName } from '../../api/store/UserStore';
 import { setBrowsedUser, setCurrentUser } from '../../store/reducers/UserSlice';
+import { useTranslation } from 'react-i18next';
 
 export const UserProfile = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { currentUser, browsedUser, isCurrentUserAdmin, isCurrentUserOwner } = useSelector(
     (state) => state.user
   );
@@ -104,10 +106,13 @@ export const UserProfile = () => {
                       delay={{ show: 75, hide: 200 }}
                       onToggle={autoCloseTooltip}
                       show={isOverlayTriggerVisible}
-                      overlay={<Tooltip id='tooltip-disabled'>Change user name</Tooltip>}
+                      overlay={<Tooltip id='tooltip-disabled'>{t('change_name')}</Tooltip>}
                     >
                       <div className='profile_username_edit_container'>
-                        <h4 className=''> User name: {browsedUser.name} </h4>
+                        <h4 className=''>
+                          {' '}
+                          {t('name')}: {browsedUser.name}{' '}
+                        </h4>
 
                         <Rating
                           className='profile_username_edit_icon'
@@ -123,9 +128,13 @@ export const UserProfile = () => {
                       </div>
                     </OverlayTrigger>
                   ) : (
-                    <h4 className=''> User name: {browsedUser.name} </h4>
+                    <h4 className=''>
+                      {t('name')}: {browsedUser.name}{' '}
+                    </h4>
                   )}
-                  <h4 className=''> User likes: {browsedUser.likes} </h4>
+                  <h4 className=''>
+                    {t('likes')}: {browsedUser.likes}{' '}
+                  </h4>
                 </Col>
                 <Col md={6} sm={12}>
                   <Form
@@ -139,7 +148,7 @@ export const UserProfile = () => {
                           required
                           value={editUsername}
                           id='inlineFormInputName'
-                          placeholder='Enter new user name'
+                          placeholder={t('enter_new_name')}
                           isInvalid={errorValidationMessage}
                           isValid={validationMessage}
                           onChange={(e) => {
@@ -161,7 +170,7 @@ export const UserProfile = () => {
                       type='submit'
                       variant='success'
                     >
-                      Submit
+                      {t('submit')}
                     </Button>
                   </Form>
                 </Col>

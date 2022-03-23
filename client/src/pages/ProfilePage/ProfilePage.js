@@ -9,7 +9,7 @@ import {
   UserProfile,
 } from '../../components/index.components';
 import { getUserById } from '../../api/store/UserStore';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   deleteImagesFromFirebaseCloud,
   deleteUserReview,
@@ -24,21 +24,23 @@ import {
 import { setDisplayFilters, setEditedReview, setReviews } from '../../store/reducers/ReviewSlice';
 import { setModalParams } from '../../store/reducers/ModalSlice';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
+import { useTranslation } from 'react-i18next';
 
-export const ProfilePage = (props) => {
+export const ProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isCurrentUserAdmin, isCurrentUserOwner, currentUser, browsedUser } = useSelector(
     (state) => state.user
   );
   const { reviews, displayFilters, selectedReview } = useSelector((state) => state.review);
   const { isAuthenticated } = useAuth0();
-
+  const { t } = useTranslation();
   const isLoading1 = useSelector((state) => state.loading.isLoading);
 
   const routerParams = useParams();
   const reviewsModal = useRef();
 
-  const [filtersBtnText, setFiltersBtnText] = useState('Show filters');
+  const [filtersBtnText, setFiltersBtnText] = useState(t('show_filters'));
 
   useEffect(async () => {
     console.log('au', isAuthenticated);
@@ -63,23 +65,33 @@ export const ProfilePage = (props) => {
 
   const setCurrentUserAsGuest = async () => {
     const userBrowsedProfile = await getUserById(routerParams.id); // userBrowsedProfile - profile of user, which you browse now
-    dispatch(setBrowsedUser(userBrowsedProfile));
-    dispatch(setIsCurrentUserAdmin(false));
-    const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
-    dispatch(setReviews(reviews));
+    if (!userBrowsedProfile) {
+      navigate('/1');
+    }
+    try {
+      dispatch(setBrowsedUser(userBrowsedProfile));
+      dispatch(setIsCurrentUserAdmin(false));
+      const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
+      dispatch(setReviews(reviews));
+    } catch (e) {}
   };
 
   const authUserInOtherUserProfile = async () => {
     const userBrowsedProfile = await getUserById(routerParams.id);
-    dispatch(setBrowsedUser(userBrowsedProfile));
-    const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
-    dispatch(setReviews(reviews));
-    if (userBrowsedProfile.authId === currentUser.authId) {
-      console.log('owner!');
-      dispatch(setIsCurrentUserOwner(true));
-    } else {
-      dispatch(setIsCurrentUserOwner(false));
+    if (!userBrowsedProfile) {
+      navigate('/1');
     }
+    try {
+      dispatch(setBrowsedUser(userBrowsedProfile));
+      const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
+      dispatch(setReviews(reviews));
+      if (userBrowsedProfile.authId === currentUser.authId) {
+        console.log('owner!');
+        dispatch(setIsCurrentUserOwner(true));
+      } else {
+        dispatch(setIsCurrentUserOwner(false));
+      }
+    } catch (e) {}
   };
 
   const authUserInOwnProfile = async () => {
@@ -103,7 +115,7 @@ export const ProfilePage = (props) => {
     dispatch(setEditedReview({}));
     dispatch(
       setModalParams({
-        title: 'Review Creating',
+        title: t('review_creating'),
         displayModalButtons: '',
         displayModalFeedback: 'none',
         displayEditForm: true,
@@ -120,7 +132,7 @@ export const ProfilePage = (props) => {
       dispatch(setEditedReview(selectedReview));
       dispatch(
         setModalParams({
-          title: 'Review View',
+          title: t('review_view'),
           displayModalButtons: 'none',
           displayModalFeedback: '',
           displayEditForm: false,
@@ -138,7 +150,7 @@ export const ProfilePage = (props) => {
       dispatch(setEditedReview(selectedReview));
       dispatch(
         setModalParams({
-          title: 'Review Editing',
+          title: t('review_editing'),
           displayModalButtons: '',
           displayModalFeedback: 'none',
           displayEditForm: true,
@@ -168,10 +180,10 @@ export const ProfilePage = (props) => {
   const changeDisplayFiltersState = (e) => {
     if (!displayFilters) {
       dispatch(setDisplayFilters('none'));
-      setFiltersBtnText('Show filters');
+      setFiltersBtnText(t('show_filters'));
     } else {
       dispatch(setDisplayFilters(''));
-      setFiltersBtnText('Hide filters');
+      setFiltersBtnText(t('hide_filters'));
     }
   };
 
@@ -183,14 +195,14 @@ export const ProfilePage = (props) => {
         <div>
           {routerParams.id || isAuthenticated ? (
             <div>
-              <h1 className='small_margin_left no_select'> User Profile </h1>
+              <h1 className='small_margin_left no_select'> {t('profile')} </h1>
               <div className='user_profile'>
                 <UserProfile />
               </div>
 
               {reviews && reviews.length > 0 ? (
                 <div>
-                  <h1 className='text-center'>Reviews</h1>
+                  <h1 className='text-center'>{t('reviews')}</h1>
 
                   <Fragment>
                     <div className='reviews_table_container'>
@@ -202,7 +214,7 @@ export const ProfilePage = (props) => {
                         className='reviews_table_button'
                         onClick={viewReview}
                       >
-                        View
+                        {t('view')}
                       </Button>
                     </div>
                     {isCurrentUserAdmin || isCurrentUserOwner ? (
@@ -212,21 +224,21 @@ export const ProfilePage = (props) => {
                           className='reviews_table_button'
                           onClick={createReview}
                         >
-                          Create
+                          {t('create')}
                         </Button>
                         <Button
                           variant='success'
                           className='reviews_table_button'
                           onClick={editReview}
                         >
-                          Edit
+                          {t('edit')}
                         </Button>
                         <Button
                           variant='success'
                           className='reviews_table_button'
                           onClick={deleteReview}
                         >
-                          Delete
+                          {t('delete')}
                         </Button>
                       </div>
                     ) : null}
@@ -238,19 +250,16 @@ export const ProfilePage = (props) => {
                 <div className='center_profile_page text-center'>
                   {isCurrentUserAdmin || isCurrentUserOwner ? (
                     <div className='no_wrap_on_normal_screen'>
-                      <h2>
-                        Ooooops...It seems you have not reviews, click the button to create the
-                        first!
-                      </h2>
+                      <h2>{t('no_reviews')}</h2>
                       <div className='profile_button_container'>
                         <Button className='profile_button' variant='danger' onClick={createReview}>
-                          Tap me!
+                          {t('tap_me')}
                         </Button>
                       </div>
                     </div>
                   ) : (
                     <div className='no_wrap_on_big_screen'>
-                      <h2>This user has no reviews at the moment!</h2>
+                      <h2>{t('no_reviews_admin')}</h2>
                     </div>
                   )}
                 </div>
@@ -259,7 +268,7 @@ export const ProfilePage = (props) => {
           ) : (
             <div className='no_wrap_on_normal_screen center_without_content text-center'>
               <div>
-                <h2>Log in to create your first review!</h2>
+                <h2>{t('log_in_first')}</h2>
                 <LogInButton size={'big'} />
               </div>
             </div>

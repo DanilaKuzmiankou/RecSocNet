@@ -422,8 +422,8 @@ ul {
 .profile_button {
     margin-right: 0.5%;
     border-radius: 15px;
-    height: 85px;
-    width: 200px;
+    min-height: 85px;
+    min-width: 200px;
     font-size: 30px;
     margin-top: 10px;
 }

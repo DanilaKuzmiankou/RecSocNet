@@ -14,8 +14,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedReview } from '../../store/reducers/ReviewSlice';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import ReactQuill from 'react-quill';
+import { useTranslation } from 'react-i18next';
 
 export const CustomBootstrapTable = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.review.reviews);
   const displayFilters = useSelector((state) => state.review.displayFilters);
@@ -30,7 +32,7 @@ export const CustomBootstrapTable = () => {
         <OverlayTrigger
           placement={tooltipPlacement}
           delay={{ show: 150, hide: 200 }}
-          overlay={<Tooltip id='tooltip-disabled'>Click to sort!</Tooltip>}
+          overlay={<Tooltip id='tooltip-disabled'>{t('click_to_sort')}</Tooltip>}
         >
           <h5>{column.text}</h5>
         </OverlayTrigger>
@@ -61,9 +63,9 @@ export const CustomBootstrapTable = () => {
   const columns = [
     {
       dataField: 'title',
-      text: 'Title',
+      text: t('title'),
       filter: textFilter({
-        placeholder: 'Title',
+        placeholder: t('title'),
         style: { display: displayFilters },
       }),
       sort: true,
@@ -71,9 +73,9 @@ export const CustomBootstrapTable = () => {
     },
     {
       dataField: 'text',
-      text: 'Text',
+      text: t('text'),
       filter: textFilter({
-        placeholder: 'Text',
+        placeholder: t('text'),
         style: { display: displayFilters },
       }),
       classes: 'text-center',
@@ -87,9 +89,9 @@ export const CustomBootstrapTable = () => {
     },
     {
       dataField: 'category',
-      text: 'Category',
+      text: t('category'),
       filter: textFilter({
-        placeholder: 'Category',
+        placeholder: t('category'),
         style: { display: displayFilters },
       }),
       sort: true,
@@ -98,9 +100,9 @@ export const CustomBootstrapTable = () => {
     },
     {
       dataField: 'tags',
-      text: 'Tags',
+      text: t('tags'),
       filter: textFilter({
-        placeholder: 'Tags',
+        placeholder: t('tags'),
         style: { display: displayFilters },
       }),
       sort: true,
@@ -108,11 +110,11 @@ export const CustomBootstrapTable = () => {
     },
     {
       dataField: 'authorScore',
-      text: 'Author score',
+      text: t('author_score'),
       filter: numberFilter({
         comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
         withoutEmptyComparatorOption: true,
-        placeholder: 'Author score ',
+        placeholder: t('author_score'),
         style: { display: displayFilters },
       }),
       sort: true,
@@ -120,11 +122,11 @@ export const CustomBootstrapTable = () => {
     },
     {
       dataField: 'usersContentScore',
-      text: 'Users creation score',
+      text: t('users_creation_score'),
       filter: numberFilter({
         comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
         withoutEmptyComparatorOption: true,
-        placeholder: 'User score ',
+        placeholder: t('users_creation_score'),
         style: { display: displayFilters },
       }),
       sort: true,
@@ -132,11 +134,11 @@ export const CustomBootstrapTable = () => {
     },
     {
       dataField: 'usersReviewScore',
-      text: 'Likes',
+      text: t('likes'),
       filter: numberFilter({
         comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
         withoutEmptyComparatorOption: true,
-        placeholder: 'Likes',
+        placeholder: t('likes'),
         style: { display: displayFilters },
       }),
       sort: true,
@@ -144,7 +146,7 @@ export const CustomBootstrapTable = () => {
     },
     {
       dataField: 'createdAt',
-      text: 'Created',
+      text: t('created'),
       sort: true,
       sortFunc: (a, b, order, dataField, rowA, rowB) => {
         if (order === 'asc') {

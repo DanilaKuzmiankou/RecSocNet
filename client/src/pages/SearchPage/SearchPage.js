@@ -7,6 +7,7 @@ import { LoadingComponent, ReviewShortened } from '../../components/index.compon
 import { useDispatch, useSelector } from 'react-redux';
 import { setReviews } from '../../store/reducers/ReviewSlice';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
+import { useTranslation } from 'react-i18next';
 
 export const SearchPage = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export const SearchPage = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const [infiniteScrollKey, setInfiniteScrollKey] = useState(0);
   const [searchParams] = useSearchParams();
-
+  const { t } = useTranslation();
   useEffect(async () => {
     if (searchParams) {
       await searchReviews(true);
@@ -80,7 +81,7 @@ export const SearchPage = () => {
         <div>
           {searchedReviews && searchedReviews.length > 0 ? (
             <div>
-              <div className='search_page_title'>Search result:</div>
+              <div className='search_page_title'>{t('search_result')}</div>
               <Container className='cont'>
                 <Row>
                   <Col> </Col>
@@ -91,11 +92,7 @@ export const SearchPage = () => {
                       next={searchReviews}
                       hasMore={hasMoreReviews}
                       loader={<LoadingComponent />}
-                      endMessage={
-                        <h3 style={{ textAlign: 'center' }}>
-                          There is no more suitable reviews...
-                        </h3>
-                      }
+                      endMessage={<h3 style={{ textAlign: 'center' }}>{t('no_more_suitable')}</h3>}
                     >
                       {searchedReviews.map((review, id) => (
                         <div key={id} className='review_shortened_container'>
@@ -110,7 +107,7 @@ export const SearchPage = () => {
             </div>
           ) : (
             <div className='center_without_content'>
-              <h1>Sorry, we have not found anything!</h1>
+              <h1>{t('no_found_more')}</h1>
             </div>
           )}
         </div>

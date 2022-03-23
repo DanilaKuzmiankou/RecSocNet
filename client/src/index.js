@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { setupStore } from './store/store';
 import { BrowserRouter } from 'react-router-dom';
 import Auth0ProviderWithNavigate from './auth/Auth0ProviderWithNavigate';
+import './i18nextConf';
 
 const store = setupStore();
 

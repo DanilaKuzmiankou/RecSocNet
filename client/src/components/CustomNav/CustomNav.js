@@ -13,14 +13,16 @@ import {
   Tooltip,
 } from 'react-bootstrap';
 import { createSearchParams, useNavigate } from 'react-router-dom';
-import { LogInButton } from '../index.components';
+import { LogInButton, NavBarToolsPanel } from '../index.components';
 import { useAuth0 } from '@auth0/auth0-react';
 import { UserProfileDiminished } from '../Profile/UserProfileDiminished';
+import { useTranslation } from 'react-i18next';
 
 export const CustomNav = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth0();
   const [searchData, setSearchData] = useState('');
+  const { t } = useTranslation();
 
   const search = async (event) => {
     event.preventDefault();
@@ -36,14 +38,14 @@ export const CustomNav = () => {
         <OverlayTrigger
           placement='bottom'
           delay={{ show: 250, hide: 400 }}
-          overlay={<Tooltip id='tooltip-disabled'>To Home!</Tooltip>}
+          overlay={<Tooltip id='tooltip-disabled'>{t('to_home')}</Tooltip>}
         >
           <a
             style={{ fontSize: '50px' }}
             href='/'
             className=' justify-content-start navbar_home_button'
           >
-            Home
+            {t('home')}
           </a>
         </OverlayTrigger>
 
@@ -52,7 +54,7 @@ export const CustomNav = () => {
           <Nav className='me-auto my-2 my-lg-0' style={{ maxHeight: '100px', gap: '1rem' }}></Nav>
 
           <div>
-            <Container>
+            <Container className='p-0'>
               <Row>
                 <Col
                   style={{ display: 'flex', alignItems: 'center' }}
@@ -64,18 +66,26 @@ export const CustomNav = () => {
                     <FormControl
                       style={{ fontSize: '25px' }}
                       type='search'
-                      placeholder='Search reviews'
+                      placeholder={t('search_reviews')}
                       className='me-2'
                       aria-label='Search'
                       onChange={(event) => setSearchData(event.target.value)}
                     />
                     <Button style={{ fontSize: '25px' }} type='submit' variant='outline-success'>
-                      Search
+                      {t('search')}
                     </Button>
                   </Form>
                 </Col>
-                <Col lg={'auto'} sm={12} className='nav_elements_margin nav_elements_margin_right'>
+                <Col
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  lg={'auto'}
+                  sm={12}
+                  className='nav_elements_margin'
+                >
                   {isAuthenticated ? <UserProfileDiminished /> : <LogInButton />}
+                </Col>
+                <Col lg={'auto'} sm={12}>
+                  <NavBarToolsPanel />
                 </Col>
               </Row>
             </Container>

@@ -1,6 +1,7 @@
 import { Multiselect } from 'multiselect-react-dropdown';
 import React, { useEffect, useState } from 'react';
 import { getTags } from '../../api/store/ReviewStore';
+import { useTranslation } from 'react-i18next';
 
 const fieldName = 'tags';
 
@@ -8,7 +9,7 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
   const [isEmptyTagExist, setIsEmptyTagExist] = useState(false);
   const [currentTag, setCurrentTag] = useState('');
   const [tags, setTags] = useState([]);
-
+  const { t } = useTranslation();
   useEffect(async () => {
     const tags = await getTags();
     setTags(tags);
@@ -80,7 +81,7 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
         onSearch={onMultiselectSearch}
         onSelect={onMultiselectSelect}
         options={tags}
-        placeholder='Enter tags'
+        placeholder={t('enter_tags')}
       />
     </div>
   );

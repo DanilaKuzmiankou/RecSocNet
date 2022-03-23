@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 export const UploadImage = ({ field, form, ...props }) => {
+  const { t } = useTranslation();
   const fieldName = 'images';
   const baseStyle = {
     flex: 1,
@@ -116,7 +118,7 @@ export const UploadImage = ({ field, form, ...props }) => {
     <section className='container'>
       <div {...dropzone.getRootProps({ style })}>
         <input {...dropzone.getInputProps()} />
-        <p>Drag &apos;n&apos; drop pictures here, or click to select</p>
+        <p>{t('drag_and_drop')}</p>
       </div>
       {files && files.length > 0 && <h6 className='small_margin_top'>Pictures to upload</h6>}
       <aside className='thumbsContainer'>{thumbs}</aside>

@@ -20,10 +20,11 @@ import {
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
 import LoadingComponent from '../LoadingComponent/LoadingComponent';
 import { modules, options } from '../../utils/Storage';
+import { useTranslation } from 'react-i18next';
 
 export const CreateOrEditReviewForm = (props) => {
   const isLoading = useSelector((state) => state.loading.isLoading);
-
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { browsedUser } = useSelector((state) => state.user);
   const { reviews, editedReview } = useSelector((state) => state.review);
@@ -106,14 +107,16 @@ export const CreateOrEditReviewForm = (props) => {
           category: currentReview?.category || '',
         }}
         validationSchema={Yup.object({
-          title: Yup.string().max(100, 'Must be 100 characters or less').required('Required'),
+          title: Yup.string().max(100, t('must_be_100_characters_or_less')).required(t('required')),
           authorScore: Yup.number()
-            .max(5, 'Must be in range from 1 to 5')
-            .min(1, 'Must be in range from 1 to 5')
-            .required('Required'),
-          category: Yup.string().matches('^(?!Select category$)', 'Required').required('Required'),
+            .max(5, t('must_be_in_range_from_1_to_5'))
+            .min(1, t('must_be_in_range_from_1_to_5'))
+            .required(t('required')),
+          category: Yup.string()
+            .matches(`1^(?!${t('select_category')}$)`, t('required'))
+            .required(t('required')),
           text: Yup.string(),
-          tags: Yup.array().required('Required'),
+          tags: Yup.array().required(t('required')),
           images: Yup.array(),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -128,9 +131,9 @@ export const CreateOrEditReviewForm = (props) => {
       >
         {({ errors, touched }) => (
           <Form id='reviewForm'>
-            <label htmlFor='title'>Title</label>
+            <label htmlFor='title'>{t('title')}</label>
             <Field
-              placeholder='Enter review title'
+              placeholder={t('enter_review_title')}
               style={{ width: '100%' }}
               name='title'
               type='text'
@@ -141,16 +144,15 @@ export const CreateOrEditReviewForm = (props) => {
             <Row style={{ marginBottom: '10px', marginTop: '10px' }}>
               <Col xs={4}>
                 <label style={{ whiteSpace: 'nowrap' }} htmlFor='category'>
-                  Category
+                  {t('category')}
                 </label>
                 <Field
                   className={touched.category && errors.category ? 'error' : null}
                   style={{ width: '100%', height: '55px' }}
                   name='category'
                   as='select'
-                  aria-label='Category'
                 >
-                  <option>Select category</option>
+                  <option>{t('select_category')}</option>
                   {options}
                 </Field>
                 <ErrorMessage component='div' className='custom_error_message' name='category' />
@@ -158,7 +160,7 @@ export const CreateOrEditReviewForm = (props) => {
 
               <Col xs={6}>
                 <label style={{ whiteSpace: 'nowrap' }} htmlFor='tags'>
-                  Tags
+                  {t('tags')}
                 </label>
                 <Field
                   name='tags'
@@ -169,7 +171,7 @@ export const CreateOrEditReviewForm = (props) => {
               </Col>
 
               <Col xs={2}>
-                <label htmlFor='authorScore'>Score</label>
+                <label htmlFor='authorScore'>{t('score')}</label>
                 <Field
                   className={touched.authorScore && errors.authorScore ? 'error' : null}
                   style={{ width: '100%', height: '55px' }}
@@ -182,13 +184,14 @@ export const CreateOrEditReviewForm = (props) => {
               </Col>
 
               <label style={{ paddingTop: '15px' }} htmlFor='text'>
-                Text
+                {t('text')}
               </label>
               <Field name='text' type='text'>
                 {({ field, form }) => (
                   <ReactQuill
                     className='ql-editor'
                     theme='snow'
+                    placeholder={t('enter_text')}
                     value={field.value}
                     modules={modules}
                     onChange={(value) => {
@@ -198,7 +201,7 @@ export const CreateOrEditReviewForm = (props) => {
                 )}
               </Field>
 
-              <label htmlFor='images'>Pictures</label>
+              <label htmlFor='images'>{t('pictures')}</label>
               <Field
                 className={touched.title && errors.title ? 'error' : null}
                 name='images'

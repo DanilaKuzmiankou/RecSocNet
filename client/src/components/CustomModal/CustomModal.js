@@ -4,11 +4,12 @@ import '../../App.css';
 import { CreateOrEditReviewForm } from '../Review/CreateOrEditReviewForm';
 import { useSelector } from 'react-redux';
 import { Review } from '../Review/Review';
+import { useTranslation } from 'react-i18next';
 
 // eslint-disable-next-line react/display-name
 export const CustomModal = forwardRef((props, ref) => {
   const params = useSelector((state) => state.modal.params);
-
+  const { t } = useTranslation();
   const formRef = useRef();
 
   const [showModal, setShowModal] = useState(false);
@@ -58,10 +59,10 @@ export const CustomModal = forwardRef((props, ref) => {
 
         <Modal.Footer style={{ display: params.displayModalButtons }}>
           <Button variant='secondary' onClick={closeModal}>
-            Close
+            {t('close')}
           </Button>
           <Button variant='primary' onClick={handleModalSaveChanges}>
-            Save Changes
+            {t('save_changes')}
           </Button>
         </Modal.Footer>
 
