@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../../App.css';
 import { UploadImage } from '../UploadImage/UploadImage';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,16 +22,12 @@ import LoadingComponent from '../LoadingComponent/LoadingComponent';
 import { modules, options } from '../../utils/Storage';
 
 export const CreateOrEditReviewForm = (props) => {
-  const tagsArray = ['world war', 'fantasy', 'scam', 'politics'];
-
   const isLoading = useSelector((state) => state.loading.isLoading);
 
   const dispatch = useDispatch();
   const { browsedUser } = useSelector((state) => state.user);
   const { reviews, editedReview } = useSelector((state) => state.review);
   const currentReview = Object.assign({}, editedReview);
-
-  useEffect(() => {}, [dispatch]);
 
   const handleToUpdate = async (newReview) => {
     await uploadOrDeletePictures(newReview);
@@ -84,6 +80,7 @@ export const CreateOrEditReviewForm = (props) => {
   const formSubmit = async (values, resolve) => {
     dispatch(setIsLoading(true));
     const redactedReview = values;
+    redactedReview.tags = redactedReview.tags.map((tag) => tag.trim());
     redactedReview.tags = redactedReview.tags.join(',');
     if (Object.keys(currentReview).length !== 0) {
       await handleToUpdate(redactedReview);
@@ -99,6 +96,7 @@ export const CreateOrEditReviewForm = (props) => {
       {isLoading ? <LoadingComponent /> : null}
       <Formik
         innerRef={props.formRef}
+        enableReinitialize={true}
         initialValues={{
           title: currentReview?.title || '',
           authorScore: currentReview?.authorScore || '',
@@ -166,7 +164,6 @@ export const CreateOrEditReviewForm = (props) => {
                   name='tags'
                   className={touched.tags && errors.tags ? 'error' : null}
                   component={CustomMultiselect}
-                  tagsArray={tagsArray}
                 />
                 <ErrorMessage component='div' className='custom_error_message' name='tags' />
               </Col>

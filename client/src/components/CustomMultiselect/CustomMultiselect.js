@@ -1,12 +1,20 @@
 import { Multiselect } from 'multiselect-react-dropdown';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getTags } from '../../api/store/ReviewStore';
 
 const fieldName = 'tags';
 
-export const CustomMultiselect = ({ field, tagsArray, form, ...props }) => {
+export const CustomMultiselect = ({ field, form, ...props }) => {
   const [isEmptyTagExist, setIsEmptyTagExist] = useState(false);
   const [currentTag, setCurrentTag] = useState('');
-  const [tags, setTags] = useState(tagsArray);
+  const [tags, setTags] = useState([]);
+
+  useEffect(async () => {
+    const tags = await getTags();
+    console.log('default tags: ', tags);
+    setTags(tags);
+  }, []);
+
   const onMultiselectSelect = (selectedList, selectedItem) => {
     if (selectedItem && field.value.indexOf(selectedItem) === -1 && selectedItem.trim()) {
       const newTagsList = [...field.value, selectedItem];
@@ -25,14 +33,23 @@ export const CustomMultiselect = ({ field, tagsArray, form, ...props }) => {
   };
 
   const onMultiselectSearch = (searchedTag) => {
+    console.log('search!');
     setCurrentTag(searchedTag);
-    if (isEmptyTagExist) {
-      deleteLastTag();
-    }
-    if (tags.find((tag) => tag === searchedTag) === undefined) {
-      setTags((tags) => [...tags, searchedTag]);
-      setIsEmptyTagExist(true);
+    if (searchedTag !== '') {
+      if (isEmptyTagExist) {
+        console.log('delete1!');
+        deleteLastTag();
+      }
+      if (tags.find((tag) => tag === searchedTag) === undefined) {
+        setTags((tags) => [...tags, searchedTag]);
+        setIsEmptyTagExist(true);
+      } else {
+        console.log('delete2!');
+        deleteLastTag();
+      }
     } else {
+      setIsEmptyTagExist(false);
+      console.log('delete3!');
       deleteLastTag();
     }
   };
@@ -40,6 +57,7 @@ export const CustomMultiselect = ({ field, tagsArray, form, ...props }) => {
   const deleteLastTag = () => {
     const newTags = [...tags];
     newTags.pop();
+    console.log('newTags', newTags);
     setTags(newTags);
   };
 

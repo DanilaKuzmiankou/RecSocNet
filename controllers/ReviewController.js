@@ -1,5 +1,5 @@
 const ApiError = require("../error/ApiError");
-const { Review, User, ReviewImage, Rating } = require("../models/Models");
+const { Review, User, ReviewImage, Rating, Tags } = require("../models/Models");
 const Sequelize = require("sequelize");
 const sequelize = require("sequelize");
 const op = Sequelize.Op;
@@ -32,6 +32,7 @@ class ReviewController {
         review.images
       );
     }
+    await reviewController.addNewTags(review.tags);
     return res.json([createdReview]);
   }
 
@@ -166,6 +167,7 @@ class ReviewController {
       category: review.category,
       authorScore: review.authorScore,
     });
+    await reviewController.addNewTags(review.tags);
     let newReview = await Review.findOne({
       where: { id: review.id },
       include: [
@@ -177,6 +179,36 @@ class ReviewController {
       ],
     });
     return res.json(newReview);
+  }
+
+  async getTags(req, res, next) {
+    let tagsFromDB = await Tags.findAll({
+      attributes: ["tag"],
+    });
+    tagsFromDB = tagsFromDB.map((item) => (item = item.tag));
+    return res.json(tagsFromDB);
+  }
+
+  async addNewTags(rawTags) {
+    const tags = rawTags.split(",");
+    let tagsFromDB = await Tags.findAll({
+      attributes: ["tag"],
+      where: {
+        tag: {
+          [op.in]: tags,
+        },
+      },
+    });
+    let newTags = tags;
+    if (tagsFromDB.length > 0) {
+      tagsFromDB = tagsFromDB.map((item) => (item = item.tag));
+      newTags = tags.filter((tag) => !tagsFromDB.includes(tag));
+    }
+    for (const tag of newTags) {
+      await Tags.create({
+        tag,
+      });
+    }
   }
 
   async deleteReview(req, res, next) {

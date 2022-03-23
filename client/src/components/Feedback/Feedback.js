@@ -69,7 +69,7 @@ export const Feedback = (props) => {
   };
 
   return (
-    <div className='d-flex align-items-end justify-content-around'>
+    <div className='d-flex align-items-end justify-content-around, align-items-center'>
       <span style={{ fontSize: '1.4rem' }}>
         {review.usersReviewScore}
         &nbsp;
@@ -91,7 +91,7 @@ export const Feedback = (props) => {
             starRatedColor='#ffd700'
             starHoverColor='#ffd700'
             numberOfStars={5}
-            starDimension='2rem'
+            starDimension='1.3rem'
             changeRating={changeRating}
             name='rating'
           />
