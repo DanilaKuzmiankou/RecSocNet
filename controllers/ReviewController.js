@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("sequelize");
 const op = Sequelize.Op;
 
-var reviewController = this;
+let reviewController = this;
 
 class ReviewController {
   constructor() {
@@ -13,7 +13,6 @@ class ReviewController {
 
   async addNewReview(req, res, next) {
     const { authId, review } = req.body;
-    console.log("req.body: ", req.body);
     if (!authId || !review.authorScore || !review.category || !review.title) {
       return next(ApiError.badRequest("Enter all required fields"));
     }
@@ -174,13 +173,11 @@ class ReviewController {
       whereQueryString,
       [["createdAt", "DESC"]]
     );
-    console.log("res: ", reviews);
     return res.json(reviews);
   }
 
   async saveReview(req, res, next) {
     const { review } = req.body;
-    console.log("review: ", review);
     const oldReview = await Review.findOne({ where: { id: review.id } });
     await oldReview.update({
       title: review.title,
