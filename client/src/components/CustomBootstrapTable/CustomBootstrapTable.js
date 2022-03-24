@@ -12,7 +12,6 @@ import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 import { changeSingleDateToUserTimezone } from '../../utils/Utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedReview } from '../../store/reducers/ReviewSlice';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import ReactQuill from 'react-quill';
 import { useTranslation } from 'react-i18next';
 

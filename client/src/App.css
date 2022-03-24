@@ -294,6 +294,10 @@ body {
     font-size: 30px;
 }
 
+.table1{
+    table-layout: auto;
+    overflow-x: auto !important;
+}
 
 .react-bootstrap-table table {
     table-layout: auto;
