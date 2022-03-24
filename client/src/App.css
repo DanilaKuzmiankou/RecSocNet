@@ -51,7 +51,7 @@ body {
 
 * {
 
-    font-size: 25px;
+    font-size: 15px;
 }
 
 @media screen and (max-width: 800px) {
@@ -294,10 +294,6 @@ body {
     font-size: 30px;
 }
 
-.table1{
-    table-layout: auto;
-    overflow-x: auto !important;
-}
 
 .react-bootstrap-table table {
     table-layout: auto;
