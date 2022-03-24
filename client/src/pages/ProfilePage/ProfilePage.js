@@ -197,7 +197,7 @@ export const ProfilePage = () => {
               </div>
 
               {reviews && reviews.length > 0 ? (
-                <div>
+                <div className='profile_page_table_container'>
                   <h1 className='text-center'>{t('reviews')}</h1>
 
                   <Fragment>

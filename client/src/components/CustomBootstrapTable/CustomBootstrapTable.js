@@ -36,12 +36,6 @@ export const CustomBootstrapTable = () => {
         >
           <h5>{column.text}</h5>
         </OverlayTrigger>
-        <h5>
-          <span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-        </h5>
       </div>
     );
   }
