@@ -7,7 +7,9 @@ html {
     border: 2px solid #FF6565;
 }
 
-
+@keyframes blinker {
+    50% { opacity: 0.0; }
+}
 
 .custom_error_message{
     color: #FF6565;
