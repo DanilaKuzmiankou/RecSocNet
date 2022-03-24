@@ -48,24 +48,35 @@ export const UserProfile = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const answer = await changeUserName(browsedUser.authId, editUsername);
-    if (answer?.status === 200) {
-      const newBrowsedUser = Object.assign({}, browsedUser);
-      newBrowsedUser.name = editUsername;
-      dispatch(setBrowsedUser(newBrowsedUser));
-      if (currentUser.authId === browsedUser.authId) {
-        const newCurrentUser = Object.assign({}, currentUser);
-        newCurrentUser.name = editUsername;
-        dispatch(setCurrentUser(newCurrentUser));
-      }
-      setValidationMessage(answer.data.message);
-      setTimeout(async () => {
-        setEditUsername('');
-        setDisplayForm('none');
-      }, 2000);
+    const response = await changeUserName(browsedUser.authId, editUsername);
+    if (response?.status === 200) {
+      changeName(response);
     } else {
-      setErrorValidationMessage(answer.data.message);
+      setErrorValidationMessage(response.data.message);
     }
+  };
+  const changeName = (response) => {
+    const newBrowsedUser = Object.assign({}, browsedUser);
+    newBrowsedUser.name = editUsername;
+    dispatch(setBrowsedUser(newBrowsedUser));
+    if (currentUser.authId === browsedUser.authId) {
+      changeCurrentUserName();
+    }
+    updateProfileUI(response);
+  };
+
+  const updateProfileUI = (response) => {
+    setValidationMessage(response.data.message);
+    setTimeout(async () => {
+      setEditUsername('');
+      setDisplayForm('none');
+    }, 2000);
+  };
+
+  const changeCurrentUserName = () => {
+    const newCurrentUser = Object.assign({}, currentUser);
+    newCurrentUser.name = editUsername;
+    dispatch(setCurrentUser(newCurrentUser));
   };
 
   const autoCloseTooltip = (value) => {

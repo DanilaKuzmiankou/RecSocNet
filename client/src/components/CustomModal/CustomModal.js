@@ -65,10 +65,6 @@ export const CustomModal = forwardRef((props, ref) => {
             {t('save_changes')}
           </Button>
         </Modal.Footer>
-
-        {/*  <Modal.Footer style={{display: params.displayModalFeedback, backgroundColor: "#EEF1F0"}}>
-                    <Feedback review={editedReview}/>
-                </Modal.Footer>*/}
       </Modal>
     </div>
   );

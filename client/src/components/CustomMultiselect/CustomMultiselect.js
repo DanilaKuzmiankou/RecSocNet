@@ -33,23 +33,19 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
   };
 
   const onMultiselectSearch = (searchedTag) => {
-    console.log('search!');
     setCurrentTag(searchedTag);
     if (searchedTag !== '') {
       if (isEmptyTagExist) {
-        console.log('delete1!');
         deleteLastTag();
       }
       if (tags.find((tag) => tag === searchedTag) === undefined) {
         setTags((tags) => [...tags, searchedTag]);
         setIsEmptyTagExist(true);
       } else {
-        console.log('delete2!');
         deleteLastTag();
       }
     } else {
       setIsEmptyTagExist(false);
-      console.log('delete3!');
       deleteLastTag();
     }
   };
@@ -57,7 +53,6 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
   const deleteLastTag = () => {
     const newTags = [...tags];
     newTags.pop();
-    console.log('newTags', newTags);
     setTags(newTags);
   };
 

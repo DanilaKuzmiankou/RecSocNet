@@ -22,7 +22,6 @@ export const ToolsContainer = (props) => {
     props.refreshNewestReviews();
   };
   const onTopReviewsClick = () => {
-    // console.log('')
     dispatch(setIsNewReviewsClicked(false));
     dispatch(setIsTopReviewsClicked(true));
     props.refreshMostLikedReviews();

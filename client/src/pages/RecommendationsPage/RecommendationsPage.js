@@ -40,20 +40,21 @@ export const RecommendationsPage = () => {
 
   useEffect(async () => {
     await fetchNewestReviews();
+    await initTags();
+    dispatch(setIsLoading(false));
+  }, []);
+
+  const initTags = async () => {
     const tags = await getTags();
     const tagsObj = [];
     tags.map((tag) => tagsObj.push(Object.create({ value: tag, count: Math.random() * 100 })));
     setTags(tagsObj);
-    dispatch(setIsLoading(false));
-  }, []);
+  };
 
   const fetchNewestReviews = async () => {
-    console.log('current user: ', currentUser);
     const newestReviewsFromApi = await getNewestReviews(10, rowSelectionRate * 10, currentUser.id);
-    console.log('newest rev: ', newestReviewsFromApi);
     if (newestReviewsFromApi.length !== 0) {
       const resultNewestReviews = [...currentReviews, ...newestReviewsFromApi];
-      console.log('result rev: ', resultNewestReviews);
       setCurrentReviews(resultNewestReviews);
       dispatch(setReviews(resultNewestReviews));
       setRowSelectionRate((rowSelectionRate) => rowSelectionRate + 1);
@@ -63,16 +64,13 @@ export const RecommendationsPage = () => {
   };
 
   const fetchMostLikedReviews = async () => {
-    console.log('rate: ', rowSelectionRate);
     const mostLikedReviewsFromApi = await getMostLikedReviews(
       10,
       rowSelectionRate * 10,
       currentUser.id
     );
-    console.log('mostLikedReviewsFromApi rev: ', mostLikedReviewsFromApi);
     if (mostLikedReviewsFromApi.length !== 0) {
       const resultMostLikedReviews = [...currentReviews, ...mostLikedReviewsFromApi];
-      console.log('result rev: ', resultMostLikedReviews);
       setCurrentReviews(resultMostLikedReviews);
       dispatch(setReviews(resultMostLikedReviews));
       setRowSelectionRate((rowSelectionRate) => rowSelectionRate + 1);
@@ -83,10 +81,8 @@ export const RecommendationsPage = () => {
 
   const fetchTagReviews = async () => {
     const tagReviewsFromApi = await getTagReviews(10, rowSelectionRate * 10, currentUser.id, tag);
-    console.log('tagReviewsFromApi rev: ', tagReviewsFromApi);
     if (tagReviewsFromApi.length !== 0) {
       const resultTagReviews = [...currentReviews, ...tagReviewsFromApi];
-      console.log('result rev: ', resultTagReviews);
       setCurrentReviews(resultTagReviews);
       dispatch(setReviews(resultTagReviews));
       setRowSelectionRate((rowSelectionRate) => rowSelectionRate + 1);
@@ -119,7 +115,6 @@ export const RecommendationsPage = () => {
   };
 
   const refreshTagReviews = async (tag) => {
-    console.log('tag', tag);
     dispatch(setIsLoading(true));
     setFetchFunction((fetchFunction) => 'fetchTagReviews');
     const tagReviewsFromApi = await getTagReviews(10, 0, currentUser.id, tag);
@@ -146,7 +141,22 @@ export const RecommendationsPage = () => {
     setTag(tag);
     refreshTagReviews(tag);
   };
-
+  const customRenderer = (tag, size, color) => (
+    <span
+      key={tag.value}
+      style={{
+        animation: 'blinker 3s linear infinite',
+        animationDelay: `${Math.random() * 2}s`,
+        fontSize: `${size / 2}em`,
+        margin: '3px',
+        padding: '3px',
+        display: 'inline-block',
+        color: `${color}`,
+      }}
+    >
+      {tag.value}
+    </span>
+  );
   return (
     <div className='recommendations_page_container'>
       {isLoading ? (
@@ -158,9 +168,10 @@ export const RecommendationsPage = () => {
             <Col sm={8}>
               <div className='tags_cloud_container'>
                 <TagCloud
-                  minSize={30}
-                  maxSize={75}
+                  minSize={2}
+                  maxSize={5}
                   tags={tags}
+                  renderer={customRenderer}
                   onClick={(tag) => findTagReviews(tag.value)}
                 />
               </div>

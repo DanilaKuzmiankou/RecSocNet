@@ -11,24 +11,25 @@ export const useRegisterNewUser = () => {
   const [isLoadingCompleted, setIsLoadingCompleted] = useState(false);
 
   useEffect(async () => {
-    await register();
+    await checkRegistration();
   }, [isLoading]);
 
-  const register = async () => {
-    // console.log("checking user data...", isAuthenticated)
+  const checkRegistration = async () => {
     if (isLoading === false) {
       if (isAuthenticated && Object.keys(currentUser).length === 0) {
-        // console.log("updating user data...")
-        const token = await getAccessTokenSilently();
-        await registerNewUser(token, user.sub, user.name, user.picture);
-        const currentUser = await getUserByAuthId(token, user.sub);
-        // console.log('browsed: ', currentUser)
-        dispatch(setCurrentUser(currentUser));
-        if (currentUser.role === 'admin') {
-          dispatch(setIsCurrentUserAdmin(true));
-        }
+        await startRegistration();
       }
       setIsLoadingCompleted(true);
+    }
+  };
+
+  const startRegistration = async () => {
+    const token = await getAccessTokenSilently();
+    await registerNewUser(token, user.sub, user.name, user.picture);
+    const currentUser = await getUserByAuthId(token, user.sub);
+    dispatch(setCurrentUser(currentUser));
+    if (currentUser.role === 'admin') {
+      dispatch(setIsCurrentUserAdmin(true));
     }
   };
 

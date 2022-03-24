@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-regular-svg-icons';
 import { faComment as faCommentSolid } from '@fortawesome/free-solid-svg-icons';
 import Rating from 'react-rating';
+import { useAuth0 } from '@auth0/auth0-react';
 
-export const Comments = (props) => {
+export const Comments = () => {
   const [comments, setComments] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      // setLikes(props?.likes)
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [props]);
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   const onCommentsClick = () => {
-    setComments(!comments);
-    console.log('opening comments...');
+    if (isAuthenticated) {
+      setComments(!comments);
+    } else {
+      loginWithRedirect();
+    }
   };
 
   return (

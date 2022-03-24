@@ -43,7 +43,6 @@ export const ProfilePage = () => {
   const [filtersBtnText, setFiltersBtnText] = useState(t('show_filters'));
 
   useEffect(async () => {
-    console.log('au', isAuthenticated);
     await checkPrivileges();
     setTimeout(async () => {
       dispatch(setIsLoading(false));
@@ -51,12 +50,9 @@ export const ProfilePage = () => {
   }, [isAuthenticated]);
 
   const checkPrivileges = async () => {
-    console.log('1');
     if (isAuthenticated) {
-      console.log('3');
       await setCurrentUserAsAuthUser();
     } else {
-      console.log('2');
       if (routerParams.id) {
         await setCurrentUserAsGuest();
       }
@@ -64,7 +60,7 @@ export const ProfilePage = () => {
   };
 
   const setCurrentUserAsGuest = async () => {
-    const userBrowsedProfile = await getUserById(routerParams.id); // userBrowsedProfile - profile of user, which you browse now
+    const userBrowsedProfile = await getUserById(routerParams.id);
     if (!userBrowsedProfile) {
       navigate('/1');
     }

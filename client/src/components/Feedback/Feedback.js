@@ -10,7 +10,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export const Feedback = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState({});
@@ -18,22 +18,21 @@ export const Feedback = (props) => {
   useEffect(() => {
     let isMounted = true;
     if (isMounted && props.review) {
-      const review = Object.assign({}, props.review);
-      review.usersContentScore = +review.usersContentScore.toFixed(2);
-      setReview(review);
-      if (
-        review.ratings &&
-        review.ratings[0] &&
-        review.ratings[0].contentScore &&
-        review.ratings[0].contentScore !== undefined
-      ) {
-        setRating(review.ratings[0].contentScore);
-      }
+      initFeedback();
     }
     return () => {
       isMounted = false;
     };
   }, [props]);
+
+  const initFeedback = () => {
+    const review = Object.assign({}, props.review);
+    review.usersContentScore = +review.usersContentScore.toFixed(2);
+    setReview(review);
+    if (review?.ratings[0]?.contentScore) {
+      setRating(review.ratings[0].contentScore);
+    }
+  };
 
   const changeRating = async (newRating) => {
     if (isAuthenticated) {
@@ -42,23 +41,27 @@ export const Feedback = (props) => {
         props.review.id,
         newRating
       );
-      let reviewUsersContentScore = response.data.usersContentScore;
-      reviewUsersContentScore = +reviewUsersContentScore.toFixed(2);
-      switch (response.status) {
-        case 200:
-          setRating(newRating);
-          break;
-        case 202:
-          setRating(0);
-          break;
-        default:
-          alert('Error while changing rating! Reload Page please!');
-          break;
-      }
-      saveEditedReview(reviewUsersContentScore, newRating);
+      saveNewRating(response, newRating);
     } else {
-      alert('Log in first!');
+      loginWithRedirect();
     }
+  };
+
+  const saveNewRating = (response, newRating) => {
+    let reviewUsersContentScore = response.data.usersContentScore;
+    reviewUsersContentScore = +reviewUsersContentScore.toFixed(2);
+    switch (response.status) {
+      case 200:
+        setRating(newRating);
+        break;
+      case 202:
+        setRating(0);
+        break;
+      default:
+        alert('Error while changing rating! Reload page please!');
+        break;
+    }
+    saveEditedReview(reviewUsersContentScore, newRating);
   };
 
   const saveEditedReview = (reviewUsersContentScore, newRating) => {

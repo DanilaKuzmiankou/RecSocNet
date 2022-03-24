@@ -23,9 +23,7 @@ export function changeSingleDateToUserTimezone(str) {
 
 function formatTime(date, timeZone) {
   const time = moment.tz(date, timeZone);
-  return time
-    .format(process.env.REACT_APP_DATESTRING_FORMAT)
-    .replace(/['"]+/g, ''); /* timezone_string = "Australia/Sydney" */
+  return time.format(process.env.REACT_APP_DATESTRING_FORMAT).replace(/['"]+/g, '');
 }
 
 function dec2hex(dec) {

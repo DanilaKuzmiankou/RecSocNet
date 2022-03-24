@@ -22,7 +22,6 @@ export const ReviewShortened = (props) => {
     if (isMounted) {
       setCurrentReview(reviews[props.reviewId]);
       const shortenedText = formatText(props.currentReview?.text);
-      // let shortenedText = props.review?.text
       setEditorText(shortenedText);
     }
     return () => {

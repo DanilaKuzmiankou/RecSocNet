@@ -53,6 +53,16 @@ export const CreateOrEditReviewForm = (props) => {
     }
   };
 
+  const getPicturesToDelete = (redactedPictures) => {
+    return editedReview.images?.filter(
+      (prevPicture) =>
+        redactedPictures.find(
+          (redactedPicture) =>
+            redactedPicture.imageLink === prevPicture.imageLink ||
+            redactedPicture.preview === prevPicture.imageLink
+        ) === undefined
+    );
+  };
   const uploadOrDeletePictures = async (newReview) => {
     const picturesToUpload = [];
     const redactedPictures = [];
@@ -64,14 +74,7 @@ export const CreateOrEditReviewForm = (props) => {
         redactedPictures.push(picture);
       }
     });
-    const picturesToDelete = editedReview.images?.filter(
-      (prevPicture) =>
-        redactedPictures.find(
-          (redactedPicture) =>
-            redactedPicture.imageLink === prevPicture.imageLink ||
-            redactedPicture.preview === prevPicture.imageLink
-        ) === undefined
-    );
+    const picturesToDelete = getPicturesToDelete(redactedPictures);
 
     await deleteImagesFromFirebaseCloud(picturesToDelete);
     const picturesUrl = await uploadImagesToFirebase(picturesToUpload);
@@ -81,8 +84,7 @@ export const CreateOrEditReviewForm = (props) => {
   const formSubmit = async (values, resolve) => {
     dispatch(setIsLoading(true));
     const redactedReview = values;
-    redactedReview.tags = redactedReview.tags.map((tag) => tag.trim());
-    redactedReview.tags = redactedReview.tags.join(',');
+    redactedReview.tags = redactedReview.tags.map((tag) => tag.trim()).join(',');
     if (Object.keys(currentReview).length !== 0) {
       await handleToUpdate(redactedReview);
     } else {
@@ -91,7 +93,6 @@ export const CreateOrEditReviewForm = (props) => {
     dispatch(setIsLoading(false));
     resolve('onSubmitHandler complete');
   };
-
   return (
     <div>
       {isLoading ? <LoadingComponent /> : null}
@@ -113,7 +114,7 @@ export const CreateOrEditReviewForm = (props) => {
             .min(1, t('must_be_in_range_from_1_to_5'))
             .required(t('required')),
           category: Yup.string()
-            .matches(`1^(?!${t('select_category')}$)`, t('required'))
+            .matches(`^(?!${t('select_category')}$)`, t('required'))
             .required(t('required')),
           text: Yup.string(),
           tags: Yup.array().required(t('required')),
@@ -122,7 +123,6 @@ export const CreateOrEditReviewForm = (props) => {
         onSubmit={(values, { setSubmitting, resetForm }) => {
           return new Promise(async (resolve, reject) => {
             setSubmitting(true);
-            console.log('submit...');
             resetForm();
             setSubmitting(false);
             await formSubmit(values, resolve);

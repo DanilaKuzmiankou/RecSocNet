@@ -39,7 +39,6 @@ export const UploadImage = ({ field, form, ...props }) => {
     accept: 'image/*',
 
     onDrop: async (acceptedFiles) => {
-      console.log('accept', acceptedFiles);
       const newFiles = acceptedFiles.map((file) =>
         Object.assign(file, {
           preview: URL.createObjectURL(file),

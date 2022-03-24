@@ -11,7 +11,7 @@ export const Like = ({ updateReview, review }) => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const [like, setLike] = useState(false);
 
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   useEffect(() => {
     let isMounted = true;
@@ -27,24 +27,30 @@ export const Like = ({ updateReview, review }) => {
 
   const onLikeClick = async () => {
     if (isAuthenticated) {
-      const result = await changeReviewLikeState(currentUser.authId, review.id);
-      if (result.status === 200) {
-        const newReview = Object.assign({}, review);
-        newReview.usersReviewScore = result.data.usersReviewScore;
-        setLike(result.data.liked);
-        updateReview(newReview);
-      } else {
-        alert(result.message);
-      }
+      await changeLikeStatus();
     } else {
-      /* using this construction we know, that react will anyway update state,
-                even if prev value is equal to next value */
       setLike((prevState) => {
         prevState = null;
         return { ...prevState };
       });
-      alert('Log in first!');
+      loginWithRedirect();
     }
+  };
+
+  const changeLikeStatus = async () => {
+    const response = await changeReviewLikeState(currentUser.authId, review.id);
+    if (response.status === 200) {
+      saveLike(response);
+    } else {
+      alert(response.message);
+    }
+  };
+
+  const saveLike = (response) => {
+    const newReview = Object.assign({}, review);
+    newReview.usersReviewScore = response.data.usersReviewScore;
+    setLike(response.data.liked);
+    updateReview(newReview);
   };
 
   return (

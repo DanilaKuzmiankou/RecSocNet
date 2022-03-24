@@ -11,6 +11,17 @@ export const UserProfileDiminished = () => {
   const { t } = useTranslation();
   const [imageGetAttempt, setImageGetAttempt] = useState(0);
 
+  const onImageDownloadError = (currentTarget) => {
+    setTimeout(async () => {
+      currentTarget.onerror = null;
+      setImageGetAttempt((imageGetAttempt) => imageGetAttempt + 1);
+      currentTarget.src =
+        imageGetAttempt < 10
+          ? currentUser.profilePictureUrl
+          : process.env.PUBLIC_URL + '/blank_profile_picture.png';
+    }, 50);
+  };
+
   return (
     <div>
       {currentUser && (
@@ -21,16 +32,7 @@ export const UserProfileDiminished = () => {
               height={50}
               width={50}
               roundedCircle={true}
-              onError={({ currentTarget }) => {
-                setTimeout(async () => {
-                  currentTarget.onerror = null;
-                  setImageGetAttempt((imageGetAttempt) => imageGetAttempt + 1);
-                  currentTarget.src =
-                    imageGetAttempt < 10
-                      ? currentUser.profilePictureUrl
-                      : process.env.PUBLIC_URL + '/blank_profile_picture.png';
-                }, 50);
-              }}
+              onError={({ currentTarget }) => onImageDownloadError(currentTarget)}
             />
           </div>
           <div style={{ width: 'auto' }}>

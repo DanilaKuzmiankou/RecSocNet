@@ -45,31 +45,24 @@ export const SearchPage = () => {
       setSearchedReviews(prevReviews);
       setHasMoreReviews(true);
     }
-    console.log(
-      'params: ',
-      'rowSelection: ',
-      rowSelection,
-      'searchParams',
-      searchParams.get('search'),
-      'currentUser:',
-      currentUser.id
-    );
     const searchedReviewsFromApi = await findReviews(
       10,
       rowSelection * 10,
       searchParams.get('search'),
       currentUser.id
     );
-    console.log('searched:', searchedReviewsFromApi);
     if (searchedReviewsFromApi.length !== 0) {
-      const resultNewestReviews = [...prevReviews, ...searchedReviewsFromApi];
-      setSearchedReviews(resultNewestReviews);
-      dispatch(setReviews(resultNewestReviews));
-      setRowSelectionRate((rowSelectionRate) => rowSelectionRate + 1);
-      if (searchedReviewsFromApi.length < 10) {
-        console.log('end!');
-        setHasMoreReviews(false);
-      }
+      setFetchedReviews(prevReviews, searchedReviewsFromApi);
+    }
+  };
+
+  const setFetchedReviews = (prevReviews, searchedReviewsFromApi) => {
+    const resultNewestReviews = [...prevReviews, ...searchedReviewsFromApi];
+    setSearchedReviews(resultNewestReviews);
+    dispatch(setReviews(resultNewestReviews));
+    setRowSelectionRate((rowSelectionRate) => rowSelectionRate + 1);
+    if (searchedReviewsFromApi.length < 10) {
+      setHasMoreReviews(false);
     }
   };
 
