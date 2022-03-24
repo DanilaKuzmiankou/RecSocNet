@@ -191,7 +191,10 @@ export const ProfilePage = () => {
         <div>
           {routerParams.id || isAuthenticated ? (
             <div>
-              <h1 className='small_margin_left no_select'> {t('profile')} </h1>
+              <h2 style={{ marginTop: '10px' }} className='small_margin_left no_select'>
+                {' '}
+                {t('profile')}{' '}
+              </h2>
               <div className='user_profile'>
                 <UserProfile />
               </div>

@@ -64,16 +64,9 @@ export const CreateOrEditReviewForm = (props) => {
     );
   };
   const uploadOrDeletePictures = async (newReview) => {
-    const picturesToUpload = [];
-    const redactedPictures = [];
     const allPictures = newReview.images;
-    allPictures.forEach(function (picture) {
-      if (picture.constructor === File) {
-        picturesToUpload.push(picture);
-      } else {
-        redactedPictures.push(picture);
-      }
-    });
+    const picturesToUpload = allPictures.filter((pic) => pic.constructor === File);
+    const redactedPictures = allPictures.filter((pic) => !picturesToUpload.includes(pic));
     const picturesToDelete = getPicturesToDelete(redactedPictures);
 
     await deleteImagesFromFirebaseCloud(picturesToDelete);
