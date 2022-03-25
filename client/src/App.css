@@ -254,7 +254,7 @@ body {
 }
 
 .not_found_page_container {
-    background-image: url("../public/error_404_background.jpg");
+    background-image: url("../public/error_404_background.png");
     min-height: 100vh;
     background-position: center;
     background-size: cover;

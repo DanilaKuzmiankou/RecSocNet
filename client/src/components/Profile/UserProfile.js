@@ -19,6 +19,7 @@ import { faEdit as editLight } from '@fortawesome/free-regular-svg-icons';
 import { changeUserName } from '../../api/store/UserStore';
 import { setBrowsedUser, setCurrentUser } from '../../store/reducers/UserSlice';
 import { useTranslation } from 'react-i18next';
+import { onImageDownloadError } from '../../utils/Utils';
 
 export const UserProfile = () => {
   const dispatch = useDispatch();
@@ -86,7 +87,6 @@ export const UserProfile = () => {
       }, 700);
     }
   };
-
   return (
     <Container fluid className='no_select'>
       <Row>
@@ -95,14 +95,9 @@ export const UserProfile = () => {
             src={browsedUser.profilePictureUrl}
             height={150}
             width={150}
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null;
-              setImageGetAttempt((imageGetAttempt) => imageGetAttempt + 1);
-              currentTarget.src =
-                imageGetAttempt < 10
-                  ? currentUser.profilePictureUrl
-                  : process.env.PUBLIC_URL + '/blank_profile_picture.png';
-            }}
+            onError={({ currentTarget }) =>
+              onImageDownloadError(currentTarget, setImageGetAttempt, imageGetAttempt, browsedUser)
+            }
           />
         </Col>
         <Col xs={'auto'} md={'auto'}>

@@ -77,6 +77,11 @@ class UserController {
     const user = await User.findOne({ where: { authId } });
     return res.json(user);
   }
+  async getUsers(req, res, next) {
+    return res.json(
+      await User.findAll({ attributes: ["id", "name", "profilePictureUrl"] })
+    );
+  }
 }
 
 module.exports = new UserController();

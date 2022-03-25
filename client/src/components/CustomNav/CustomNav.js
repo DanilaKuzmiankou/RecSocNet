@@ -80,7 +80,7 @@ export const CustomNav = () => {
                   style={{ display: 'flex', alignItems: 'center' }}
                   lg={'auto'}
                   sm={12}
-                  className='nav_elements_margin'
+                  className='nav_elements_margin ps-0'
                 >
                   {isAuthenticated ? <UserProfileDiminished /> : <LogInButton />}
                 </Col>

@@ -42,3 +42,19 @@ export function formatStringLength(formattingString, maxLength) {
   }
   return formattingString;
 }
+
+export function onImageDownloadError(
+  currentTarget,
+  setImageGetAttempt,
+  imageGetAttempt,
+  currentUser
+) {
+  setTimeout(async () => {
+    currentTarget.onerror = null;
+    setImageGetAttempt((imageGetAttempt) => imageGetAttempt + 1);
+    currentTarget.src =
+      imageGetAttempt < 10
+        ? currentUser.profilePictureUrl
+        : process.env.PUBLIC_URL + '/blank_profile_picture.png';
+  }, 50);
+}

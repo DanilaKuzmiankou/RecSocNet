@@ -19,3 +19,7 @@ export async function getUserByAuthId(token, authId) {
   const body = JSON.stringify({ authId: authId });
   return await postSecretRequest(token, '/api/user/getUser', body);
 }
+
+export async function getAllUsers() {
+  return await postRequest('/api/user/getUsers', {});
+}

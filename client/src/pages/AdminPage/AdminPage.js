@@ -1,5 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getAllUsers } from '../../api/store/UserStore';
+import { onImageDownloadError } from '../../utils/Utils';
+import { Col, Container, Image, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const AdminPage = () => {
-  return <h1>Admin page</h1>;
+  const navigate = useNavigate();
+  const [users, setUsers] = useState([]);
+  const [imageGetAttempt, setImageGetAttempt] = useState(0);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  useEffect(async () => {
+    if (currentUser?.role === 'admin') {
+      const usersFromApi = await getAllUsers();
+      setUsers(usersFromApi);
+      console.log('users: ', usersFromApi);
+    } else {
+      navigate('/NotFoundPage');
+    }
+  }, []);
+  return (
+    <Container fluid className='profile_page_container'>
+      <Row>
+        <Col md={3}></Col>
+        <Col md={6}>
+          {users.map((user, key) => (
+            <Row key={key} className=' pt-5'>
+              <Col md={'auto'}>
+                <Image
+                  src={user.profilePictureUrl}
+                  height={150}
+                  width={150}
+                  onError={({ currentTarget }) =>
+                    onImageDownloadError(currentTarget, setImageGetAttempt, imageGetAttempt, user)
+                  }
+                />
+              </Col>
+              <Col style={{ display: 'flex', alignItems: 'center' }} md={'auto'}>
+                <a href={`/profile/${user.id}`}>{user.name}</a>
+              </Col>
+            </Row>
+          ))}
+        </Col>
+        <Col md={3}></Col>
+      </Row>
+    </Container>
+  );
 };

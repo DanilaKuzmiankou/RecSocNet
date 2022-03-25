@@ -4,24 +4,13 @@ import { Image, NavDropdown } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { formatStringLength } from '../../utils/Utils';
+import { formatStringLength, onImageDownloadError } from '../../utils/Utils';
 
 export const UserProfileDiminished = () => {
   const { logout } = useAuth0();
   const { currentUser, isCurrentUserAdmin } = useSelector((state) => state.user);
   const { t } = useTranslation();
   const [imageGetAttempt, setImageGetAttempt] = useState(0);
-
-  const onImageDownloadError = (currentTarget) => {
-    setTimeout(async () => {
-      currentTarget.onerror = null;
-      setImageGetAttempt((imageGetAttempt) => imageGetAttempt + 1);
-      currentTarget.src =
-        imageGetAttempt < 10
-          ? currentUser.profilePictureUrl
-          : process.env.PUBLIC_URL + '/blank_profile_picture.png';
-    }, 50);
-  };
 
   return (
     <div>
@@ -33,7 +22,14 @@ export const UserProfileDiminished = () => {
               height={50}
               width={50}
               roundedCircle={true}
-              onError={({ currentTarget }) => onImageDownloadError(currentTarget)}
+              onError={({ currentTarget }) =>
+                onImageDownloadError(
+                  currentTarget,
+                  setImageGetAttempt,
+                  imageGetAttempt,
+                  currentUser
+                )
+              }
             />
           </div>
           <div style={{ width: 'auto' }}>
