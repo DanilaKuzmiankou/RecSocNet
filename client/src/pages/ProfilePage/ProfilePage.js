@@ -200,7 +200,7 @@ export const ProfilePage = () => {
               </div>
 
               {reviews && reviews.length > 0 ? (
-                <div className='profile_page_table_container'>
+                <div>
                   <h1 className='text-center'>{t('reviews')}</h1>
 
                   <Fragment>
@@ -242,8 +242,9 @@ export const ProfilePage = () => {
                       </div>
                     ) : null}
                   </Fragment>
-
-                  <CustomBootstrapTable />
+                  <div className='profile_page_table_container'>
+                    <CustomBootstrapTable />
+                  </div>
                 </div>
               ) : (
                 <div className='center_profile_page text-center'>

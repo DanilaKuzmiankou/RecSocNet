@@ -20,18 +20,22 @@ export const ReviewShortened = (props) => {
   useEffect(async () => {
     let isMounted = true;
     if (isMounted) {
-      setCurrentReview(reviews[props.reviewId]);
-      const shortenedText = formatText(props.currentReview?.text);
-      setEditorText(shortenedText);
+      if (reviews[props.reviewId] !== undefined) {
+        const shortenedText = formatText(props.currentReview?.text);
+        const newReview = JSON.parse(JSON.stringify(reviews[props.reviewId]));
+        // newReview.user.name = formatStringLength(newReview.user.name, 13);
+        setCurrentReview(newReview);
+        setEditorText(shortenedText);
+      }
     }
     return () => {
       isMounted = false;
     };
-  }, [reviews]);
+  }, [reviews, props]);
 
   const formatText = (text) => {
-    text = text.substring(0, process.env.REACT_APP_MAX_TABLE_TEXT_LENGTH);
     if (text.length >= process.env.REACT_APP_MAX_TABLE_TEXT_LENGTH) {
+      text = text.substring(0, process.env.REACT_APP_MAX_TABLE_TEXT_LENGTH);
       return text + '... <p>&nbsp;</p><strong><em>Click to read more!</em></strong>';
     } else {
       return text;
@@ -64,31 +68,38 @@ export const ReviewShortened = (props) => {
           backgroundColor: 'white',
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <div style={{ display: 'flex', flexShrink: '0' }}>
-            <label style={{ fontSize: '33px', fontStyle: 'italic' }}>by </label>
-            <a
-              style={{ marginLeft: '10px', fontSize: '43px' }}
-              className='review_shortened_profile_url'
-              href={'/profile/' + currentReview?.user?.id}
+        <Container className='p-0'>
+          <Row>
+            <Col
+              xs={9}
+              style={{
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+              }}
             >
-              {currentReview?.user?.name}
-            </a>
-          </div>
-          <div style={{ display: 'flex', flex: '1' }}> </div>
-          <div style={{ display: 'flex', flexShrink: '0' }}>
-            <label style={{ fontSize: '23px' }}>
-              {changeSingleDateToUserTimezone(currentReview?.createdAt)}
-            </label>
-          </div>
-        </div>
-
+              <label style={{ fontSize: '1rem', fontStyle: 'italic' }}>by </label>
+              <a
+                style={{ marginLeft: '10px', fontSize: '1.3rem' }}
+                className='review_shortened_profile_url'
+                href={'/profile/' + currentReview?.user?.id}
+              >
+                {currentReview?.user?.name}
+              </a>
+            </Col>
+            <Col xs={3} className='pe-0' style={{ display: 'flex', justifyContent: 'end' }}>
+              <label style={{ fontSize: '1.1rem' }}>
+                {changeSingleDateToUserTimezone(currentReview?.createdAt)}
+              </label>
+            </Col>
+          </Row>
+        </Container>
         <div
           onClick={() => {
             viewReview(currentReview);
           }}
         >
-          <div style={{ fontSize: '43px' }}>{currentReview?.id}</div>
+          <div style={{ fontSize: '1.8rem' }}>{currentReview?.title}</div>
 
           <Container
             fluid

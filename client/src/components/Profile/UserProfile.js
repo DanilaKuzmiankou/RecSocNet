@@ -27,7 +27,7 @@ export const UserProfile = () => {
     (state) => state.user
   );
   const [edit, setEdit] = useState(false);
-  const [editUsername, setEditUsername] = useState('');
+  const [editUsername, setEditUsername] = useState(browsedUser.name);
   const [displayForm, setDisplayForm] = useState('none');
   const [validationMessage, setValidationMessage] = useState('');
   const [errorValidationMessage, setErrorValidationMessage] = useState('');
@@ -68,7 +68,6 @@ export const UserProfile = () => {
   const updateProfileUI = (response) => {
     setValidationMessage(response.data.message);
     setTimeout(async () => {
-      setEditUsername('');
       setDisplayForm('none');
     }, 2000);
   };

@@ -35,3 +35,10 @@ export function generateRandomString(len) {
   window.crypto.getRandomValues(arr);
   return Array.from(arr, dec2hex).join('');
 }
+
+export function formatStringLength(formattingString, maxLength) {
+  if (formattingString.length > maxLength) {
+    formattingString = formattingString.substring(0, maxLength) + '...';
+  }
+  return formattingString;
+}

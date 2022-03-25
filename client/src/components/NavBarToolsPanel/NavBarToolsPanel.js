@@ -11,7 +11,7 @@ export const NavBarToolsPanel = () => {
   };
   return (
     <Container fluid className='p-0'>
-      <Row>
+      <Row xs={6} sm={6}>
         <Col md={'auto'} className='p-0 pe-2'>
           <Image
             src={process.env.PUBLIC_URL + '/united_states_flag.png'}
@@ -31,7 +31,7 @@ export const NavBarToolsPanel = () => {
           />
         </Col>
       </Row>
-      <Row>
+      <Row xs={6} sm={6}>
         <Col md={'auto'} className='p-0 pe-2 pt-1'>
           <Image
             src={process.env.PUBLIC_URL + '/moon.png'}

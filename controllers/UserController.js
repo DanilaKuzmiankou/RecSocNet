@@ -42,15 +42,16 @@ class UserController {
   }
 
   async changeName(req, res, next) {
-    const { authId, newUserName } = req.body;
-    let answer = await userController.validateUserName(newUserName);
+    let { authId, newUserName } = req.body;
+    const answer = await userController.validateUserName(newUserName);
     if (answer === "") {
       const candidate = await User.findOne({ where: { authId } });
       if (candidate) {
+        newUserName = newUserName.trim();
         await candidate.update({ name: newUserName });
         return res
           .status(200)
-          .json({ message: "User name was successfully changed!" });
+          .json({ message: "Name was successfully changed!" });
       }
       return res.status(202).json({ message: "User was not found" });
     }
@@ -58,14 +59,11 @@ class UserController {
   }
 
   async validateUserName(username) {
-    if (username && !/\s/.test(username)) {
-      const candidate = await User.findOne({ where: { name: username } });
-      if (!candidate) {
-        return "";
-      }
-      return "This username is already taken!";
-    }
-    return "Not valid user name. Spaces are not allowed!";
+    if (!username) return "Not valid user name.";
+    const candidate = await User.findOne({ where: { name: username } });
+    if (candidate) return "This username is already taken!";
+    if (username.length > 30) return "Name max length is 30 symbols!";
+    return "";
   }
 
   async getUser(req, res, next) {

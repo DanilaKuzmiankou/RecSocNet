@@ -29,7 +29,7 @@ export const Feedback = (props) => {
     const review = Object.assign({}, props.review);
     review.usersContentScore = +review.usersContentScore.toFixed(2);
     setReview(review);
-    if (review?.ratings[0]?.contentScore) {
+    if (review?.ratings[0] && review.ratings[0].contentScore) {
       setRating(review.ratings[0].contentScore);
     }
   };

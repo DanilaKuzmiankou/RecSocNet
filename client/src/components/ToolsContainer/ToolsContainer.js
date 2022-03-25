@@ -32,20 +32,22 @@ export const ToolsContainer = (props) => {
         <Col className='tools_container_div'>
           <div>
             <div>{t('newest')}</div>
-            <Rating
-              start={0}
-              stop={1}
-              initialRating={isNewReviewsClicked}
-              onClick={onNewReviewsClick}
-              emptySymbol={<FontAwesomeIcon icon={faCalendar} color={'black'} size='4x' />}
-              fullSymbol={<FontAwesomeIcon icon={faTimerSolid} size='4x' color={'black'} />}
-            />
+            <div className='tools_container_div'>
+              <Rating
+                start={0}
+                stop={1}
+                initialRating={isNewReviewsClicked}
+                onClick={onNewReviewsClick}
+                emptySymbol={<FontAwesomeIcon icon={faCalendar} color={'black'} size='4x' />}
+                fullSymbol={<FontAwesomeIcon icon={faTimerSolid} size='4x' color={'black'} />}
+              />
+            </div>
           </div>
         </Col>
         <Col className='tools_container_div'>
           <div>
             <div>{t('most_liked')}</div>
-            <div>
+            <div className='tools_container_div'>
               <Rating
                 start={0}
                 stop={1}

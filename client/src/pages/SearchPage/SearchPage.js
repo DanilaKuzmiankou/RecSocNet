@@ -36,6 +36,7 @@ export const SearchPage = () => {
   }, []);
 
   const searchReviews = async (reRenderFlag) => {
+    dispatch(setIsLoading(true));
     let rowSelection = rowSelectionRate;
     let prevReviews = searchedReviews;
     if (reRenderFlag) {
@@ -64,6 +65,7 @@ export const SearchPage = () => {
     if (searchedReviewsFromApi.length < 10) {
       setHasMoreReviews(false);
     }
+    dispatch(setIsLoading(false));
   };
 
   return (

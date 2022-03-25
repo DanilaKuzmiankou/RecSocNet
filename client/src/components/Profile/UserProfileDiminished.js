@@ -4,6 +4,7 @@ import { Image, NavDropdown } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { formatStringLength } from '../../utils/Utils';
 
 export const UserProfileDiminished = () => {
   const { logout } = useAuth0();
@@ -38,7 +39,7 @@ export const UserProfileDiminished = () => {
           <div style={{ width: 'auto' }}>
             <NavDropdown
               style={{ fontSize: '30px' }}
-              title={currentUser?.name}
+              title={formatStringLength(currentUser?.name, 30)}
               id='navbarScrollingDropdown'
             >
               <NavDropdown.Item href={'/profile/' + currentUser?.id}>

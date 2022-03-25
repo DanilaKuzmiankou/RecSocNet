@@ -145,8 +145,8 @@ export const RecommendationsPage = () => {
     <span
       key={tag.value}
       style={{
-        animation: 'blinker 3s linear infinite',
-        animationDelay: `${Math.random() * 2}s`,
+        // animation: 'blinker 3s linear infinite',
+        // animationDelay: `${Math.random() * 2}s`,
         fontSize: `${size / 2}em`,
         margin: '3px',
         padding: '3px',
@@ -157,6 +157,12 @@ export const RecommendationsPage = () => {
       {tag.value}
     </span>
   );
+
+  const options = {
+    luminosity: 'bright',
+    hue: 'purple',
+  };
+
   return (
     <div className='recommendations_page_container'>
       {isLoading ? (
@@ -170,7 +176,9 @@ export const RecommendationsPage = () => {
                 <TagCloud
                   minSize={2}
                   maxSize={5}
+                  shuffle={false}
                   tags={tags}
+                  colorOptions={options}
                   renderer={customRenderer}
                   onClick={(tag) => findTagReviews(tag.value)}
                 />
