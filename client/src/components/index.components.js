@@ -4,7 +4,7 @@ export { UserProfile } from './Profile/UserProfile';
 export { CustomBootstrapTable } from './CustomBootstrapTable/CustomBootstrapTable';
 export { UploadImage } from './UploadImage/UploadImage';
 export { LoadingComponent } from './LoadingComponent/LoadingComponent';
-export { LogInButton } from './AuthUI/LogInButton/LogInButton';
+export { LogInButton } from './LogInButton/LogInButton';
 export { Feedback } from './Feedback/Feedback';
 export { Review } from './Review/Review';
 export { ReviewShortened } from './Review/ReviewShortened';

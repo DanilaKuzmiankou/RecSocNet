@@ -5,7 +5,7 @@ export const LoadingComponent = () => {
   return (
     <div>
       <RotatingSquare
-        wrapperClass='custom_spinner'
+        wrapperClass='custom-spinner'
         ariaLabel='rotating-square'
         visible={true}
         color='grey'

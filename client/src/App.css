@@ -4,7 +4,6 @@
     --bg-home-background-color: rgba(218, 224, 230, 255);
     --background-color: #FFF;
     --feedback-background-color: #EEF1F0;
-    --loading-screen-background: #565656;
     --table-selected-row-background: #c8e6c9;
     --text-color: #000000;
     --modal-border: 0.01em solid rgba(0, 0, 0, 0.2);
@@ -18,7 +17,6 @@ body[data-theme="dark-theme"] {
     --bg-home-background-color: #000000;
     --background-color: #1A1A18;
     --feedback-background-color: #1A1A1BCC;
-    --loading-screen-background: #1A1A18;
     --table-selected-row-background: #3a3a3d;
     --text-color:  #fff;
     --modal-border: 1 #000000;
@@ -32,7 +30,6 @@ body[data-theme="light-theme"] {
     --bg-home-background-color: rgba(218, 224, 230, 255);
     --background-color: #FFF;
     --feedback-background-color: #EEF1F0;
-    --loading-screen-background: #565656;
     --table-selected-row-background: #c8e6c9;
     --text-color: #000000;
     --modal-border: 0.01em solid rgba(0, 0, 0, 0.2);
@@ -459,7 +456,7 @@ a.dropdown-item {
 }
 
 .overlay {
-    background: var(--loading-screen-background);
+    background: #565656;
     position: absolute;
     z-Index: 5000;
     top: 0;
