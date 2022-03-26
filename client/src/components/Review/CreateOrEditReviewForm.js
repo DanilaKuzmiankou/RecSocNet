@@ -89,7 +89,6 @@ export const CreateOrEditReviewForm = (props) => {
       {isLoading ? <LoadingComponent /> : null}
       <Formik
         innerRef={props.formRef}
-        enableReinitialize={true}
         initialValues={{
           title: currentReview?.title || '',
           authorScore: currentReview?.authorScore || '',
@@ -138,7 +137,7 @@ export const CreateOrEditReviewForm = (props) => {
                   {t('category')}
                 </label>
                 <Field
-                  className={`${touched.title && errors.title ? 'error' : null} formik`}
+                  className={`${touched.category && errors.category ? 'error' : null} formik`}
                   style={{ width: '100%', height: '55px' }}
                   name='category'
                   as='select'
@@ -155,7 +154,7 @@ export const CreateOrEditReviewForm = (props) => {
                 </label>
                 <Field
                   name='tags'
-                  className={`${touched.title && errors.title ? 'error' : null} formik`}
+                  className={`${touched.tags && errors.tags ? 'error' : null} formik`}
                   component={CustomMultiselect}
                 />
                 <ErrorMessage component='div' className='custom_error_message' name='tags' />
@@ -164,7 +163,7 @@ export const CreateOrEditReviewForm = (props) => {
               <Col xs={2}>
                 <label htmlFor='authorScore'>{t('score')}</label>
                 <Field
-                  className={`${touched.title && errors.title ? 'error' : null} formik`}
+                  className={`${touched.authorScore && errors.authorScore ? 'error' : null} formik`}
                   style={{ width: '100%', height: '55px' }}
                   name='authorScore'
                   type='number'
@@ -193,11 +192,7 @@ export const CreateOrEditReviewForm = (props) => {
               </Field>
 
               <label htmlFor='images'>{t('pictures')}</label>
-              <Field
-                className={`${touched.title && errors.title ? 'error' : null} formik`}
-                name='images'
-                component={UploadImage}
-              />
+              <Field name='images' component={UploadImage} />
             </Row>
           </Form>
         )}

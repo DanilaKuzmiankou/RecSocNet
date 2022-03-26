@@ -6,12 +6,11 @@ import {
   setIsCurrentUserAdmin,
 } from '../store/reducers/UserSlice';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import i18next, { changeLanguage } from 'i18next';
 
 export const useRegisterNewUser = () => {
   const { user, getAccessTokenSilently, isAuthenticated, isLoading } = useAuth0();
-  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [isLoadingCompleted, setIsLoadingCompleted] = useState(false);
 
@@ -24,7 +23,7 @@ export const useRegisterNewUser = () => {
 
   const checkRegistration = async () => {
     if (isLoading === false) {
-      if (isAuthenticated && Object.keys(currentUser).length === 0) {
+      if (isAuthenticated) {
         await startRegistration();
       }
       setIsLoadingCompleted(true);

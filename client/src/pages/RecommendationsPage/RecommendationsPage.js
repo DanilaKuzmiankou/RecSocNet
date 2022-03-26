@@ -39,13 +39,14 @@ export const RecommendationsPage = () => {
   const [tag, setTag] = useState('');
 
   useEffect(() => {
+    dispatch(setIsLoading(true));
     document.body.setAttribute('data-theme', currentUserTheme);
     async function fetchData() {
       await fetchNewestReviews();
       await initTags();
+      dispatch(setIsLoading(false));
     }
     fetchData();
-    dispatch(setIsLoading(false));
   }, []);
 
   const initTags = async () => {

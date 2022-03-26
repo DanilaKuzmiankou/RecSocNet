@@ -42,14 +42,13 @@ export const ProfilePage = () => {
   const [filtersBtnText, setFiltersBtnText] = useState(t('show_filters'));
 
   useEffect(() => {
+    dispatch(setIsLoading(true));
     document.body.setAttribute('data-theme', currentUserTheme);
     async function fetchData() {
       await checkPrivileges();
+      dispatch(setIsLoading(false));
     }
     fetchData();
-    setTimeout(async () => {
-      dispatch(setIsLoading(false));
-    }, 1000);
   }, [isAuthenticated, currentUserTheme]);
 
   const checkPrivileges = async () => {
@@ -71,6 +70,7 @@ export const ProfilePage = () => {
       dispatch(setBrowsedUser(userBrowsedProfile));
       dispatch(setIsCurrentUserAdmin(false));
       const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
+      console.log('r1', reviews);
       dispatch(setReviews(reviews));
     } catch (e) {}
   };
@@ -84,6 +84,7 @@ export const ProfilePage = () => {
       dispatch(setBrowsedUser(userBrowsedProfile));
       const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
       dispatch(setReviews(reviews));
+      console.log('r2', reviews);
       if (userBrowsedProfile.authId === currentUser.authId) {
         console.log('owner!');
         dispatch(setIsCurrentUserOwner(true));
@@ -95,6 +96,7 @@ export const ProfilePage = () => {
 
   const authUserInOwnProfile = async () => {
     const newReviews = await getUserReviews(currentUser.authId, currentUser.id);
+    console.log('r3', reviews);
     dispatch(setReviews(newReviews));
     dispatch(setBrowsedUser(currentUser));
     dispatch(setIsCurrentUserOwner(true));

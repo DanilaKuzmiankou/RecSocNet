@@ -11,7 +11,7 @@ export const LoadingComponent = () => {
         color='grey'
         strokeWidth='10'
       />
-      <div className='overlay'></div>
+      <div className='overlay'> </div>
     </div>
   );
 };

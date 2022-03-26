@@ -15,12 +15,13 @@ export const SearchPage = () => {
   const [rowSelectionRate, setRowSelectionRate] = useState(0);
   const [hasMoreReviews, setHasMoreReviews] = useState(true);
   const [searchedReviews, setSearchedReviews] = useState([]);
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const { currentUser, currentUserTheme } = useSelector((state) => state.user);
   const [infiniteScrollKey, setInfiniteScrollKey] = useState(0);
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
   useEffect(() => {
     if (searchParams) {
+      document.body.setAttribute('data-theme', currentUserTheme);
       async function fetchData() {
         await searchReviews(true);
       }

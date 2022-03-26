@@ -71,7 +71,6 @@ export const CustomBootstrapTable = () => {
         placeholder: t('text'),
         style: { display: displayFilters },
       }),
-      classes: 'text-center',
       formatter: (cell, row, rowIndex, extraData) => (
         <div>
           <ReactQuill theme={null} readOnly={true} defaultValue={formatString(row.text)} />
@@ -88,7 +87,6 @@ export const CustomBootstrapTable = () => {
         style: { display: displayFilters },
       }),
       sort: true,
-      classes: 'text-center',
       headerFormatter: headerFormat,
     },
     {
@@ -166,7 +164,8 @@ export const CustomBootstrapTable = () => {
   return (
     <BootstrapTable
       bordered={false}
-      wrapperClasses='table responsive-table'
+      wrapperClasses='responsive-table text-center'
+      headerClasses='text-center'
       keyField='id'
       data={reviews}
       columns={columns}
@@ -175,7 +174,7 @@ export const CustomBootstrapTable = () => {
       selectRow={{
         mode: 'radio',
         clickToSelect: true,
-        style: { backgroundColor: '#c8e6c9' },
+        classes: 'bootstrap-table-selected-row',
         onSelect: (row, isSelect, rowIndex, e) => {
           dispatch(setSelectedReview(row));
         },
