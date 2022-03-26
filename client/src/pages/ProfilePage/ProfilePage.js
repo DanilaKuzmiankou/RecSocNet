@@ -21,7 +21,12 @@ import {
   setIsCurrentUserAdmin,
   setIsCurrentUserOwner,
 } from '../../store/reducers/UserSlice';
-import { setDisplayFilters, setEditedReview, setReviews } from '../../store/reducers/ReviewSlice';
+import {
+  setDisplayFilters,
+  setEditedReview,
+  setReviews,
+  setSelectedReview,
+} from '../../store/reducers/ReviewSlice';
 import { setModalParams } from '../../store/reducers/ModalSlice';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
 import { useTranslation } from 'react-i18next';
@@ -174,6 +179,7 @@ export const ProfilePage = () => {
           reviews.find((review) => review.id === selectedId).images
         );
         await deleteUserReview(browsedUser.authId, selectedId);
+        dispatch(setSelectedReview({}));
       }
     }
   };

@@ -82,7 +82,6 @@ export const CreateOrEditReviewForm = (props) => {
       await handleToCreate(redactedReview);
     }
     dispatch(setIsLoading(false));
-    resolve('onSubmitHandler complete');
   };
   return (
     <div>
@@ -112,9 +111,7 @@ export const CreateOrEditReviewForm = (props) => {
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           return new Promise(async (resolve, reject) => {
-            setSubmitting(true);
             resetForm();
-            setSubmitting(false);
             await formSubmit(values, resolve);
           });
         }}

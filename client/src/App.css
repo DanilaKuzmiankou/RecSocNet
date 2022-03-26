@@ -120,7 +120,9 @@ input::placeholder {
     border-radius: 0;
     min-height: 55px;
 }
-
+.multiSelectContainer li{
+    background-color: var(--background-color);
+}
 .customMultiselect{
     min-height: 55px;
     border-style: solid;
