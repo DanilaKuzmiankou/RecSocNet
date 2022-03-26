@@ -1,6 +1,6 @@
 
 :root {
-    --bg-main-background: url("../public/profile_page_background.jpg");
+    --bg-main-background: url("assets/pictures/profilePageBackground.jpg");
     --bg-home-background-color: rgba(218, 224, 230, 255);
     --background-color: #FFF;
     --feedback-background-color: #EEF1F0;
@@ -13,7 +13,7 @@
 }
 
 body[data-theme="dark-theme"] {
-    --bg-main-background: url("../public/background-fiber.jpg");
+    --bg-main-background: url("assets/pictures/backgroundFiber.jpg");
     --bg-home-background-color: #000000;
     --background-color: #1A1A18;
     --feedback-background-color: #1A1A1BCC;
@@ -26,7 +26,7 @@ body[data-theme="dark-theme"] {
 }
 
 body[data-theme="light-theme"] {
-    --bg-main-background: url("../public/profile_page_background.jpg");
+    --bg-main-background: url("assets/pictures/profilePageBackground.jpg");
     --bg-home-background-color: rgba(218, 224, 230, 255);
     --background-color: #FFF;
     --feedback-background-color: #EEF1F0;
@@ -41,17 +41,17 @@ body[data-theme="light-theme"] {
 
 @font-face {
     font-family: 'JosefinSansExtraLightItalic';
-    src: local('JosefinSans'), url(../public/fonts/JosefinSans-ExtraLightItalic.ttf) format('truetype');
+    src: local('JosefinSans'), url(assets/fonts/JosefinSans-ExtraLightItalic.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'JosefinSansRegular';
-    src: local('JosefinSans'), url(../public/fonts/JosefinSans-Regular.ttf) format('truetype');
+    src: local('JosefinSans'), url(assets/fonts/JosefinSans-Regular.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'JosefinSansMedium';
-    src: local('JosefinSans'), url(../public/fonts/JosefinSans-Medium.ttf) format('truetype');
+    src: local('JosefinSans'), url(assets/fonts/JosefinSans-Medium.ttf) format('truetype');
 
 }
 
@@ -253,7 +253,7 @@ input::placeholder {
 }
 
 .not-found-page-container {
-    background-image: url("../public/error_404_background.png");
+    background-image: url("assets/pictures/error404Background.png");
     min-height: 100vh;
     background-position: center;
     background-size: cover;

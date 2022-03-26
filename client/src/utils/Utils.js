@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone'; // dependent on utc plugin
 import moment from 'moment-timezone';
+import blankProfilePicture from '../assets/pictures/blankProfilePicture.png';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -52,9 +53,6 @@ export function onImageDownloadError(
   setTimeout(async () => {
     currentTarget.onerror = null;
     setImageGetAttempt((imageGetAttempt) => imageGetAttempt + 1);
-    currentTarget.src =
-      imageGetAttempt < 10
-        ? currentUser.profilePictureUrl
-        : process.env.PUBLIC_URL + '/blank_profile_picture.png';
+    currentTarget.src = imageGetAttempt < 10 ? currentUser.profilePictureUrl : blankProfilePicture;
   }, 50);
 }

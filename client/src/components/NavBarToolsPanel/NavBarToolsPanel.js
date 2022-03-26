@@ -4,6 +4,10 @@ import { changeLanguage } from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUserLanguage, setCurrentUserTheme } from '../../store/reducers/UserSlice';
 import { changeUserLanguage, changeUserTheme } from '../../api/store/UserStore';
+import unitedStatesFlag from '../../assets/pictures/unitedStatesFlag.png';
+import russiaFlag from '../../assets/pictures/russiaFlag.png';
+import sun from '../../assets/pictures/sun.png';
+import moon from '../../assets/pictures/moon.png';
 
 export const NavBarToolsPanel = () => {
   const dispatch = useDispatch();
@@ -39,7 +43,7 @@ export const NavBarToolsPanel = () => {
       <Row xs={6} sm={6}>
         <Col md={'auto'} className='p-0 pe-2'>
           <Image
-            src={process.env.PUBLIC_URL + '/united_states_flag.png'}
+            src={unitedStatesFlag}
             height={35}
             width={35}
             roundedCircle={true}
@@ -48,7 +52,7 @@ export const NavBarToolsPanel = () => {
         </Col>
         <Col md={'auto'} className='p-0'>
           <Image
-            src={process.env.PUBLIC_URL + '/russia_flag.png'}
+            src={russiaFlag}
             height={35}
             width={35}
             roundedCircle={true}
@@ -59,7 +63,7 @@ export const NavBarToolsPanel = () => {
       <Row xs={6} sm={6}>
         <Col md={'auto'} className='p-0 pe-2 pt-1'>
           <Image
-            src={process.env.PUBLIC_URL + '/moon.png'}
+            src={moon}
             height={35}
             width={35}
             roundedCircle={true}
@@ -68,7 +72,7 @@ export const NavBarToolsPanel = () => {
         </Col>
         <Col md={'auto'} className='p-0 pe-1 pt-1'>
           <Image
-            src={process.env.PUBLIC_URL + '/sun.png'}
+            src={sun}
             height={40}
             width={40}
             roundedCircle={true}
