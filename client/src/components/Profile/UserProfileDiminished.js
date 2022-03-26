@@ -38,10 +38,12 @@ export const UserProfileDiminished = () => {
               title={formatStringLength(currentUser?.name, 30)}
               id='navbarScrollingDropdown'
             >
-              <NavDropdown.Item href={'/profile/' + currentUser?.id}>
-                {t('profile')}
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
+              <div>
+                <NavDropdown.Item href={'/profile/' + currentUser?.id}>
+                  {t('profile')}
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+              </div>
               {isCurrentUserAdmin && (
                 <div>
                   <NavDropdown.Item href={'/admin'}>{t('admin_page')}</NavDropdown.Item>

@@ -9,7 +9,7 @@ class UserController {
   }
 
   async registration(req, res, next) {
-    const { authId, name, picture } = req.body;
+    const { authId, name, picture, language, theme } = req.body;
     let username = name;
     if (!name || name === "") {
       username = "New user";
@@ -35,10 +35,28 @@ class UserController {
       authId,
       name: username,
       profilePictureUrl: picture,
+      language,
+      theme,
     });
     return res
       .status(200)
       .json({ message: "User was successfully registered!" });
+  }
+
+  async changeTheme(req, res) {
+    const { authId, theme } = req.body;
+    const user = await User.findOne({ where: { authId } });
+    if (user) {
+      await user.update({ theme });
+    }
+  }
+
+  async changeLanguage(req, res) {
+    const { authId, language } = req.body;
+    const user = await User.findOne({ where: { authId } });
+    if (user) {
+      await user.update({ language });
+    }
   }
 
   async changeName(req, res, next) {

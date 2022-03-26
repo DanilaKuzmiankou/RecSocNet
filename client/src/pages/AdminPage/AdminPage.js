@@ -9,10 +9,11 @@ export const AdminPage = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [imageGetAttempt, setImageGetAttempt] = useState(0);
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const { currentUser, currentUserTheme } = useSelector((state) => state.user);
 
   useEffect(async () => {
     if (currentUser?.role === 'admin') {
+      document.body.setAttribute('data-theme', currentUserTheme);
       const usersFromApi = await getAllUsers();
       setUsers(usersFromApi);
       console.log('users: ', usersFromApi);

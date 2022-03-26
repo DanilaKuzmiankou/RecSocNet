@@ -7,6 +7,8 @@ export const userSlice = createSlice({
     browsedUser: {},
     isCurrentUserAdmin: false,
     isCurrentUserOwner: false,
+    currentUserTheme: '',
+    currentUserLanguage: '',
   },
   reducers: {
     setCurrentUser: (state, action) => {
@@ -21,11 +23,23 @@ export const userSlice = createSlice({
     setIsCurrentUserOwner: (state, action) => {
       state.isCurrentUserOwner = action.payload;
     },
+    setCurrentUserTheme: (state, action) => {
+      state.currentUserTheme = action.payload;
+    },
+    setCurrentUserLanguage: (state, action) => {
+      state.currentUserLanguage = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setCurrentUser, setBrowsedUser, setIsCurrentUserAdmin, setIsCurrentUserOwner } =
-  userSlice.actions;
+export const {
+  setCurrentUser,
+  setBrowsedUser,
+  setIsCurrentUserAdmin,
+  setIsCurrentUserOwner,
+  setCurrentUserTheme,
+  setCurrentUserLanguage,
+} = userSlice.actions;
 
 export default userSlice.reducer;

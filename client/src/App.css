@@ -3,6 +3,104 @@ html {
     overflow-x: hidden;
 }
 */
+
+
+:root {
+    --bg-main-background: url("../public/profile_page_background.jpg");
+    --bg-home-background-color: rgba(218, 224, 230, 255);
+    --background-color: #FFF;
+    --feedback-background-color: #EEF1F0;
+    --loading-screen-background: #565656;
+    --text-color: #000000;
+    --modal-border: 0.01em solid rgba(0, 0, 0, 0.2);
+    --dropzone-border: 2px dashed #eeeeee;
+    --dropzone-background-color: #fafafa;
+    --dropzone-color: #bdbdbd;
+}
+
+body[data-theme="dark-theme"] {
+    --bg-main-background: url("../public/background-fiber.jpg");
+    --bg-home-background-color: #000000;
+    --background-color: #1A1A18;
+    --feedback-background-color: #1A1A1BCC;
+    --loading-screen-background: #1A1A18;
+    --text-color:  #fff;
+    --modal-border: 1 #000000;
+    --dropzone-border: 2px dashed #424242;
+    --dropzone-background-color: #1a1a1a;
+    --dropzone-color: #bdbdbd;
+}
+
+body[data-theme="light-theme"] {
+    --bg-main-background: url("../public/profile_page_background.jpg");
+    --bg-home-background-color: rgba(218, 224, 230, 255);
+    --background-color: #FFF;
+    --feedback-background-color: #EEF1F0;
+    --loading-screen-background: #565656;
+    --text-color: #000000;
+    --modal-border: 0.01em solid rgba(0, 0, 0, 0.2);
+    --dropzone-border: 2px dashed #eeeeee;
+    --dropzone-background-color: #fafafa;
+    --dropzone-color: #bdbdbd;
+}
+
+
+@font-face {
+    font-family: 'JosefinSansExtraLightItalic';
+    src: local('JosefinSans'), url(../public/fonts/JosefinSans-ExtraLightItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'JosefinSansRegular';
+    src: local('JosefinSans'), url(../public/fonts/JosefinSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'JosefinSansMedium';
+    src: local('JosefinSans'), url(../public/fonts/JosefinSans-Medium.ttf) format('truetype');
+
+}
+
+body {
+    font-family: JosefinSansMedium, Arial, serif;
+    font-weight: 500;
+}
+
+* {
+    color: var(--text-color);
+    font-size: 19px;
+}
+
+@media screen and (max-width: 800px) {
+    * {
+        font-size: 15px;
+    }
+}
+
+
+/* debug mode
+* {
+  background: #000 !important;
+  color: #0f0 !important;
+  outline: solid #f00 1px !important;
+}
+
+ */
+
+.form-control:not(active){
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.form-control:focus{
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.formik{
+    background: var(--background-color);
+
+}
 .error {
     border: 2px solid #FF6565;
 }
@@ -28,50 +126,8 @@ html {
     border-color: rgba(0,0,0,0.5);
 }
 
-@font-face {
-    font-family: 'JosefinSansExtraLightItalic';
-    src: local('JosefinSans'), url(../public/fonts/JosefinSans-ExtraLightItalic.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'JosefinSansRegular';
-    src: local('JosefinSans'), url(../public/fonts/JosefinSans-Regular.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'JosefinSansMedium';
-    src: local('JosefinSans'), url(../public/fonts/JosefinSans-Medium.ttf) format('truetype');
-
-}
-
-body {
-    font-family: JosefinSansMedium, Arial, serif;
-    font-weight: 500;
-}
-
-* {
-
-    font-size: 19px;
-}
-
-@media screen and (max-width: 800px) {
-    * {
-        font-size: 15px;
-    }
-}
-
-
-/* debug mode
-* {
-  background: #000 !important;
-  color: #0f0 !important;
-  outline: solid #f00 1px !important;
-}
-
- */
-
 .tags_cloud_container{
-    background-color: white;
+    background-color: var(--background-color);
     margin-bottom: 30px;
     border: black 1px solid;
     border-radius: 100px;
@@ -104,10 +160,16 @@ body {
 
 }
 
+.custom_modal{
+    border-bottom: var(--modal-border);
+    border-top: var(--modal-border);
+    background-color: var(--background-color)
+}
 
 .review_shortened_container {
     border: black 2px solid;
-    margin: 0 0 30px 0;
+    margin: 0 0 15px 0;
+    background-color: var(--background-color)
 }
 
 .tools_container_div{
@@ -119,11 +181,11 @@ body {
 .recommendations_page_tools_container{
     padding: 20px 0 ;
     margin: 0 0 30px 0;
-    background-color: white;
+    background-color: var(--background-color)
 }
 
 .review_shortened_feedback_container {
-    background-color: #EEF1F0;
+    background-color: var(--feedback-background-color);
     min-height: 70px;
     display: flex;
     align-items: center;
@@ -189,8 +251,8 @@ body {
 @media screen and (min-width: 750px) {
     .search_page_title {
         font-size: 70px;
-        margin-left: 8rem;
-        margin-top: 1rem;
+        padding-left: 8rem;
+        padding-top: 1rem;
         padding-bottom: 1rem;
     }
 }
@@ -246,7 +308,7 @@ body {
 
 .recommendations_page_container {
     padding-top: 20px;
-    background-color: rgba(218, 224, 230, 255);
+    background-color: var(--bg-home-background-color);
     min-height: 100vh;
     background-position: center;
     background-size: cover;
@@ -267,7 +329,7 @@ body {
 
 
 .profile_page_container {
-    background-image: url("../public/profile_page_background.jpg");
+    background-image: var(--bg-main-background);
     min-height: 100vh;
     background-position: center;
     background-size: cover;
@@ -275,7 +337,7 @@ body {
 }
 
 .search_page_container {
-    background-image: url("../public/profile_page_background.jpg");
+    background-image: var(--bg-main-background);
     min-height: 100vh;
     background-position: center;
     background-size: cover;
@@ -359,13 +421,26 @@ ul {
     margin: 0;
 }
 
-.dropzone {
-    text-align: center;
-    padding: 20px;
-    border: 3px dashed #eeeeee;
-    background-color: #fafafa;
-    color: #bdbdbd;
+div.dropdown-menu.show {
+    background-color: var(--background-color);
+}
+a.dropdown-item {
+    color: var(--text-color);
+}
 
+.dropzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    outline: none;
+    border-style: dashed;
+    transition: border .24s ease-in-out;
+    text-align: center;
+    border: var(--dropzone-border);
+    background-color: var(--dropzone-background-color);
+    color: var(--dropzone-color);
     margin-bottom: 20px;
 }
 
@@ -509,7 +584,7 @@ ul {
 
 
 .overlay {
-    background: #565656;
+    background: var(--loading-screen-background);
     position: absolute;
     z-Index: 5000;
     top: 0;

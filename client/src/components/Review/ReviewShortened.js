@@ -65,7 +65,6 @@ export const ReviewShortened = (props) => {
       <div
         style={{
           padding: '30px',
-          backgroundColor: 'white',
         }}
       >
         <Container className='p-0'>
@@ -80,7 +79,11 @@ export const ReviewShortened = (props) => {
             >
               <label style={{ fontSize: '1rem', fontStyle: 'italic' }}>by </label>
               <a
-                style={{ marginLeft: '10px', fontSize: '1.3rem' }}
+                style={{
+                  marginLeft: '10px',
+                  fontSize: '1.3rem',
+                  color: 'currentcolor',
+                }}
                 className='review_shortened_profile_url'
                 href={'/profile/' + currentReview?.user?.id}
               >

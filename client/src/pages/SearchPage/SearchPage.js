@@ -77,7 +77,7 @@ export const SearchPage = () => {
           {searchedReviews && searchedReviews.length > 0 ? (
             <div>
               <div className='search_page_title'>{t('search_result')}</div>
-              <Container className='cont'>
+              <Container>
                 <Row>
                   <Col> </Col>
                   <Col sm={8}>

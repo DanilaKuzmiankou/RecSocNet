@@ -25,7 +25,7 @@ export const RecommendationsPage = () => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector((state) => state.loading.isLoading);
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const { currentUser, currentUserTheme } = useSelector((state) => state.user);
 
   const [currentReviews, setCurrentReviews] = useState([]);
   const [infiniteScrollKey, setInfiniteScrollKey] = useState(0);
@@ -41,6 +41,7 @@ export const RecommendationsPage = () => {
   useEffect(async () => {
     await fetchNewestReviews();
     await initTags();
+    document.body.setAttribute('data-theme', currentUserTheme);
     dispatch(setIsLoading(false));
   }, []);
 

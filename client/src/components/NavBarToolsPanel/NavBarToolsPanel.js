@@ -1,13 +1,38 @@
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import React from 'react';
 import i18next from 'i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentUserLanguage, setCurrentUserTheme } from '../../store/reducers/UserSlice';
+import { changeUserLanguage, changeUserTheme } from '../../api/store/UserStore';
 
 export const NavBarToolsPanel = () => {
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
   const setEngLanguage = () => {
-    i18next.changeLanguage('en');
+    setLanguage('en');
   };
   const setRuLanguage = () => {
-    i18next.changeLanguage('ru');
+    setLanguage('ru');
+  };
+  const setLanguage = (language) => {
+    i18next.changeLanguage(language);
+    dispatch(setCurrentUserLanguage(language));
+    if (Object.keys(currentUser).length !== 0) {
+      changeUserLanguage(currentUser.authId, language);
+    }
+  };
+  const setLightBackground = () => {
+    setTheme('light-theme');
+  };
+  const setDarkBackground = () => {
+    setTheme('dark-theme');
+  };
+  const setTheme = (theme) => {
+    document.body.setAttribute('data-theme', theme);
+    dispatch(setCurrentUserTheme(theme));
+    if (Object.keys(currentUser).length !== 0) {
+      changeUserTheme(currentUser.authId, theme);
+    }
   };
   return (
     <Container fluid className='p-0'>
@@ -38,6 +63,7 @@ export const NavBarToolsPanel = () => {
             height={35}
             width={35}
             roundedCircle={true}
+            onClick={setDarkBackground}
           />
         </Col>
         <Col md={'auto'} className='p-0 pe-1 pt-1'>
@@ -46,6 +72,7 @@ export const NavBarToolsPanel = () => {
             height={40}
             width={40}
             roundedCircle={true}
+            onClick={setLightBackground}
           />
         </Col>
       </Row>

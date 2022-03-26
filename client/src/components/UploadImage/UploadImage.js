@@ -7,19 +7,7 @@ export const UploadImage = ({ field, form, ...props }) => {
   const { t } = useTranslation();
   const fieldName = 'images';
   const baseStyle = {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-    borderWidth: 2,
-    borderRadius: 2,
     borderColor: '#eeeeee',
-    borderStyle: 'dashed',
-    backgroundColor: '#fafafa',
-    color: '#bdbdbd',
-    outline: 'none',
-    transition: 'border .24s ease-in-out',
   };
 
   const focusedStyle = {
@@ -115,7 +103,7 @@ export const UploadImage = ({ field, form, ...props }) => {
 
   return (
     <section className='container'>
-      <div {...dropzone.getRootProps({ style })}>
+      <div {...dropzone.getRootProps({ style, className: 'dropzone' })}>
         <input {...dropzone.getInputProps()} />
         <p>{t('drag_and_drop')}</p>
       </div>

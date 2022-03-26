@@ -67,7 +67,7 @@ export const CustomNav = () => {
                       style={{ fontSize: '20px' }}
                       type='search'
                       placeholder={t('search_reviews')}
-                      className='me-2'
+                      className='me-2 nav-search-bar'
                       aria-label='Search'
                       onChange={(event) => setSearchData(event.target.value)}
                     />

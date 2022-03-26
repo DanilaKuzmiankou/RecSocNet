@@ -10,6 +10,16 @@ export async function changeUserName(authId, newUserName) {
   return await rawPostRequest('/api/user/changeName', body);
 }
 
+export async function changeUserTheme(authId, theme) {
+  const body = JSON.stringify({ authId, theme });
+  return await rawPostRequest('/api/user/changeTheme', body);
+}
+
+export async function changeUserLanguage(authId, language) {
+  const body = JSON.stringify({ authId, language });
+  return await rawPostRequest('/api/user/changeLanguage', body);
+}
+
 export async function getUserById(id) {
   const body = JSON.stringify({ id: id });
   return await postRequest('/api/user/getUserById', body);

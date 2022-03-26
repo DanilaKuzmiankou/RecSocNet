@@ -10,6 +10,8 @@ const User = sequelize.define(
     role: { type: DataTypes.STRING, defaultValue: "user" },
     likes: { type: DataTypes.INTEGER, defaultValue: 0 },
     profilePictureUrl: { type: DataTypes.STRING },
+    language: { type: DataTypes.STRING },
+    theme: { type: DataTypes.STRING, defaultValue: "light-theme" },
     createdAt: { type: DataTypes.DATE },
     updatedAt: { type: DataTypes.DATE },
   },

@@ -47,17 +47,22 @@ export const CustomModal = forwardRef((props, ref) => {
         onHide={closeModal}
         scrollable={true}
       >
-        <Modal.Header style={{ display: params.displayHeader }} closeButton onClick={closeModal}>
+        <Modal.Header
+          className='custom_modal'
+          style={{ display: params.displayHeader }}
+          closeButton
+          onClick={closeModal}
+        >
           <Modal.Title>{params.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className='custom_modal'>
           <Container>
             {params.displayEditForm && <CreateOrEditReviewForm formRef={formRef} />}
             {params.displayViewForm && <Review closeModal={closeModal} />}
           </Container>
         </Modal.Body>
 
-        <Modal.Footer style={{ display: params.displayModalButtons }}>
+        <Modal.Footer className='custom_modal' style={{ display: params.displayModalButtons }}>
           <Button variant='secondary' onClick={closeModal}>
             {t('close')}
           </Button>

@@ -29,9 +29,8 @@ import { useTranslation } from 'react-i18next';
 export const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isCurrentUserAdmin, isCurrentUserOwner, currentUser, browsedUser } = useSelector(
-    (state) => state.user
-  );
+  const { isCurrentUserAdmin, isCurrentUserOwner, currentUser, browsedUser, currentUserTheme } =
+    useSelector((state) => state.user);
   const { reviews, displayFilters, selectedReview } = useSelector((state) => state.review);
   const { isAuthenticated } = useAuth0();
   const { t } = useTranslation();
@@ -44,10 +43,12 @@ export const ProfilePage = () => {
 
   useEffect(async () => {
     await checkPrivileges();
+    console.log('theme', currentUserTheme);
+    document.body.setAttribute('data-theme', currentUserTheme);
     setTimeout(async () => {
       dispatch(setIsLoading(false));
     }, 1000);
-  }, [isAuthenticated]);
+  }, [isAuthenticated, currentUserTheme]);
 
   const checkPrivileges = async () => {
     if (isAuthenticated) {
@@ -191,7 +192,7 @@ export const ProfilePage = () => {
         <div>
           {routerParams.id || isAuthenticated ? (
             <div>
-              <h2 style={{ marginTop: '10px' }} className='small_margin_left no_select'>
+              <h2 style={{ paddingTop: '10px' }} className='small_margin_left no_select'>
                 {' '}
                 {t('profile')}{' '}
               </h2>
