@@ -58,6 +58,7 @@ body[data-theme="light-theme"] {
 body {
     font-family: JosefinSansMedium, Arial, serif;
     font-weight: 500;
+
 }
 
 * {
@@ -70,6 +71,7 @@ body {
         font-size: 15px;
     }
 }
+
 
 .form-control:not(active){
     color: var(--text-color);
@@ -260,10 +262,6 @@ input::placeholder {
     background-repeat: no-repeat
 }
 
-.profile-page-table-container {
-    overflow-x: auto !important;
-}
-
 .profile-page-container {
     background-image: var(--bg-main-background);
     min-height: 100vh;
@@ -282,12 +280,22 @@ input::placeholder {
     background-repeat: no-repeat
 }
 
+@media screen and (max-width: 850px) {
+    body {
+        overflow-x: hidden;
+    }
+}
+
 .react-bootstrap-table-header {
     font-size: 30px;
 }
 
 .react-bootstrap-table table {
     table-layout: auto;
+    overflow-x: auto !important;
+}
+
+.profile-page-table-container {
     overflow-x: auto !important;
 }
 

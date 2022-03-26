@@ -56,6 +56,7 @@ export const CustomBootstrapTable = () => {
   const columns = [
     {
       dataField: 'title',
+      classes: 'text-start',
       text: t('title'),
       filter: textFilter({
         placeholder: t('title'),
@@ -164,7 +165,7 @@ export const CustomBootstrapTable = () => {
   return (
     <BootstrapTable
       bordered={false}
-      wrapperClasses='responsive-table text-center'
+      wrapperClasses='table-responsive text-center'
       headerClasses='text-center'
       keyField='id'
       data={reviews}

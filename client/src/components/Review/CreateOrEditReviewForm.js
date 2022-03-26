@@ -129,7 +129,7 @@ export const CreateOrEditReviewForm = (props) => {
             <ErrorMessage component='div' className='custom-error-message' name='title' />
 
             <Row style={{ marginBottom: '10px', marginTop: '10px' }}>
-              <Col xs={4}>
+              <Col xs={5} sm={4}>
                 <label style={{ whiteSpace: 'nowrap' }} htmlFor='category'>
                   {t('category')}
                 </label>
@@ -145,7 +145,7 @@ export const CreateOrEditReviewForm = (props) => {
                 <ErrorMessage component='div' className='custom-error-message' name='category' />
               </Col>
 
-              <Col xs={6}>
+              <Col xs={7} sm={6}>
                 <label style={{ whiteSpace: 'nowrap' }} htmlFor='tags'>
                   {t('tags')}
                 </label>
@@ -157,7 +157,7 @@ export const CreateOrEditReviewForm = (props) => {
                 <ErrorMessage component='div' className='custom-error-message' name='tags' />
               </Col>
 
-              <Col xs={2}>
+              <Col xs={12} sm={2}>
                 <label htmlFor='authorScore'>{t('score')}</label>
                 <Field
                   className={`${touched.authorScore && errors.authorScore ? 'error' : null} formik`}
