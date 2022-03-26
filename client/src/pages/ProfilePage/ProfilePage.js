@@ -195,57 +195,60 @@ export const ProfilePage = () => {
   };
 
   return (
-    <Container fluid className='profile_page_container'>
+    <Container fluid className='profile-page-container'>
       {isLoading1 ? (
         <LoadingComponent />
       ) : (
         <div>
           {routerParams.id || isAuthenticated ? (
             <div>
-              <h2 style={{ paddingTop: '10px' }} className='small_margin_left no_select'>
+              <h2
+                style={{ paddingTop: '10px', marginLeft: '100px' }}
+                className='small_margin_left no-select'
+              >
                 {' '}
                 {t('profile')}{' '}
               </h2>
-              <div className='user_profile'>
+              <div>
                 <UserProfile />
               </div>
 
               {reviews && reviews.length > 0 ? (
-                <div>
+                <div style={{ paddingTop: '20px' }}>
                   <h1 className='text-center'>{t('reviews')}</h1>
 
                   <Fragment>
-                    <div className='reviews_table_container'>
+                    <div className='reviews-table-container'>
                       <Button variant='success' onClick={changeDisplayFiltersState}>
                         {filtersBtnText}
                       </Button>
                       <Button
                         variant='success'
-                        className='reviews_table_button'
+                        className='reviews-table-button'
                         onClick={viewReview}
                       >
                         {t('view')}
                       </Button>
                     </div>
                     {isCurrentUserAdmin || isCurrentUserOwner ? (
-                      <div className='reviews_table_container'>
+                      <div className='reviews-table-container'>
                         <Button
                           variant='success'
-                          className='reviews_table_button'
+                          className='reviews-table-button'
                           onClick={createReview}
                         >
                           {t('create')}
                         </Button>
                         <Button
                           variant='success'
-                          className='reviews_table_button'
+                          className='reviews-table-button'
                           onClick={editReview}
                         >
                           {t('edit')}
                         </Button>
                         <Button
                           variant='success'
-                          className='reviews_table_button'
+                          className='reviews-table-button'
                           onClick={deleteReview}
                         >
                           {t('delete')}
@@ -253,23 +256,23 @@ export const ProfilePage = () => {
                       </div>
                     ) : null}
                   </Fragment>
-                  <div className='profile_page_table_container'>
+                  <div className='profile-page-table-container'>
                     <CustomBootstrapTable />
                   </div>
                 </div>
               ) : (
-                <div className='center_profile_page text-center'>
+                <div className='centered-profile-page text-center'>
                   {isCurrentUserAdmin || isCurrentUserOwner ? (
-                    <div className='no_wrap_on_normal_screen'>
+                    <div className='no-wrap-on-normal-screen'>
                       <h2>{t('no_reviews')}</h2>
-                      <div className='profile_button_container'>
-                        <Button className='profile_button' variant='danger' onClick={createReview}>
+                      <div className='profile-button-container'>
+                        <Button className='profile-button' variant='danger' onClick={createReview}>
                           {t('tap_me')}
                         </Button>
                       </div>
                     </div>
                   ) : (
-                    <div className='no_wrap_on_big_screen'>
+                    <div className='no-wrap-on-big-screen'>
                       <h2>{t('no_reviews_admin')}</h2>
                     </div>
                   )}
@@ -277,7 +280,7 @@ export const ProfilePage = () => {
               )}
             </div>
           ) : (
-            <div className='no_wrap_on_normal_screen center_without_content text-center'>
+            <div className='no-wrap-on-normal-screen centered-without-content text-center'>
               <div>
                 <h2>{t('log_in_first')}</h2>
                 <LogInButton size={'big'} />

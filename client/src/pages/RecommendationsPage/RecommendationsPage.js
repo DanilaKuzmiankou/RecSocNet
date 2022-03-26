@@ -169,7 +169,7 @@ export const RecommendationsPage = () => {
   };
 
   return (
-    <div className='recommendations_page_container'>
+    <div className='recommendations-page-container'>
       {isLoading ? (
         <LoadingComponent />
       ) : (
@@ -177,7 +177,7 @@ export const RecommendationsPage = () => {
           <Row>
             <Col> </Col>
             <Col sm={8}>
-              <div className='tags_cloud_container'>
+              <div className='tags-cloud-container'>
                 <TagCloud
                   minSize={2}
                   maxSize={5}
@@ -205,7 +205,7 @@ export const RecommendationsPage = () => {
                 }
               >
                 {currentReviews.map((review, id) => (
-                  <div key={id} className='review_shortened_container'>
+                  <div key={id} className='review-shortened-container'>
                     <ReviewShortened key={id} currentReview={review} reviewId={id} />
                   </div>
                 ))}

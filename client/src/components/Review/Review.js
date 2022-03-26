@@ -19,7 +19,7 @@ export const Review = (props) => {
     <div>
       <FontAwesomeIcon size='lg' icon={faArrowLeft} onClick={closeModal} />
       <Container fluid>
-        <div className='review_container'>
+        <div className='review-container'>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             {editedReview.user?.name && (
               <div style={{ display: 'flex', flexShrink: '0' }}>
@@ -43,9 +43,9 @@ export const Review = (props) => {
               paddingBottom: '20px',
             }}
           >
-            <label className='review_category'>{editedReview.category}</label>
-            <label className='review_tags'>{editedReview.tags}</label>
-            <div className='review_rating_container'>
+            <label className='review-category'>{editedReview.category}</label>
+            <label className='review-tags'>{editedReview.tags}</label>
+            <div className='review-rating-container'>
               <StarRatings
                 rating={editedReview.authorScore}
                 starRatedColor='#ffd700'
@@ -62,8 +62,8 @@ export const Review = (props) => {
 
           {editedReview.images?.map((image, index) => (
             <div className='thumb' key={index}>
-              <div className='thumbInner'>
-                <Image src={image.imageLink} className='review_img' />
+              <div className='thumb-inner'>
+                <Image src={image.imageLink} className='review-img' />
               </div>
             </div>
           ))}

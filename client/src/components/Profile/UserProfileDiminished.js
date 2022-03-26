@@ -2,20 +2,27 @@ import React, { useState } from 'react';
 import '../../App.css';
 import { Image, NavDropdown } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { formatStringLength, onImageDownloadError } from '../../utils/Utils';
+import { setCurrentUser } from '../../store/reducers/UserSlice';
 
 export const UserProfileDiminished = () => {
   const { logout } = useAuth0();
   const { currentUser, isCurrentUserAdmin } = useSelector((state) => state.user);
   const { t } = useTranslation();
   const [imageGetAttempt, setImageGetAttempt] = useState(0);
-
+  const dispatch = useDispatch();
+  const logOut = () => {
+    dispatch(setCurrentUser({}));
+    logout({
+      returnTo: window.location.origin,
+    });
+  };
   return (
     <div>
       {currentUser && (
-        <div className='no_select user_profile_diminished_container'>
+        <div className='no-select user-profile-diminished-container'>
           <div>
             <Image
               src={currentUser?.profilePictureUrl}
@@ -50,7 +57,7 @@ export const UserProfileDiminished = () => {
                   <NavDropdown.Divider />
                 </div>
               )}
-              <NavDropdown.Item onClick={logout}>{t('log_out')}</NavDropdown.Item>
+              <NavDropdown.Item onClick={logOut}>{t('log_out')}</NavDropdown.Item>
             </NavDropdown>
           </div>
         </div>

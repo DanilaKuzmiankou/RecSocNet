@@ -27,12 +27,12 @@ export const ToolsContainer = (props) => {
     props.refreshMostLikedReviews();
   };
   return (
-    <Container fluid className='recommendations_page_tools_container'>
+    <Container fluid className='recommendations-page-tools-container'>
       <Row>
-        <Col className='tools_container_div'>
+        <Col className='tools-container-div'>
           <div>
             <div>{t('newest')}</div>
-            <div className='tools_container_div'>
+            <div className='tools-container-div'>
               <Rating
                 start={0}
                 stop={1}
@@ -44,10 +44,10 @@ export const ToolsContainer = (props) => {
             </div>
           </div>
         </Col>
-        <Col className='tools_container_div'>
+        <Col className='tools-container-div'>
           <div>
             <div>{t('most_liked')}</div>
-            <div className='tools_container_div'>
+            <div className='tools-container-div'>
               <Rating
                 start={0}
                 stop={1}

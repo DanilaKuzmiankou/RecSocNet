@@ -37,7 +37,7 @@ export function generateRandomString(len) {
 }
 
 export function formatStringLength(formattingString, maxLength) {
-  if (formattingString.length > maxLength) {
+  if (formattingString && formattingString.length > maxLength) {
     formattingString = formattingString.substring(0, maxLength) + '...';
   }
   return formattingString;

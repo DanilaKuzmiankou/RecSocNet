@@ -24,7 +24,7 @@ export const AdminPage = () => {
     }
   }, []);
   return (
-    <Container fluid className='profile_page_container'>
+    <Container fluid className='profile-page-container'>
       <Row>
         <Col md={3}></Col>
         <Col md={6}>

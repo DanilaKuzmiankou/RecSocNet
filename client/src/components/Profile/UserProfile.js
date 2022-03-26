@@ -88,7 +88,7 @@ export const UserProfile = () => {
     }
   };
   return (
-    <Container fluid className='no_select'>
+    <Container fluid className='no-select'>
       <Row>
         <Col xs={'auto'} md={'auto'}>
           <Image
@@ -100,9 +100,13 @@ export const UserProfile = () => {
             }
           />
         </Col>
-        <Col xs={'auto'} md={'auto'}>
-          <div className='small_margin_top'>
-            <div className='profile_username_edit_container'>
+        <Col
+          style={{ display: 'flex', alignItems: 'center', paddingTop: '10px' }}
+          xs={'auto'}
+          md={'auto'}
+        >
+          <div>
+            <div className='profile-username-edit-container'>
               <Row>
                 <Col xs={'auto'} md={'auto'} sm={12}>
                   {isCurrentUserAdmin || isCurrentUserOwner ? (
@@ -113,14 +117,14 @@ export const UserProfile = () => {
                       show={isOverlayTriggerVisible}
                       overlay={<Tooltip id='tooltip-disabled'>{t('change_name')}</Tooltip>}
                     >
-                      <div className='profile_username_edit_container'>
+                      <div className='profile-username-edit-container'>
                         <h4 className=''>
                           {' '}
                           {t('name')}: {browsedUser.name}{' '}
                         </h4>
 
                         <Rating
-                          className='profile_username_edit_icon'
+                          style={{ marginLeft: '9px' }}
                           start={0}
                           stop={1}
                           initialRating={edit}
@@ -145,7 +149,7 @@ export const UserProfile = () => {
                   <Form
                     onSubmit={handleSubmit}
                     style={{ display: displayForm }}
-                    className='profile_username_edit_container'
+                    className='profile-username-edit-container'
                   >
                     <Form.Group className='profile_username_field'>
                       <InputGroup hasValidation>
@@ -171,7 +175,7 @@ export const UserProfile = () => {
                       </InputGroup>
                     </Form.Group>
                     <Button
-                      className='profile_username_submit_button'
+                      className='profile-username-submit-button'
                       type='submit'
                       variant='success'
                     >

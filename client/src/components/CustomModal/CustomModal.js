@@ -43,7 +43,7 @@ export const CustomModal = forwardRef((props, ref) => {
         size='xl'
         backdrop={params.backdrop}
         keyboard={false}
-        className='no_select'
+        className='no-select'
         onHide={closeModal}
         scrollable={true}
       >

@@ -71,7 +71,7 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
     <div>
       <Multiselect
         isObject={false}
-        className='customMultiselect'
+        className='custom-multiselect'
         selectedValues={field.value}
         avoidHighlightFirstOption={true}
         onKeyPressFn={onMultiselectKeyPress}

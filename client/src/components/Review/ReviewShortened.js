@@ -83,7 +83,7 @@ export const ReviewShortened = (props) => {
                   fontSize: '1.3rem',
                   color: 'currentcolor',
                 }}
-                className='review_shortened_profile_url'
+                className='review-shortened-profile-url'
                 href={'/profile/' + currentReview?.user?.id}
               >
                 {currentReview?.user?.name}
@@ -112,10 +112,10 @@ export const ReviewShortened = (props) => {
           >
             <Row>
               <Col md={'auto'}>
-                <label className='review_category'>{currentReview?.category}</label>
+                <label className='review-category'>{currentReview?.category}</label>
               </Col>
-              <Col className='tags_container'>
-                <label className='review_tags'>{currentReview?.tags}</label>
+              <Col className='tags-container'>
+                <label className='review-tags'>{currentReview?.tags}</label>
               </Col>
               <Col md={'auto'} style={{ whiteSpace: 'nowrap' }}>
                 <StarRatings
@@ -134,7 +134,7 @@ export const ReviewShortened = (props) => {
           </div>
         </div>
       </div>
-      <div className='review_shortened_feedback_container'>
+      <div className='review-shortened-feedback-container'>
         <Feedback review={currentReview} />
       </div>
 

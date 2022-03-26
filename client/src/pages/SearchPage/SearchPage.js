@@ -73,14 +73,14 @@ export const SearchPage = () => {
   };
 
   return (
-    <div className='search_page_container'>
+    <div className='search-page-container'>
       {isLoading ? (
         <LoadingComponent />
       ) : (
         <div>
           {searchedReviews && searchedReviews.length > 0 ? (
             <div>
-              <div className='search_page_title'>{t('search_result')}</div>
+              <div className='search-page-title'>{t('search_result')}</div>
               <Container>
                 <Row>
                   <Col> </Col>
@@ -94,7 +94,7 @@ export const SearchPage = () => {
                       endMessage={<h3 style={{ textAlign: 'center' }}>{t('no_more_suitable')}</h3>}
                     >
                       {searchedReviews.map((review, id) => (
-                        <div key={id} className='review_shortened_container'>
+                        <div key={id} className='review-shortened-container'>
                           <ReviewShortened key={id} currentReview={review} reviewId={id} />
                         </div>
                       ))}
@@ -105,7 +105,7 @@ export const SearchPage = () => {
               </Container>
             </div>
           ) : (
-            <div className='center_without_content'>
+            <div className='centered-without-content'>
               <h1>{t('no_found_more')}</h1>
             </div>
           )}

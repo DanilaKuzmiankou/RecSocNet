@@ -88,7 +88,7 @@ export const Feedback = (props) => {
           <Tooltip id='tooltip-disabled'>Average content score: {review.usersContentScore}</Tooltip>
         }
       >
-        <div className='feedback_rating'>
+        <div className='feedback-rating'>
           <StarRatings
             rating={rating}
             starRatedColor='#ffd700'

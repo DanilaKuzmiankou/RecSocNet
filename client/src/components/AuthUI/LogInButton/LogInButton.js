@@ -15,7 +15,7 @@ export const LogInButton = (props) => {
         overlay={<Tooltip id='tooltip-disabled'>{t('log_in')}!</Tooltip>}
       >
         <button
-          className='btn btn-primary btn-block big_log_in_button'
+          className='btn btn-primary btn-block big-log-in-button'
           onClick={() => loginWithRedirect()}
         >
           {t('log_in')}
@@ -30,7 +30,8 @@ export const LogInButton = (props) => {
         overlay={<Tooltip id='tooltip-disabled'>{t('log_in')}!</Tooltip>}
       >
         <button
-          className='btn btn-primary btn-block log_in_button'
+          style={{ whiteSpace: 'nowrap' }}
+          className='btn btn-primary btn-block'
           onClick={() => loginWithRedirect()}
         >
           {t('log_in')}

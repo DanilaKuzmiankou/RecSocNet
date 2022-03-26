@@ -126,7 +126,7 @@ export const CreateOrEditReviewForm = (props) => {
               type='text'
               className={`${touched.title && errors.title ? 'error' : null} formik`}
             />
-            <ErrorMessage component='div' className='custom_error_message' name='title' />
+            <ErrorMessage component='div' className='custom-error-message' name='title' />
 
             <Row style={{ marginBottom: '10px', marginTop: '10px' }}>
               <Col xs={4}>
@@ -142,7 +142,7 @@ export const CreateOrEditReviewForm = (props) => {
                   <option>{t('select_category')}</option>
                   {options}
                 </Field>
-                <ErrorMessage component='div' className='custom_error_message' name='category' />
+                <ErrorMessage component='div' className='custom-error-message' name='category' />
               </Col>
 
               <Col xs={6}>
@@ -154,7 +154,7 @@ export const CreateOrEditReviewForm = (props) => {
                   className={`${touched.tags && errors.tags ? 'error' : null} formik`}
                   component={CustomMultiselect}
                 />
-                <ErrorMessage component='div' className='custom_error_message' name='tags' />
+                <ErrorMessage component='div' className='custom-error-message' name='tags' />
               </Col>
 
               <Col xs={2}>
@@ -167,7 +167,7 @@ export const CreateOrEditReviewForm = (props) => {
                   max='5'
                   min='1'
                 />
-                <ErrorMessage component='div' className='custom_error_message' name='authorScore' />
+                <ErrorMessage component='div' className='custom-error-message' name='authorScore' />
               </Col>
 
               <label style={{ paddingTop: '15px' }} htmlFor='text'>

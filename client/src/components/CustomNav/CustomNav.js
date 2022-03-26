@@ -43,7 +43,7 @@ export const CustomNav = () => {
           <a
             style={{ fontSize: '33px' }}
             href='/'
-            className=' justify-content-start navbar_home_button'
+            className=' justify-content-start navbar-home-button'
           >
             {t('home')}
           </a>
@@ -60,7 +60,7 @@ export const CustomNav = () => {
                   style={{ display: 'flex', alignItems: 'center' }}
                   lg={'auto'}
                   sm={12}
-                  className='nav_elements_margin '
+                  className='nav-elements-margin '
                 >
                   <Form className='d-flex' onSubmit={search}>
                     <FormControl
@@ -80,7 +80,7 @@ export const CustomNav = () => {
                   style={{ display: 'flex', alignItems: 'center' }}
                   lg={'auto'}
                   sm={12}
-                  className='nav_elements_margin ps-0'
+                  className='nav-elements-margin ps-0'
                 >
                   {isAuthenticated ? <UserProfileDiminished /> : <LogInButton />}
                 </Col>

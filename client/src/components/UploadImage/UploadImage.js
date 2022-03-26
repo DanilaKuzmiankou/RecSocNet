@@ -54,7 +54,7 @@ export const UploadImage = ({ field, form, ...props }) => {
       <div key={index}>
         {file.preview ? (
           <div className='thumb'>
-            <div className='thumbInner'>
+            <div className='thumb-inner'>
               <OverlayTrigger
                 delay={{ show: 150, hide: 300 }}
                 overlay={<Tooltip id='tooltip-disabled'>Click to remove picture</Tooltip>}
@@ -62,7 +62,7 @@ export const UploadImage = ({ field, form, ...props }) => {
                 <Image
                   onClick={() => removePicture(file)}
                   src={file.preview}
-                  className='review_img'
+                  className='review-img'
                 />
               </OverlayTrigger>
             </div>
@@ -107,8 +107,8 @@ export const UploadImage = ({ field, form, ...props }) => {
         <input {...dropzone.getInputProps()} />
         <p>{t('drag_and_drop')}</p>
       </div>
-      {files && files.length > 0 && <h6 className='small_margin_top'>Pictures to upload</h6>}
-      <aside className='thumbsContainer'>{thumbs}</aside>
+      {files && files.length > 0 && <h6 style={{ marginTop: '20px' }}>Pictures to upload</h6>}
+      <aside className='thumbs-container'>{thumbs}</aside>
     </section>
   );
 };
