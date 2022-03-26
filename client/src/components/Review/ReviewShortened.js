@@ -17,13 +17,12 @@ export const ReviewShortened = (props) => {
   const [currentReview, setCurrentReview] = useState('');
   const reviewsModal = useRef();
 
-  useEffect(async () => {
+  useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       if (reviews[props.reviewId] !== undefined) {
         const shortenedText = formatText(props.currentReview?.text);
         const newReview = JSON.parse(JSON.stringify(reviews[props.reviewId]));
-        // newReview.user.name = formatStringLength(newReview.user.name, 13);
         setCurrentReview(newReview);
         setEditorText(shortenedText);
       }

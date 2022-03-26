@@ -11,3 +11,4 @@ export { ReviewShortened } from './Review/ReviewShortened';
 export { CreateOrEditReviewForm } from './Review/CreateOrEditReviewForm';
 export { ToolsContainer } from './ToolsContainer/ToolsContainer';
 export { NavBarToolsPanel } from './NavBarToolsPanel/NavBarToolsPanel';
+export { CustomMultiselect } from './CustomMultiselect/CustomMultiselect';

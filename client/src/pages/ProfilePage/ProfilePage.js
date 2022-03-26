@@ -41,10 +41,12 @@ export const ProfilePage = () => {
 
   const [filtersBtnText, setFiltersBtnText] = useState(t('show_filters'));
 
-  useEffect(async () => {
-    await checkPrivileges();
-    console.log('theme', currentUserTheme);
+  useEffect(() => {
     document.body.setAttribute('data-theme', currentUserTheme);
+    async function fetchData() {
+      await checkPrivileges();
+    }
+    fetchData();
     setTimeout(async () => {
       dispatch(setIsLoading(false));
     }, 1000);

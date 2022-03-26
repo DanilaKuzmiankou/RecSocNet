@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../App.css';
-import { UploadImage } from '../UploadImage/UploadImage';
+import { UploadImage, LoadingComponent, CustomMultiselect } from '../index.components';
 import { useDispatch, useSelector } from 'react-redux';
 import { setReviews, setSelectedReview } from '../../store/reducers/ReviewSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
@@ -9,7 +9,6 @@ import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Col, Row } from 'react-bootstrap';
-import { CustomMultiselect } from '../CustomMultiselect/CustomMultiselect';
 import {
   addImagesToDatabase,
   deleteImagesFromFirebaseCloud,
@@ -18,7 +17,6 @@ import {
   uploadImagesToFirebaseCloud,
 } from '../../api/store/ReviewStore';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
-import LoadingComponent from '../LoadingComponent/LoadingComponent';
 import { modules, options } from '../../utils/Storage';
 import { useTranslation } from 'react-i18next';
 

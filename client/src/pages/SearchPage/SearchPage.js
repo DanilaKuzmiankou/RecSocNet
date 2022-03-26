@@ -19,9 +19,12 @@ export const SearchPage = () => {
   const [infiniteScrollKey, setInfiniteScrollKey] = useState(0);
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
-  useEffect(async () => {
+  useEffect(() => {
     if (searchParams) {
-      await searchReviews(true);
+      async function fetchData() {
+        await searchReviews(true);
+      }
+      fetchData();
       setInfiniteScrollKey(Math.random());
     }
     setTimeout(async () => {

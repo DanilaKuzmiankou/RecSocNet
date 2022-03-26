@@ -11,12 +11,14 @@ export const AdminPage = () => {
   const [imageGetAttempt, setImageGetAttempt] = useState(0);
   const { currentUser, currentUserTheme } = useSelector((state) => state.user);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (currentUser?.role === 'admin') {
       document.body.setAttribute('data-theme', currentUserTheme);
-      const usersFromApi = await getAllUsers();
-      setUsers(usersFromApi);
-      console.log('users: ', usersFromApi);
+      async function fetchData() {
+        const usersFromApi = await getAllUsers();
+        setUsers(usersFromApi);
+      }
+      fetchData();
     } else {
       navigate('/NotFoundPage');
     }

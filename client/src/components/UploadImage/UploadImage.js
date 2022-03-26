@@ -72,7 +72,7 @@ export const UploadImage = ({ field, form, ...props }) => {
     );
   });
 
-  useEffect(async () => {
+  useEffect(() => {
     let isMounted = true;
     if (isMounted) {
       if (field.value && field.value.length) {

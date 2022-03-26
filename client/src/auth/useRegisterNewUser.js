@@ -7,7 +7,7 @@ import {
 } from '../store/reducers/UserSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import i18next from 'i18next';
+import i18next, { changeLanguage } from 'i18next';
 
 export const useRegisterNewUser = () => {
   const { user, getAccessTokenSilently, isAuthenticated, isLoading } = useAuth0();
@@ -15,8 +15,11 @@ export const useRegisterNewUser = () => {
   const dispatch = useDispatch();
   const [isLoadingCompleted, setIsLoadingCompleted] = useState(false);
 
-  useEffect(async () => {
-    await checkRegistration();
+  useEffect(() => {
+    async function fetchData() {
+      await checkRegistration();
+    }
+    fetchData();
   }, [isLoading]);
 
   const checkRegistration = async () => {
@@ -35,7 +38,7 @@ export const useRegisterNewUser = () => {
     await registerNewUser(token, user.sub, user.name, user.picture, language);
     const currentUser = await getUserByAuthId(token, user.sub);
     dispatch(setCurrentUserTheme(currentUser.theme));
-    i18next.changeLanguage(currentUser.language);
+    changeLanguage(currentUser.language);
     dispatch(setCurrentUser(currentUser));
     if (currentUser.role === 'admin') {
       dispatch(setIsCurrentUserAdmin(true));

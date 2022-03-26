@@ -1,6 +1,6 @@
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import React from 'react';
-import i18next from 'i18next';
+import { changeLanguage } from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUserLanguage, setCurrentUserTheme } from '../../store/reducers/UserSlice';
 import { changeUserLanguage, changeUserTheme } from '../../api/store/UserStore';
@@ -15,7 +15,7 @@ export const NavBarToolsPanel = () => {
     setLanguage('ru');
   };
   const setLanguage = (language) => {
-    i18next.changeLanguage(language);
+    changeLanguage(language);
     dispatch(setCurrentUserLanguage(language));
     if (Object.keys(currentUser).length !== 0) {
       changeUserLanguage(currentUser.authId, language);

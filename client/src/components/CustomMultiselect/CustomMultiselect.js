@@ -10,9 +10,12 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
   const [currentTag, setCurrentTag] = useState('');
   const [tags, setTags] = useState([]);
   const { t } = useTranslation();
-  useEffect(async () => {
-    const tags = await getTags();
-    setTags(tags);
+  useEffect(() => {
+    async function fetchData() {
+      const tags = await getTags();
+      setTags(tags);
+    }
+    fetchData();
   }, []);
 
   const onMultiselectSelect = (selectedList, selectedItem) => {
