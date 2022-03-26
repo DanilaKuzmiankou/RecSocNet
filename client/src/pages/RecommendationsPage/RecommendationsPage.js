@@ -150,8 +150,6 @@ export const RecommendationsPage = () => {
     <span
       key={tag.value}
       style={{
-        // animation: 'blinker 3s linear infinite',
-        // animationDelay: `${Math.random() * 2}s`,
         fontSize: `${size / 2}em`,
         margin: '3px',
         padding: '3px',
