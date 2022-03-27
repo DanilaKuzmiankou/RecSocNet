@@ -10,12 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeSingleDateToUserTimezone } from '../../utils/Utils';
 
 export const ReviewShortened = (props) => {
+  const reviewsModal = useRef();
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.review.reviews);
-
   const [editorText, setEditorText] = useState('');
   const [currentReview, setCurrentReview] = useState('');
-  const reviewsModal = useRef();
 
   useEffect(() => {
     let isMounted = true;
@@ -128,7 +127,6 @@ export const ReviewShortened = (props) => {
               </Col>
             </Row>
           </Container>
-
           <div>
             <ReactQuill theme={null} readOnly={true} value={editorText} />
           </div>
@@ -137,7 +135,6 @@ export const ReviewShortened = (props) => {
       <div className='review-shortened-feedback-container'>
         <Feedback review={currentReview} />
       </div>
-
       <CustomModal ref={reviewsModal} />
     </div>
   );

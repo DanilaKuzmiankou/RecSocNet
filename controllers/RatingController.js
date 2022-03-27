@@ -58,7 +58,7 @@ class RatingController {
       let newUsersContentScoreCount;
       let resStatus = 200;
       if (ratings.length > 0) {
-        let prevContentScore = ratings[0].contentScore;
+        const prevContentScore = ratings[0].contentScore;
         if (prevContentScore === null || prevContentScore === 0) {
           newUsersContentScore =
             ratingController.calculateNewAverageWithAddition(
@@ -125,7 +125,7 @@ class RatingController {
     newNumber,
     prevNumber
   ) {
-    let averageBeforeAddition = ratingController.getAverageBeforeAddition(
+    const averageBeforeAddition = ratingController.getAverageBeforeAddition(
       prevAverage,
       numbersCount,
       newNumber,
@@ -141,7 +141,7 @@ class RatingController {
   getAverageBeforeAddition(prevAverage, numbersCount, newNumber, prevNumber) {
     let averageBeforeAddition =
       (prevAverage * numbersCount - prevNumber) / (numbersCount - 1);
-    averageBeforeAddition = averageBeforeAddition || 0; //if averageBeforeAddition===NaN(or other false value) it will be converted to 0
+    averageBeforeAddition = averageBeforeAddition || 0; // if averageBeforeAddition===NaN(or other false value) it will be converted to 0
     return averageBeforeAddition;
   }
 }

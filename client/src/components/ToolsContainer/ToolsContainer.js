@@ -14,18 +14,14 @@ import { useTranslation } from 'react-i18next';
 export const ToolsContainer = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
   const { isNewReviewsClicked, isTopReviewsClicked } = useSelector((state) => state.review);
-  const onNewReviewsClick = () => {
-    dispatch(setIsTopReviewsClicked(false));
-    dispatch(setIsNewReviewsClicked(true));
-    props.refreshNewestReviews();
+
+  const setClickedReview = (newReviewsClicked) => {
+    dispatch(setIsNewReviewsClicked(newReviewsClicked));
+    dispatch(setIsTopReviewsClicked(!newReviewsClicked));
+    newReviewsClicked ? props.refreshNewestReviews() : props.refreshMostLikedReviews();
   };
-  const onTopReviewsClick = () => {
-    dispatch(setIsNewReviewsClicked(false));
-    dispatch(setIsTopReviewsClicked(true));
-    props.refreshMostLikedReviews();
-  };
+
   return (
     <Container fluid className='recommendations-page-tools-container'>
       <Row>
@@ -37,7 +33,7 @@ export const ToolsContainer = (props) => {
                 start={0}
                 stop={1}
                 initialRating={isNewReviewsClicked}
-                onClick={onNewReviewsClick}
+                onClick={() => setClickedReview(true)}
                 emptySymbol={<FontAwesomeIcon icon={faCalendar} color={'black'} size='4x' />}
                 fullSymbol={<FontAwesomeIcon icon={faTimerSolid} size='4x' color={'black'} />}
               />
@@ -52,7 +48,7 @@ export const ToolsContainer = (props) => {
                 start={0}
                 stop={1}
                 initialRating={isTopReviewsClicked}
-                onClick={onTopReviewsClick}
+                onClick={() => setClickedReview(false)}
                 emptySymbol={<FontAwesomeIcon icon={faHeart} color={'black'} size='4x' />}
                 fullSymbol={<FontAwesomeIcon icon={faHeartSolid} size='4x' color={'black'} />}
               />

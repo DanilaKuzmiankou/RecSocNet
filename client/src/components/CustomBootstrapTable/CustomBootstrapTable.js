@@ -18,8 +18,7 @@ import { useTranslation } from 'react-i18next';
 export const CustomBootstrapTable = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const reviews = useSelector((state) => state.review.reviews);
-  const displayFilters = useSelector((state) => state.review.displayFilters);
+  const { reviews, displayFilters } = useSelector((state) => state.review);
 
   function headerFormat(column, colIndex) {
     let tooltipPlacement = 'left';

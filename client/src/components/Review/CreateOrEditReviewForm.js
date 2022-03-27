@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setReviews, setSelectedReview } from '../../store/reducers/ReviewSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Col, Row } from 'react-bootstrap';
@@ -21,9 +20,9 @@ import { modules, options } from '../../utils/Storage';
 import { useTranslation } from 'react-i18next';
 
 export const CreateOrEditReviewForm = (props) => {
-  const isLoading = useSelector((state) => state.loading.isLoading);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.loading.isLoading);
   const { browsedUser } = useSelector((state) => state.user);
   const { reviews, editedReview } = useSelector((state) => state.review);
   const currentReview = Object.assign({}, editedReview);
@@ -61,6 +60,7 @@ export const CreateOrEditReviewForm = (props) => {
         ) === undefined
     );
   };
+
   const uploadOrDeletePictures = async (newReview) => {
     const allPictures = newReview.images;
     const picturesToUpload = allPictures.filter((pic) => pic.constructor === File);
@@ -83,6 +83,7 @@ export const CreateOrEditReviewForm = (props) => {
     }
     dispatch(setIsLoading(false));
   };
+
   return (
     <div>
       {isLoading ? <LoadingComponent /> : null}
@@ -109,7 +110,7 @@ export const CreateOrEditReviewForm = (props) => {
           tags: Yup.array().required(t('required')),
           images: Yup.array(),
         })}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { resetForm }) => {
           return new Promise(async (resolve, reject) => {
             resetForm();
             await formSubmit(values, resolve);

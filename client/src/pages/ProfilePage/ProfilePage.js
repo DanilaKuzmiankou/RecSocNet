@@ -34,16 +34,14 @@ import { useTranslation } from 'react-i18next';
 export const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const routerParams = useParams();
+  const reviewsModal = useRef();
+  const { t } = useTranslation();
+  const { isAuthenticated } = useAuth0();
   const { isCurrentUserAdmin, isCurrentUserOwner, currentUser, browsedUser, currentUserTheme } =
     useSelector((state) => state.user);
   const { reviews, displayFilters, selectedReview } = useSelector((state) => state.review);
-  const { isAuthenticated } = useAuth0();
-  const { t } = useTranslation();
   const isLoading1 = useSelector((state) => state.loading.isLoading);
-
-  const routerParams = useParams();
-  const reviewsModal = useRef();
-
   const [filtersBtnText, setFiltersBtnText] = useState(t('show_filters'));
 
   useEffect(() => {
@@ -75,7 +73,6 @@ export const ProfilePage = () => {
       dispatch(setBrowsedUser(userBrowsedProfile));
       dispatch(setIsCurrentUserAdmin(false));
       const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
-      console.log('r1', reviews);
       dispatch(setReviews(reviews));
     } catch (e) {}
   };
@@ -89,9 +86,7 @@ export const ProfilePage = () => {
       dispatch(setBrowsedUser(userBrowsedProfile));
       const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
       dispatch(setReviews(reviews));
-      console.log('r2', reviews);
       if (userBrowsedProfile.authId === currentUser.authId) {
-        console.log('owner!');
         dispatch(setIsCurrentUserOwner(true));
       } else {
         dispatch(setIsCurrentUserOwner(false));
@@ -101,7 +96,6 @@ export const ProfilePage = () => {
 
   const authUserInOwnProfile = async () => {
     const newReviews = await getUserReviews(currentUser.authId, currentUser.id);
-    console.log('r3', reviews);
     dispatch(setReviews(newReviews));
     dispatch(setBrowsedUser(currentUser));
     dispatch(setIsCurrentUserOwner(true));
@@ -109,10 +103,8 @@ export const ProfilePage = () => {
 
   const setCurrentUserAsAuthUser = async () => {
     if (routerParams.id) {
-      console.log('4');
       await authUserInOtherUserProfile();
     } else {
-      console.log('5');
       await authUserInOwnProfile();
     }
   };
@@ -184,7 +176,7 @@ export const ProfilePage = () => {
     }
   };
 
-  const changeDisplayFiltersState = (e) => {
+  const changeDisplayFiltersState = () => {
     if (!displayFilters) {
       dispatch(setDisplayFilters('none'));
       setFiltersBtnText(t('show_filters'));

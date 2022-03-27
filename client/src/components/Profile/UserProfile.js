@@ -56,6 +56,7 @@ export const UserProfile = () => {
       setErrorValidationMessage(response.data.message);
     }
   };
+
   const changeName = (response) => {
     const newBrowsedUser = Object.assign({}, browsedUser);
     newBrowsedUser.name = editUsername;
@@ -87,6 +88,7 @@ export const UserProfile = () => {
       }, 700);
     }
   };
+
   return (
     <Container fluid className='no-select'>
       <Row>

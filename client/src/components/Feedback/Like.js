@@ -9,9 +9,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 export const Like = ({ updateReview, review }) => {
   const currentUser = useSelector((state) => state.user.currentUser);
-  const [like, setLike] = useState(false);
-
   const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const [like, setLike] = useState(false);
 
   useEffect(() => {
     let isMounted = true;

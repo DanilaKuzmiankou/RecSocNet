@@ -11,7 +11,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 export const Feedback = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
   const { isAuthenticated, loginWithRedirect } = useAuth0();
-
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState({});
 
@@ -61,10 +60,10 @@ export const Feedback = (props) => {
         alert('Error while changing rating! Reload page please!');
         break;
     }
-    saveEditedReview(reviewUsersContentScore, newRating);
+    saveEditedReview(reviewUsersContentScore);
   };
 
-  const saveEditedReview = (reviewUsersContentScore, newRating) => {
+  const saveEditedReview = (reviewUsersContentScore) => {
     setReview((prevState) => ({
       ...prevState,
       usersContentScore: reviewUsersContentScore,

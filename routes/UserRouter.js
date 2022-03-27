@@ -11,4 +11,5 @@ router.post("/getUserById", userController.getUser);
 router.post("/changeName", userController.changeName);
 router.post("/changeTheme", userController.changeTheme);
 router.post("/changeLanguage", userController.changeLanguage);
+
 module.exports = router;

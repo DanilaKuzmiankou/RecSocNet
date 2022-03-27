@@ -16,7 +16,7 @@ class ReviewController {
     if (!authId || !review.authorScore || !review.category || !review.title) {
       return next(ApiError.badRequest("Enter all required fields"));
     }
-    let user = await User.findOne({ where: { authId } });
+    const user = await User.findOne({ where: { authId } });
     let createdReview = await Review.create({
       category: review.category,
       tags: review.tags,
@@ -36,7 +36,7 @@ class ReviewController {
   }
 
   async addReviewImages(createdReview, images) {
-    let imagesDB = [];
+    const imagesDB = [];
     let image;
     for (const link of images) {
       if (link) {
@@ -63,7 +63,7 @@ class ReviewController {
     if (!authId) {
       return next(ApiError.badRequest("There is no authId!"));
     }
-    let reviews = await Review.findAll({
+    const reviews = await Review.findAll({
       where: { userId },
       include: [
         {
@@ -112,11 +112,11 @@ class ReviewController {
 
   async getNewestReviews(req, res, next) {
     const { limit, offset, userId } = req.body;
-    let reviews = await reviewController.getReviews(limit, offset, userId, {}, [
-      ["createdAt", "DESC"],
-    ]);
-    console.log(limit, offset, userId, reviews.length);
-    return res.json(reviews);
+    return res.json(
+      await reviewController.getReviews(limit, offset, userId, {}, [
+        ["createdAt", "DESC"],
+      ])
+    );
   }
 
   async getMostLikedReviews(req, res, next) {
@@ -166,7 +166,7 @@ class ReviewController {
         ),
       ],
     };
-    let reviews = await reviewController.getReviews(
+    const reviews = await reviewController.getReviews(
       limit,
       offset,
       userId,
@@ -187,7 +187,7 @@ class ReviewController {
       authorScore: review.authorScore,
     });
     await reviewController.addNewTags(review.tags);
-    let newReview = await Review.findOne({
+    const newReview = await Review.findOne({
       where: { id: review.id },
       include: [
         {

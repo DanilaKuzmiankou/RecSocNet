@@ -10,6 +10,7 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
   const [currentTag, setCurrentTag] = useState('');
   const [tags, setTags] = useState([]);
   const { t } = useTranslation();
+
   useEffect(() => {
     async function fetchData() {
       const tags = await getTags();

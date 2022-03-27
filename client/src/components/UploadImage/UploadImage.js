@@ -5,27 +5,23 @@ import { useTranslation } from 'react-i18next';
 
 export const UploadImage = ({ field, form, ...props }) => {
   const { t } = useTranslation();
+  const [files, setFiles] = useState([]);
   const fieldName = 'images';
   const baseStyle = {
     borderColor: '#eeeeee',
   };
-
   const focusedStyle = {
     borderColor: '#2196f3',
   };
-
   const acceptStyle = {
     borderColor: '#00e676',
   };
-
   const rejectStyle = {
     borderColor: '#ff1744',
   };
 
-  const [files, setFiles] = useState([]);
   const dropzone = useDropzone({
     accept: 'image/*',
-
     onDrop: async (acceptedFiles) => {
       const newFiles = acceptedFiles.map((file) =>
         Object.assign(file, {
@@ -88,7 +84,6 @@ export const UploadImage = ({ field, form, ...props }) => {
     } else {
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     }
-
     return () => {
       isMounted = false;
     };

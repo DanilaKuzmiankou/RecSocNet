@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { findReviews } from '../../api/store/ReviewStore';
 import { Col, Container, Row } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 export const SearchPage = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const isLoading = useSelector((state) => state.loading.isLoading);
   const [rowSelectionRate, setRowSelectionRate] = useState(0);
   const [hasMoreReviews, setHasMoreReviews] = useState(true);
@@ -18,7 +19,7 @@ export const SearchPage = () => {
   const { currentUser, currentUserTheme } = useSelector((state) => state.user);
   const [infiniteScrollKey, setInfiniteScrollKey] = useState(0);
   const [searchParams] = useSearchParams();
-  const { t } = useTranslation();
+
   useEffect(() => {
     if (searchParams) {
       document.body.setAttribute('data-theme', currentUserTheme);
@@ -28,16 +29,7 @@ export const SearchPage = () => {
       fetchData();
       setInfiniteScrollKey(Math.random());
     }
-    setTimeout(async () => {
-      dispatch(setIsLoading(false));
-    }, 500);
   }, [searchParams, currentUser]);
-
-  useLayoutEffect(() => {
-    return () => {
-      dispatch(setIsLoading(true));
-    };
-  }, []);
 
   const searchReviews = async (reRenderFlag) => {
     dispatch(setIsLoading(true));

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone'; // dependent on utc plugin
+import timezone from 'dayjs/plugin/timezone';
 import moment from 'moment-timezone';
 import blankProfilePicture from '../assets/pictures/blankProfilePicture.png';
 

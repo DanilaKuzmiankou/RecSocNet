@@ -12,12 +12,15 @@ import moon from '../../assets/pictures/moon.png';
 export const NavBarToolsPanel = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+
   const setEngLanguage = () => {
     setLanguage('en');
   };
+
   const setRuLanguage = () => {
     setLanguage('ru');
   };
+
   const setLanguage = (language) => {
     changeLanguage(language);
     dispatch(setCurrentUserLanguage(language));
@@ -25,12 +28,15 @@ export const NavBarToolsPanel = () => {
       changeUserLanguage(currentUser.authId, language);
     }
   };
+
   const setLightBackground = () => {
     setTheme('light-theme');
   };
+
   const setDarkBackground = () => {
     setTheme('dark-theme');
   };
+
   const setTheme = (theme) => {
     document.body.setAttribute('data-theme', theme);
     dispatch(setCurrentUserTheme(theme));
@@ -38,6 +44,7 @@ export const NavBarToolsPanel = () => {
       changeUserTheme(currentUser.authId, theme);
     }
   };
+
   return (
     <Container fluid className='p-0'>
       <Row xs={6} sm={6}>

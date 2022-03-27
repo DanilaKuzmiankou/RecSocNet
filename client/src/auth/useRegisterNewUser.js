@@ -10,9 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import i18next, { changeLanguage } from 'i18next';
 
 export const useRegisterNewUser = () => {
+  const dispatch = useDispatch();
   const { user, getAccessTokenSilently, isAuthenticated, isLoading } = useAuth0();
   const { currentUser } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   const [isLoadingCompleted, setIsLoadingCompleted] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,6 @@ export const useRegisterNewUser = () => {
   };
 
   const startRegistration = async () => {
-    console.log('again');
     const token = await getAccessTokenSilently();
     const language = i18next.language || 'en';
     await registerNewUser(token, user.sub, user.name, user.picture, language);

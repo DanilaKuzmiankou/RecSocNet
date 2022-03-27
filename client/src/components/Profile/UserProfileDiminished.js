@@ -8,17 +8,19 @@ import { formatStringLength, onImageDownloadError } from '../../utils/Utils';
 import { setCurrentUser } from '../../store/reducers/UserSlice';
 
 export const UserProfileDiminished = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { logout } = useAuth0();
   const { currentUser, isCurrentUserAdmin } = useSelector((state) => state.user);
-  const { t } = useTranslation();
   const [imageGetAttempt, setImageGetAttempt] = useState(0);
-  const dispatch = useDispatch();
+
   const logOut = () => {
     dispatch(setCurrentUser({}));
     logout({
       returnTo: window.location.origin,
     });
   };
+
   return (
     <div>
       {currentUser && (

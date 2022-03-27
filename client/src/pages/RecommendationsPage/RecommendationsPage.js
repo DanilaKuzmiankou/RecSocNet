@@ -23,18 +23,13 @@ import { TagCloud } from 'react-tagcloud';
 
 export const RecommendationsPage = () => {
   const dispatch = useDispatch();
-
   const isLoading = useSelector((state) => state.loading.isLoading);
   const { currentUser, currentUserTheme } = useSelector((state) => state.user);
-
   const [currentReviews, setCurrentReviews] = useState([]);
   const [infiniteScrollKey, setInfiniteScrollKey] = useState(0);
   const [fetchFunction, setFetchFunction] = useState('fetchNewestReviews');
-
   const [rowSelectionRate, setRowSelectionRate] = useState(0);
-
   const [hasMoreReviews, setHasMoreReviews] = useState(true);
-
   const [tags, setTags] = useState([]);
   const [tag, setTag] = useState('');
 
@@ -50,10 +45,9 @@ export const RecommendationsPage = () => {
   }, []);
 
   const initTags = async () => {
-    const tags = await getTags();
-    const tagsObj = [];
-    tags.map((tag) => tagsObj.push(Object.create({ value: tag, count: Math.random() * 100 })));
-    setTags(tagsObj);
+    let tags = await getTags();
+    tags = tags.map((tag) => Object.create({ value: tag, count: Math.random() * 100 }));
+    setTags(tags);
   };
 
   const fetchNewestReviews = async () => {
@@ -146,6 +140,7 @@ export const RecommendationsPage = () => {
     setTag(tag);
     refreshTagReviews(tag);
   };
+
   const customRenderer = (tag, size, color) => (
     <span
       key={tag.value}

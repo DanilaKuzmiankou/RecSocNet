@@ -13,16 +13,15 @@ import {
   Tooltip,
 } from 'react-bootstrap';
 import { createSearchParams, useNavigate } from 'react-router-dom';
-import { LogInButton, NavBarToolsPanel } from '../index.components';
+import { LogInButton, NavBarToolsPanel, UserProfileDiminished } from '../index.components';
 import { useAuth0 } from '@auth0/auth0-react';
-import { UserProfileDiminished } from '../Profile/UserProfileDiminished';
 import { useTranslation } from 'react-i18next';
 
 export const CustomNav = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth0();
-  const [searchData, setSearchData] = useState('');
   const { t } = useTranslation();
+  const [searchData, setSearchData] = useState('');
 
   const search = async (event) => {
     event.preventDefault();
@@ -51,7 +50,9 @@ export const CustomNav = () => {
 
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
         <Navbar.Collapse id='responsive-navbar-nav'>
-          <Nav className='me-auto my-2 my-lg-0' style={{ maxHeight: '100px', gap: '1rem' }}></Nav>
+          <Nav className='me-auto my-2 my-lg-0' style={{ maxHeight: '100px', gap: '1rem' }}>
+            {' '}
+          </Nav>
 
           <div>
             <Container className='p-0'>
