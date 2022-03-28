@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { getUserByAuthId, registerNewUser } from '../api/store/UserStore';
 import {
+  setBrowsedUser,
   setCurrentUser,
   setCurrentUserTheme,
   setIsCurrentUserAdmin,
@@ -37,6 +38,7 @@ export const useRegisterNewUser = () => {
     const language = i18next.language || 'en';
     await registerNewUser(token, user.sub, user.name, user.picture, language);
     const currentUser = await getUserByAuthId(token, user.sub);
+    dispatch(setBrowsedUser(currentUser));
     dispatch(setCurrentUserTheme(currentUser.theme));
     changeLanguage(currentUser.language);
     dispatch(setCurrentUser(currentUser));
