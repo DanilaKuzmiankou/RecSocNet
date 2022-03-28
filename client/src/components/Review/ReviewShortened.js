@@ -8,6 +8,7 @@ import { setModalParams } from '../../store/reducers/ModalSlice';
 import { CustomModal } from '../CustomModal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSingleDateToUserTimezone } from '../../utils/Utils';
+import { Link } from 'react-router-dom';
 
 export const ReviewShortened = (props) => {
   const reviewsModal = useRef();
@@ -76,17 +77,17 @@ export const ReviewShortened = (props) => {
               }}
             >
               <label style={{ fontSize: '1rem', fontStyle: 'italic' }}>by </label>
-              <a
+              <Link
                 style={{
                   marginLeft: '10px',
                   fontSize: '1.3rem',
                   color: 'currentcolor',
                 }}
                 className='review-shortened-profile-url'
-                href={'/profile/' + currentReview?.user?.id}
+                to={'/profile/' + currentReview?.user?.id}
               >
                 {currentReview?.user?.name}
-              </a>
+              </Link>
             </Col>
             <Col xs={3} className='pe-0' style={{ display: 'flex', justifyContent: 'end' }}>
               <label style={{ fontSize: '1.1rem' }}>

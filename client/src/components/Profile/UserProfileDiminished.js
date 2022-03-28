@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { formatStringLength, onImageDownloadError } from '../../utils/Utils';
 import { setCurrentUser } from '../../store/reducers/UserSlice';
+import { Link } from 'react-router-dom';
 
 export const UserProfileDiminished = () => {
   const dispatch = useDispatch();
@@ -48,14 +49,16 @@ export const UserProfileDiminished = () => {
               id='navbarScrollingDropdown'
             >
               <div>
-                <NavDropdown.Item href={'/profile/' + currentUser?.id}>
+                <NavDropdown.Item as={Link} to={'/profile/' + currentUser?.id}>
                   {t('profile')}
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
               </div>
               {isCurrentUserAdmin && (
                 <div>
-                  <NavDropdown.Item href={'/admin'}>{t('admin_page')}</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to='/admin'>
+                    {t('admin_page')}
+                  </NavDropdown.Item>
                   <NavDropdown.Divider />
                 </div>
               )}

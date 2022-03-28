@@ -12,7 +12,7 @@ import {
   Row,
   Tooltip,
 } from 'react-bootstrap';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { createSearchParams, Link, useNavigate } from 'react-router-dom';
 import { LogInButton, NavBarToolsPanel, UserProfileDiminished } from '../index.components';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
@@ -39,13 +39,13 @@ export const CustomNav = () => {
           delay={{ show: 250, hide: 400 }}
           overlay={<Tooltip id='tooltip-disabled'>{t('to_home')}</Tooltip>}
         >
-          <a
+          <Link
             style={{ fontSize: '33px' }}
-            href='/'
+            to='/'
             className=' justify-content-start navbar-home-button'
           >
             {t('home')}
-          </a>
+          </Link>
         </OverlayTrigger>
 
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
