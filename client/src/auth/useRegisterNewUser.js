@@ -24,7 +24,7 @@ export const useRegisterNewUser = () => {
 
   const checkRegistration = async () => {
     if (isLoading === false) {
-      if (isAuthenticated && Object.keys(currentUser).length === 0) {
+      if (isAuthenticated) {
         await startRegistration();
       }
       setIsLoadingCompleted(true);
@@ -32,6 +32,7 @@ export const useRegisterNewUser = () => {
   };
 
   const startRegistration = async () => {
+    console.log('register');
     const token = await getAccessTokenSilently();
     const language = i18next.language || 'en';
     await registerNewUser(token, user.sub, user.name, user.picture, language);
