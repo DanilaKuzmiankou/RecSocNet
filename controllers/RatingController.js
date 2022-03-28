@@ -15,7 +15,8 @@ class RatingController {
       const user = await User.findOne({ where: { authId } });
       const review = await Review.findOne({ where: { id: reviewId } });
       const ratings = await user.getRatings({ where: { reviewId } });
-      let likes = user.likes;
+      const reviewUser = await review.getUser();
+      let likes = reviewUser.likes;
       let usersReviewScore = review.usersReviewScore;
       if (ratings[0]) {
         likedStatus = !ratings[0].reviewScore;
@@ -35,7 +36,7 @@ class RatingController {
         likes++;
         usersReviewScore++;
       }
-      await user.update({ likes });
+      await reviewUser.update({ likes });
       await review.update({ usersReviewScore });
       return res
         .status(200)
