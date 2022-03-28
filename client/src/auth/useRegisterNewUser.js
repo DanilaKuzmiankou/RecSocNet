@@ -24,7 +24,7 @@ export const useRegisterNewUser = () => {
 
   const checkRegistration = async () => {
     if (isLoading === false) {
-      if (isAuthenticated) {
+      if (isAuthenticated && Object.keys(currentUser).length === 0) {
         await startRegistration();
       }
       setIsLoadingCompleted(true);

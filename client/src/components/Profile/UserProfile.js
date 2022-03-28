@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../App.css';
 import {
   Button,
@@ -28,7 +28,7 @@ export const UserProfile = () => {
     (state) => state.user
   );
   const [edit, setEdit] = useState(false);
-  const [editUsername, setEditUsername] = useState(browsedUser.name);
+  const [editUsername, setEditUsername] = useState(browsedUser?.name);
   const [displayForm, setDisplayForm] = useState('none');
   const [validationMessage, setValidationMessage] = useState('');
   const [errorValidationMessage, setErrorValidationMessage] = useState('');
