@@ -65,6 +65,7 @@ export const ProfilePage = () => {
   };
 
   const setCurrentUserAsGuest = async () => {
+    console.log('3');
     const userBrowsedProfile = await getUserById(routerParams.id);
     if (!userBrowsedProfile) {
       navigate('/1');
@@ -78,6 +79,7 @@ export const ProfilePage = () => {
   };
 
   const authUserInOtherUserProfile = async () => {
+    console.log('2');
     const userBrowsedProfile = await getUserById(routerParams.id);
     if (!userBrowsedProfile) {
       navigate('/1');
@@ -95,6 +97,7 @@ export const ProfilePage = () => {
   };
 
   const authUserInOwnProfile = async () => {
+    console.log('1');
     const newReviews = await getUserReviews(currentUser.authId, currentUser.id);
     dispatch(setReviews(newReviews));
     dispatch(setBrowsedUser(currentUser));
