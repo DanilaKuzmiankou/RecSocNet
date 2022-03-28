@@ -16,7 +16,9 @@ export const Feedback = (props) => {
 
   useEffect(() => {
     let isMounted = true;
+    console.log('props', props);
     if (isMounted && props.review) {
+      console.log('review', props.review);
       initFeedback();
     }
     return () => {
@@ -28,7 +30,9 @@ export const Feedback = (props) => {
     const review = Object.assign({}, props.review);
     review.usersContentScore = +review.usersContentScore.toFixed(2);
     setReview(review);
+    console.log('review', review);
     if (review?.ratings && review?.ratings[0] && review.ratings[0].contentScore) {
+      console.log('true');
       setRating(review.ratings[0].contentScore);
     }
   };
