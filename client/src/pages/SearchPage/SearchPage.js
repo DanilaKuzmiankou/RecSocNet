@@ -51,6 +51,7 @@ export const SearchPage = () => {
     if (searchedReviewsFromApi.length !== 0) {
       setFetchedReviews(prevReviews, searchedReviewsFromApi);
     }
+    dispatch(setIsLoading(false));
   };
 
   const setFetchedReviews = (prevReviews, searchedReviewsFromApi) => {
@@ -61,7 +62,6 @@ export const SearchPage = () => {
     if (searchedReviewsFromApi.length < 10) {
       setHasMoreReviews(false);
     }
-    dispatch(setIsLoading(false));
   };
 
   return (
