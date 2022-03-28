@@ -94,7 +94,7 @@ export const UserProfile = () => {
       <Row>
         <Col xs={'auto'} md={'auto'}>
           <Image
-            src={browsedUser.profilePictureUrl}
+            src={browsedUser?.profilePictureUrl}
             height={150}
             width={150}
             onError={({ currentTarget }) =>
@@ -122,7 +122,7 @@ export const UserProfile = () => {
                       <div className='profile-username-edit-container'>
                         <h4 className=''>
                           {' '}
-                          {t('name')}: {browsedUser.name}{' '}
+                          {t('name')}: {browsedUser?.name}{' '}
                         </h4>
 
                         <Rating
@@ -140,11 +140,11 @@ export const UserProfile = () => {
                     </OverlayTrigger>
                   ) : (
                     <h4 className=''>
-                      {t('name')}: {browsedUser.name}{' '}
+                      {t('name')}: {browsedUser?.name}{' '}
                     </h4>
                   )}
                   <h4 className=''>
-                    {t('likes')}: {browsedUser.likes}{' '}
+                    {t('likes')}: {browsedUser?.likes}{' '}
                   </h4>
                 </Col>
                 <Col md={6} sm={12}>

@@ -39,6 +39,7 @@ export const useRegisterNewUser = () => {
     await registerNewUser(token, user.sub, user.name, user.picture, language);
     const currentUser = await getUserByAuthId(token, user.sub);
     dispatch(setBrowsedUser(currentUser));
+    console.log('cur', currentUser);
     dispatch(setCurrentUserTheme(currentUser.theme));
     changeLanguage(currentUser.language);
     dispatch(setCurrentUser(currentUser));
