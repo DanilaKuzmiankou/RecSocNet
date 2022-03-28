@@ -41,7 +41,7 @@ export const Like = ({ updateReview, review }) => {
     if (response.status === 200) {
       saveLike(response);
     } else {
-      alert(response.message);
+      console.log('ERR===', response.message);
     }
   };
 

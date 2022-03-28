@@ -105,13 +105,13 @@ input::placeholder {
     font-size: 20px;
 }
 
+.multiSelectContainer li {
+    background-color: var(--background-color);
+}
+
 .search-wrapper.searchWrapper{
     border-radius: 0;
     min-height: 55px;
-}
-
-.multi-select-container li{
-    background-color: var(--background-color);
 }
 
 .custom-multiselect{

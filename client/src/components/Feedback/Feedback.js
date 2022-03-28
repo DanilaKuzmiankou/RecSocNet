@@ -57,7 +57,7 @@ export const Feedback = (props) => {
         setRating(0);
         break;
       default:
-        alert('Error while changing rating! Reload page please!');
+        console.log('Error while changing rating! Reload page please!');
         break;
     }
     saveEditedReview(reviewUsersContentScore);

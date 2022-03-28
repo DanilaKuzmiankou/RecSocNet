@@ -179,6 +179,14 @@ class ReviewController {
   async saveReview(req, res, next) {
     const { review } = req.body;
     const oldReview = await Review.findOne({ where: { id: review.id } });
+    let tagsToDelete = oldReview?.tags
+      ?.split(",")
+      .filter((tag) => !review.tags.includes(tag));
+    tagsToDelete = await reviewController.findTagsToDelete(
+      tagsToDelete,
+      review.id
+    );
+    await reviewController.deleteTags(tagsToDelete);
     await oldReview.update({
       title: review.title,
       text: review.text,
@@ -209,7 +217,19 @@ class ReviewController {
   }
 
   async addNewTags(rawTags) {
-    const tags = rawTags.split(",");
+    let tags = rawTags.split(",");
+    const tagsFromDB = await reviewController.findEqualTags(tags);
+    if (tagsFromDB.length > 0) {
+      tags = tags.filter((tag) => !tagsFromDB.includes(tag));
+    }
+    for (const tag of tags) {
+      await Tags.create({
+        tag,
+      });
+    }
+  }
+
+  async findEqualTags(tags) {
     let tagsFromDB = await Tags.findAll({
       attributes: ["tag"],
       where: {
@@ -218,14 +238,20 @@ class ReviewController {
         },
       },
     });
-    let newTags = tags;
     if (tagsFromDB.length > 0) {
       tagsFromDB = tagsFromDB.map((item) => (item = item.tag));
-      newTags = tags.filter((tag) => !tagsFromDB.includes(tag));
     }
-    for (const tag of newTags) {
-      await Tags.create({
-        tag,
+    return tagsFromDB;
+  }
+
+  async deleteTags(tags) {
+    if (tags && tags.length > 0) {
+      await Tags.destroy({
+        where: {
+          tag: {
+            [op.in]: tags,
+          },
+        },
       });
     }
   }
@@ -235,15 +261,18 @@ class ReviewController {
     if (!authId) {
       return next(ApiError.badRequest("There is no authId!"));
     }
+    const review = await Review.findOne({ where: { id } });
+    const tagsToDelete = await reviewController.findTagsToDelete(
+      review.tags.split(","),
+      id
+    );
     const user = await User.findOne({ where: { authId } });
     try {
-      ReviewImage.destroy({
+      await ReviewImage.destroy({
         where: { reviewId: id },
-      }).then(
-        Review.destroy({
-          where: { id },
-        })
-      );
+      });
+      await reviewController.deleteTags(tagsToDelete);
+      await review.destroy();
       return res
         .status(200)
         .json({ message: "Review was successfully deleted!" });
@@ -252,6 +281,30 @@ class ReviewController {
         .status(500)
         .json({ message: "An error occurred while review deleting: ", e });
     }
+  }
+
+  async findTagsToDelete(tags, id) {
+    const tagsToDelete = [];
+    if (tags && tags.length > 0) {
+      for (const tag of tags) {
+        if (tag) {
+          const review = await Review.findOne({
+            where: {
+              tags: {
+                [op.like]: "%" + tag + "%",
+              },
+              id: {
+                [op.ne]: id,
+              },
+            },
+          });
+          if (!review) {
+            tagsToDelete.push(tag);
+          }
+        }
+      }
+    }
+    return tagsToDelete;
   }
 
   async deleteImage(req, res, next) {

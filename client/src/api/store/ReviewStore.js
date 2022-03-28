@@ -65,7 +65,6 @@ export async function uploadImagesToFirebaseCloud(images) {
         imagesUrl[i] = downloadUrl;
       } catch (error) {
         console.log('ERR ===', error);
-        alert('Image uploading failed!');
       }
     }
   }
@@ -83,7 +82,6 @@ export async function deleteImagesFromFirebaseCloud(pictures) {
         await deleteImageFromDatabase(url);
       } catch (error) {
         console.log('ERR ===', error);
-        alert('Image deleting failed!');
       }
     }
   }
