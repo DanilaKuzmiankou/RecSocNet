@@ -280,7 +280,7 @@ input::placeholder {
     background-repeat: no-repeat
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1050px) {
     body {
         overflow-x: hidden;
     }
@@ -397,7 +397,7 @@ a.dropdown-item {
 
 }
 
-@media screen and (min-width: 401px) {
+@media screen and (min-width: 600px) {
     .reviews-table-button {
         white-space: nowrap;
         user-select: none;
@@ -412,7 +412,7 @@ a.dropdown-item {
     }
 }
 
-@media screen and (max-width: 401px) {
+@media screen and (max-width: 600px) {
     .reviews-table-button {
         margin: 5px;
     }
