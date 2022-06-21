@@ -7,6 +7,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import ReactQuill from 'react-quill';
 import { useSelector } from 'react-redux';
 import { changeSingleDateToUserTimezone } from '../../utils/Utils';
+import { Link } from 'react-router-dom';
 
 export const Review = (props) => {
   const { editedReview } = useSelector((state) => state.review);
@@ -22,10 +23,27 @@ export const Review = (props) => {
         <div className='review-container'>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             {editedReview.user?.name && (
-              <div style={{ display: 'flex', flexShrink: '0' }}>
-                <label style={{ fontSize: '33px', fontStyle: 'italic' }}>
-                  by {editedReview.user?.name}
-                </label>
+              <div
+                style={{
+                  display: 'flex',
+                  flexShrink: '0',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                }}
+              >
+                <label style={{ fontSize: '33px', fontStyle: 'italic' }}>by</label>
+                <Link
+                  style={{
+                    marginLeft: '6px',
+                    fontSize: '43px',
+                    fontStyle: 'italic',
+                  }}
+                  className='review-shortened-profile-url'
+                  to={'/profile/' + editedReview?.user?.id}
+                >
+                  {editedReview?.user?.name}
+                </Link>
               </div>
             )}
             <div style={{ display: 'flex', flex: '1' }}> </div>

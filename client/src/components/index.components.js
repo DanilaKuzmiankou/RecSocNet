@@ -13,3 +13,4 @@ export { ToolsContainer } from './ToolsContainer/ToolsContainer';
 export { NavBarToolsPanel } from './NavBarToolsPanel/NavBarToolsPanel';
 export { CustomMultiselect } from './CustomMultiselect/CustomMultiselect';
 export { UserProfileDiminished } from './Profile/UserProfileDiminished';
+export { RecommendationsMenu } from './RecommendationsMenu/RecommendationsMenu';

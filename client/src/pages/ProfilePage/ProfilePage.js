@@ -16,11 +16,7 @@ import {
   getUserReviews,
 } from '../../api/store/ReviewStore';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setBrowsedUser,
-  setIsCurrentUserAdmin,
-  setIsCurrentUserOwner,
-} from '../../store/reducers/UserSlice';
+import { setBrowsedUser, setIsCurrentUserOwner } from '../../store/reducers/UserSlice';
 import {
   setDisplayFilters,
   setEditedReview,
@@ -71,7 +67,7 @@ export const ProfilePage = () => {
     }
     try {
       dispatch(setBrowsedUser(userBrowsedProfile));
-      dispatch(setIsCurrentUserAdmin(false));
+      dispatch(setIsCurrentUserOwner(false));
       const reviews = await getUserReviews(userBrowsedProfile.authId, routerParams.id);
       dispatch(setReviews(reviews));
     } catch (e) {}
@@ -207,13 +203,17 @@ export const ProfilePage = () => {
                   <h1 className='text-center'>{t('reviews')}</h1>
 
                   <Fragment>
-                    <div className='reviews-table-container'>
-                      <Button variant='success' onClick={changeDisplayFiltersState}>
+                    <div className='reviews-table-container '>
+                      <Button
+                        className='button-with-shadow'
+                        variant='success'
+                        onClick={changeDisplayFiltersState}
+                      >
                         {filtersBtnText}
                       </Button>
                       <Button
                         variant='success'
-                        className='reviews-table-button'
+                        className='reviews-table-button button-with-shadow'
                         onClick={viewReview}
                       >
                         {t('view')}
@@ -223,21 +223,21 @@ export const ProfilePage = () => {
                       <div className='reviews-table-container'>
                         <Button
                           variant='success'
-                          className='reviews-table-button'
+                          className='reviews-table-button button-with-shadow'
                           onClick={createReview}
                         >
                           {t('create')}
                         </Button>
                         <Button
                           variant='success'
-                          className='reviews-table-button'
+                          className='reviews-table-button button-with-shadow'
                           onClick={editReview}
                         >
                           {t('edit')}
                         </Button>
                         <Button
                           variant='success'
-                          className='reviews-table-button'
+                          className='reviews-table-button button-with-shadow'
                           onClick={deleteReview}
                         >
                           {t('delete')}

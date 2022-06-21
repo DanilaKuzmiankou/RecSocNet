@@ -66,7 +66,6 @@ export const CreateOrEditReviewForm = (props) => {
     const picturesToUpload = allPictures.filter((pic) => pic.constructor === File);
     const redactedPictures = allPictures.filter((pic) => !picturesToUpload.includes(pic));
     const picturesToDelete = getPicturesToDelete(redactedPictures);
-
     await deleteImagesFromFirebaseCloud(picturesToDelete);
     const picturesUrl = await uploadImagesToFirebase(picturesToUpload);
     await addImagesToDatabase(picturesUrl, editedReview.id);

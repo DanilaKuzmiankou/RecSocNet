@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { formatStringLength, onImageDownloadError } from '../../utils/Utils';
 import { setCurrentUser } from '../../store/reducers/UserSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const UserProfileDiminished = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { logout } = useAuth0();
+  const navigate = useNavigate();
   const { currentUser, isCurrentUserAdmin } = useSelector((state) => state.user);
   const [imageGetAttempt, setImageGetAttempt] = useState(0);
 
@@ -32,6 +33,7 @@ export const UserProfileDiminished = () => {
               height={50}
               width={50}
               roundedCircle={true}
+              onClick={() => navigate('/profile/' + currentUser?.id)}
               onError={({ currentTarget }) =>
                 onImageDownloadError(
                   currentTarget,

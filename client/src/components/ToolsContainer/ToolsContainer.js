@@ -40,10 +40,10 @@ export const ToolsContainer = (props) => {
             </div>
           </div>
         </Col>
-        <Col className='tools-container-div'>
+        <Col>
           <div>
-            <div>{t('most_liked')}</div>
-            <div className='tools-container-div'>
+            <div>&nbsp;{t('most_liked')}</div>
+            <div>
               <Rating
                 start={0}
                 stop={1}

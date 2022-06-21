@@ -4,8 +4,8 @@ import { setIsLoading } from '../../store/reducers/LoadingSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   LoadingComponent,
+  RecommendationsMenu,
   ReviewShortened,
-  ToolsContainer,
 } from '../../components/index.components';
 import {
   getMostLikedReviews,
@@ -162,7 +162,7 @@ export const RecommendationsPage = () => {
   };
 
   return (
-    <div className='recommendations-page-container'>
+    <div className='recommendations-page-container no-select'>
       {isLoading ? (
         <LoadingComponent />
       ) : (
@@ -170,21 +170,6 @@ export const RecommendationsPage = () => {
           <Row>
             <Col> </Col>
             <Col sm={8}>
-              <div className='tags-cloud-container'>
-                <TagCloud
-                  minSize={2}
-                  maxSize={5}
-                  shuffle={false}
-                  tags={tags}
-                  colorOptions={options}
-                  renderer={customRenderer}
-                  onClick={(tag) => findTagReviews(tag.value)}
-                />
-              </div>
-              <ToolsContainer
-                refreshNewestReviews={refreshNewestReviews}
-                refreshMostLikedReviews={refreshMostLikedReviews}
-              />
               <InfiniteScroll
                 key={infiniteScrollKey}
                 dataLength={currentReviews.length}
@@ -204,7 +189,25 @@ export const RecommendationsPage = () => {
                 ))}
               </InfiniteScroll>
             </Col>
-            <Col> </Col>
+            <Col>
+              <div style={{ position: 'sticky', top: '10px' }}>
+                <RecommendationsMenu
+                  refreshNewestReviews={refreshNewestReviews}
+                  refreshMostLikedReviews={refreshMostLikedReviews}
+                />
+                <div className='tags-cloud-container'>
+                  <TagCloud
+                    minSize={2}
+                    maxSize={5}
+                    shuffle={false}
+                    tags={tags}
+                    colorOptions={options}
+                    renderer={customRenderer}
+                    onClick={(tag) => findTagReviews(tag.value)}
+                  />
+                </div>
+              </div>
+            </Col>
           </Row>
         </Container>
       )}

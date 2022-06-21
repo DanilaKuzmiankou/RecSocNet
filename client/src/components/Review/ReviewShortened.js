@@ -76,12 +76,11 @@ export const ReviewShortened = (props) => {
                 overflow: 'hidden',
               }}
             >
-              <label style={{ fontSize: '1rem', fontStyle: 'italic' }}>by </label>
+              <label style={{ fontSize: '1rem', fontStyle: 'italic' }}>by</label>
               <Link
                 style={{
-                  marginLeft: '10px',
+                  marginLeft: '6px',
                   fontSize: '1.3rem',
-                  color: 'currentcolor',
                 }}
                 className='review-shortened-profile-url'
                 to={'/profile/' + currentReview?.user?.id}
