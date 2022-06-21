@@ -50,5 +50,6 @@
   "no_reviews": "Ooooops...It seems you have not reviews, click the button to create the first!",
   "no_reviews_admin": "This user has no reviews at the moment!",
   "log_in_first": "Log in to create your first review!",
-  "tap_me": "Tap me!"
+  "tap_me": "Tap me!",
+  "average_content_score": "Average content score: "
 }

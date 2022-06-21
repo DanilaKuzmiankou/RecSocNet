@@ -7,9 +7,11 @@ import { changeReviewUsersContentScore } from '../../api/store/RatingStore';
 import { useSelector } from 'react-redux';
 import '../../App.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 
 export const Feedback = (props) => {
   const currentUser = useSelector((state) => state.user.currentUser);
+  const { t } = useTranslation();
   const { isAuthenticated, loginWithRedirect } = useAuth0();
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState({});
@@ -84,7 +86,9 @@ export const Feedback = (props) => {
         placement='top'
         delay={{ show: 150, hide: 200 }}
         overlay={
-          <Tooltip id='tooltip-disabled'>Average content score: {review.usersContentScore}</Tooltip>
+          <Tooltip id='tooltip-disabled'>
+            {t('average_content_score')} {review.usersContentScore}
+          </Tooltip>
         }
       >
         <div className='feedback-rating'>
