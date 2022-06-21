@@ -145,7 +145,7 @@ export const RecommendationsPage = () => {
     <span
       key={tag.value}
       style={{
-        fontSize: `${size / 2}em`,
+        fontSize: `${size / 2.5}em`,
         margin: '3px',
         padding: '3px',
         display: 'inline-block',

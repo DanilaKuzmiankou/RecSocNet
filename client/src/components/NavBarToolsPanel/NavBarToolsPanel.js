@@ -51,8 +51,8 @@ export const NavBarToolsPanel = () => {
         <Col md={'auto'} className='p-0 pe-2'>
           <Image
             src={unitedStatesFlag}
-            height={35}
-            width={35}
+            height={25}
+            width={25}
             roundedCircle={true}
             onClick={setEngLanguage}
           />
@@ -60,8 +60,8 @@ export const NavBarToolsPanel = () => {
         <Col md={'auto'} className='p-0'>
           <Image
             src={russiaFlag}
-            height={35}
-            width={35}
+            height={25}
+            width={25}
             roundedCircle={true}
             onClick={setRuLanguage}
           />
@@ -71,8 +71,8 @@ export const NavBarToolsPanel = () => {
         <Col md={'auto'} className='p-0 pe-2 pt-1'>
           <Image
             src={moon}
-            height={35}
-            width={35}
+            height={25}
+            width={25}
             roundedCircle={true}
             onClick={setDarkBackground}
           />
@@ -80,8 +80,8 @@ export const NavBarToolsPanel = () => {
         <Col md={'auto'} className='p-0 pe-1 pt-1'>
           <Image
             src={sun}
-            height={40}
-            width={40}
+            height={30}
+            width={30}
             roundedCircle={true}
             onClick={setLightBackground}
           />
