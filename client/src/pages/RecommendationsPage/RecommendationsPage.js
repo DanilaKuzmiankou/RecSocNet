@@ -169,7 +169,7 @@ export const RecommendationsPage = () => {
         <Container>
           <Row>
             <Col> </Col>
-            <Col sm={7}>
+            <Col sm={6}>
               <InfiniteScroll
                 key={infiniteScrollKey}
                 dataLength={currentReviews.length}
