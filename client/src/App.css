@@ -63,7 +63,7 @@ body {
 
 * {
     color: var(--text-color);
-    font-size: 9px;
+    font-size: 15px;
 }
 
 @media screen and (max-width: 800px) {
