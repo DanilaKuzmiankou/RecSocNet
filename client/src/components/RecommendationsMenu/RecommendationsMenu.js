@@ -24,7 +24,7 @@ export const RecommendationsMenu = (props) => {
 
   return (
     <ListGroup>
-      <ListGroup.Item action onClick={() => setClickedReview(true)}>
+      <ListGroup.Item className='tools-container' action onClick={() => setClickedReview(true)}>
         <div className='tools-container-div'>
           <div>
             <Rating
@@ -38,7 +38,7 @@ export const RecommendationsMenu = (props) => {
           <div style={{ marginLeft: '10px' }}>{t('newest')}</div>
         </div>
       </ListGroup.Item>
-      <ListGroup.Item action onClick={() => setClickedReview(false)}>
+      <ListGroup.Item className='tools-container' action onClick={() => setClickedReview(false)}>
         <div className='tools-container-div'>
           <div>
             <Rating
