@@ -40,7 +40,7 @@ export const CustomNav = () => {
           overlay={<Tooltip id='tooltip-disabled'>{t('to_home')}</Tooltip>}
         >
           <Link
-            style={{ fontSize: '33px' }}
+            style={{ fontSize: '23px' }}
             to='/'
             className=' justify-content-start navbar-home-button'
           >
@@ -65,14 +65,14 @@ export const CustomNav = () => {
                 >
                   <Form className='d-flex' onSubmit={search}>
                     <FormControl
-                      style={{ fontSize: '20px' }}
+                      style={{ fontSize: '15px' }}
                       type='search'
                       placeholder={t('search_reviews')}
                       className='me-2 nav-search-bar'
                       aria-label='Search'
                       onChange={(event) => setSearchData(event.target.value)}
                     />
-                    <Button style={{ fontSize: '20px' }} type='submit' variant='outline-success'>
+                    <Button style={{ fontSize: '15px' }} type='submit' variant='outline-success'>
                       {t('search')}
                     </Button>
                   </Form>
