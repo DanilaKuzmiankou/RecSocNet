@@ -1,4 +1,4 @@
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Image, Row } from 'react-bootstrap';
 import StarRatings from 'react-star-ratings/build/star-ratings';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
@@ -130,6 +130,13 @@ export const ReviewShortened = (props) => {
           <div>
             <ReactQuill theme={null} readOnly={true} value={editorText} />
           </div>
+          {currentReview.images?.map((image, index) => (
+            <div className='thumb-short' key={index}>
+              <div>
+                <Image src={image.imageLink} className='review-img' />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
       <div className='review-shortened-feedback-container'>

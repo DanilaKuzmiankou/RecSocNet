@@ -329,8 +329,18 @@ input::placeholder {
     border: 1px solid #eaeaea;
     margin-bottom: 8px;
     margin-right: 8px;
-    width: 350px;
+    max-width: 350px;
     height: 350px;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.thumb-short {
+    display: inline-flex;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    max-width: 150px;
+    height: 150px;
     padding: 4px;
     box-sizing: border-box;
 }
@@ -342,7 +352,7 @@ input::placeholder {
 }
 
 .review-img {
-    width: auto;
+    width: 100%;
     height: 100%;
     border-radius: 2px;
 }
