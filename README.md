@@ -1,6 +1,6 @@
 # RecSocNet
 Social network to find and create reviews. Project have auth and privilegies system, creating, deleting, editing, rating reviews system.
-Back-end have NodeJS+ExpressJS base. Database have deep search, constructed on Postgress tools.
+Back-end have NodeJS+ExpressJS base. Database have full-text search, constructed on Postgress tools.
 Technologies:
 JavaScript,
 HTML & CSS,
