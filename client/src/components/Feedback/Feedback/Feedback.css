@@ -1,0 +1,13 @@
+.feedback-container {
+    display: flex;
+    align-items: center;
+}
+
+.feedback-container > :not(h2) {
+    margin-right: 10px;
+}
+
+.feedback-container h2 {
+    margin-right: 4px;
+    text-align: center;
+}

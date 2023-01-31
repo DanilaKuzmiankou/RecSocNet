@@ -1,7 +1,6 @@
 import BootstrapTable from 'react-bootstrap-table-next';
-import React from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import '../../App.css';
+import './CustomBootstrapTable.css';
 import filterFactory, {
   Comparator,
   dateFilter,
@@ -26,15 +25,13 @@ export const CustomBootstrapTable = () => {
       tooltipPlacement = 'top-start';
     }
     return (
-      <div>
-        <OverlayTrigger
-          placement={tooltipPlacement}
-          delay={{ show: 150, hide: 200 }}
-          overlay={<Tooltip id='tooltip-disabled'>{t('click_to_sort')}</Tooltip>}
-        >
-          <h5>{column.text}</h5>
-        </OverlayTrigger>
-      </div>
+      <OverlayTrigger
+        placement={tooltipPlacement}
+        delay={{ show: 150, hide: 200 }}
+        overlay={<Tooltip id='tooltip-disabled'>{t('click_to_sort')}</Tooltip>}
+      >
+        <h5 style={{ width: 'max-content', margin: '0 auto' }}>{column.text}</h5>
+      </OverlayTrigger>
     );
   }
 
@@ -72,9 +69,7 @@ export const CustomBootstrapTable = () => {
         style: { display: displayFilters },
       }),
       formatter: (cell, row, rowIndex, extraData) => (
-        <div>
-          <ReactQuill theme={null} readOnly={true} defaultValue={formatString(row.text)} />
-        </div>
+        <ReactQuill theme={null} readOnly={true} defaultValue={formatString(row.text)} />
       ),
       sort: true,
       headerFormatter: headerFormat,

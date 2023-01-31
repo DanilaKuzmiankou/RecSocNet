@@ -6,32 +6,32 @@ import {
   setIsCurrentUserAdmin,
 } from '../store/reducers/UserSlice';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import i18next, { changeLanguage } from 'i18next';
 
 export const useRegisterNewUser = () => {
   const dispatch = useDispatch();
   const { user, getAccessTokenSilently, isAuthenticated, isLoading } = useAuth0();
-  const { currentUser } = useSelector((state) => state.user);
   const [isLoadingCompleted, setIsLoadingCompleted] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      await checkRegistration();
+      await startAuthentication();
     }
+
     fetchData();
   }, [isLoading]);
 
-  const checkRegistration = async () => {
+  const startAuthentication = async () => {
     if (isLoading === false) {
-      if (isAuthenticated && Object.keys(currentUser).length === 0) {
-        await startRegistration();
+      if (isAuthenticated) {
+        await authUser();
       }
       setIsLoadingCompleted(true);
     }
   };
 
-  const startRegistration = async () => {
+  const authUser = async () => {
     const token = await getAccessTokenSilently();
     const language = i18next.language || 'en';
     await registerNewUser(token, user.sub, user.name, user.picture, language);

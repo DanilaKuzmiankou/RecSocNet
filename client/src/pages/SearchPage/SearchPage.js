@@ -1,7 +1,7 @@
+import './SearchPage.css';
 import { useSearchParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { findReviews } from '../../api/store/ReviewStore';
-import { Col, Container, Row } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadingComponent, ReviewShortened } from '../../components/index.components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,9 +23,11 @@ export const SearchPage = () => {
   useEffect(() => {
     if (searchParams) {
       document.body.setAttribute('data-theme', currentUserTheme);
+
       async function fetchData() {
         await searchReviews(true);
       }
+
       fetchData();
       setInfiniteScrollKey(Math.random());
     }
@@ -65,43 +67,35 @@ export const SearchPage = () => {
   };
 
   return (
-    <div className='search-page-container'>
+    <div className='page-container search-page-container'>
       {isLoading ? (
         <LoadingComponent />
       ) : (
-        <div>
+        <>
           {searchedReviews && searchedReviews.length > 0 ? (
-            <div>
-              <div className='search-page-title'>{t('search_result')}</div>
-              <Container>
-                <Row>
-                  <Col> </Col>
-                  <Col sm={8}>
-                    <InfiniteScroll
-                      key={infiniteScrollKey}
-                      dataLength={searchedReviews.length}
-                      next={searchReviews}
-                      hasMore={hasMoreReviews}
-                      loader={<LoadingComponent />}
-                      endMessage={<h3 style={{ textAlign: 'center' }}>{t('no_more_suitable')}</h3>}
-                    >
-                      {searchedReviews.map((review, id) => (
-                        <div key={id} className='review-shortened-container'>
-                          <ReviewShortened key={id} currentReview={review} reviewId={id} />
-                        </div>
-                      ))}
-                    </InfiniteScroll>
-                  </Col>
-                  <Col> </Col>
-                </Row>
-              </Container>
-            </div>
+            <>
+              <h2 className='search-page-title'>{t('search_result')}</h2>
+              <InfiniteScroll
+                key={infiniteScrollKey}
+                dataLength={searchedReviews.length}
+                next={searchReviews}
+                hasMore={hasMoreReviews}
+                loader={<LoadingComponent />}
+                endMessage={<h3 style={{ textAlign: 'center' }}>{t('no_more_suitable')}</h3>}
+              >
+                {searchedReviews.map((review, id) => (
+                  <div key={id} className='review-shortened-container'>
+                    <ReviewShortened key={id} currentReview={review} reviewId={id} />
+                  </div>
+                ))}
+              </InfiniteScroll>
+            </>
           ) : (
             <div className='centered-without-content'>
               <h1>{t('no_found_more')}</h1>
             </div>
           )}
-        </div>
+        </>
       )}
     </div>
   );

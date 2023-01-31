@@ -1,5 +1,7 @@
+import './ProfiilePage.css';
+import '../../App.css';
 import { useAuth0 } from '@auth0/auth0-react';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import {
   CustomBootstrapTable,
@@ -43,10 +45,12 @@ export const ProfilePage = () => {
   useEffect(() => {
     dispatch(setIsLoading(true));
     document.body.setAttribute('data-theme', currentUserTheme);
+
     async function fetchData() {
       await checkPrivileges();
       dispatch(setIsLoading(false));
     }
+
     fetchData();
   }, [isAuthenticated, currentUserTheme]);
 
@@ -183,34 +187,27 @@ export const ProfilePage = () => {
   };
 
   return (
-    <Container fluid className='profile-page-container'>
+    <Container fluid className='page-container profile-page-container'>
       {isLoading1 ? (
         <LoadingComponent />
       ) : (
         <div>
           {routerParams.id || isAuthenticated ? (
             <div>
-              <h2 style={{ paddingTop: '10px', marginLeft: '100px' }} className='no-select'>
-                {' '}
-                {t('profile')}{' '}
-              </h2>
-              <div>
-                <UserProfile />
-              </div>
-
+              <h2 className='no-select profile-title'>{t('profile')}</h2>
+              <UserProfile />
               {reviews && reviews.length > 0 ? (
                 <div style={{ paddingTop: '20px' }}>
                   <h1 className='text-center'>{t('reviews')}</h1>
-
-                  <Fragment>
-                    <div className='reviews-table-container '>
-                      <Button
-                        className='button-with-shadow'
-                        variant='success'
-                        onClick={changeDisplayFiltersState}
-                      >
-                        {filtersBtnText}
-                      </Button>
+                  <div className='buttons-container'>
+                    <Button
+                      className='button-with-shadow'
+                      variant='success'
+                      onClick={changeDisplayFiltersState}
+                    >
+                      {filtersBtnText}
+                    </Button>
+                    <div className='reviews-table-container'>
                       <Button
                         variant='success'
                         className='reviews-table-button button-with-shadow'
@@ -218,33 +215,33 @@ export const ProfilePage = () => {
                       >
                         {t('view')}
                       </Button>
+                      {isCurrentUserAdmin || isCurrentUserOwner ? (
+                        <>
+                          <Button
+                            variant='success'
+                            className='reviews-table-button button-with-shadow'
+                            onClick={createReview}
+                          >
+                            {t('create')}
+                          </Button>
+                          <Button
+                            variant='success'
+                            className='reviews-table-button button-with-shadow'
+                            onClick={editReview}
+                          >
+                            {t('edit')}
+                          </Button>
+                          <Button
+                            variant='success'
+                            className='reviews-table-button button-with-shadow'
+                            onClick={deleteReview}
+                          >
+                            {t('delete')}
+                          </Button>
+                        </>
+                      ) : null}
                     </div>
-                    {isCurrentUserAdmin || isCurrentUserOwner ? (
-                      <div className='reviews-table-container'>
-                        <Button
-                          variant='success'
-                          className='reviews-table-button button-with-shadow'
-                          onClick={createReview}
-                        >
-                          {t('create')}
-                        </Button>
-                        <Button
-                          variant='success'
-                          className='reviews-table-button button-with-shadow'
-                          onClick={editReview}
-                        >
-                          {t('edit')}
-                        </Button>
-                        <Button
-                          variant='success'
-                          className='reviews-table-button button-with-shadow'
-                          onClick={deleteReview}
-                        >
-                          {t('delete')}
-                        </Button>
-                      </div>
-                    ) : null}
-                  </Fragment>
+                  </div>
                   <div className='profile-page-table-container'>
                     <CustomBootstrapTable />
                   </div>
@@ -276,7 +273,6 @@ export const ProfilePage = () => {
               </div>
             </div>
           )}
-
           <CustomModal ref={reviewsModal} />
         </div>
       )}

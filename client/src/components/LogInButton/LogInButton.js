@@ -1,6 +1,5 @@
-import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import '../../App.css';
+import './LogInButton.css';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
@@ -15,7 +14,10 @@ export const LogInButton = (props) => {
       overlay={<Tooltip id='tooltip-disabled'>{t('log_in')}!</Tooltip>}
     >
       <button
-        className={(props.size === 'big' ? 'big-log-in-button ' : '') + 'btn btn-primary btn-block'}
+        className={
+          (props.size === 'big' ? 'big-log-in-button ' : 'log-in-button ') +
+          'btn btn-primary btn-block'
+        }
         onClick={() => loginWithRedirect()}
       >
         {t('log_in')}

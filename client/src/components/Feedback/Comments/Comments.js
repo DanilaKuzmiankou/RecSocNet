@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-regular-svg-icons';
 import { faComment as faCommentSolid } from '@fortawesome/free-solid-svg-icons';
@@ -18,15 +18,13 @@ export const Comments = () => {
   };
 
   return (
-    <div>
-      <Rating
-        start={0}
-        stop={1}
-        initialRating={comments}
-        onClick={onCommentsClick}
-        emptySymbol={<FontAwesomeIcon icon={faComment} color={'black'} size='2x' />}
-        fullSymbol={<FontAwesomeIcon icon={faCommentSolid} size='2x' color={'black'} />}
-      />
-    </div>
+    <Rating
+      start={0}
+      stop={1}
+      initialRating={comments}
+      onClick={onCommentsClick}
+      emptySymbol={<FontAwesomeIcon icon={faComment} color={'black'} size='2x' />}
+      fullSymbol={<FontAwesomeIcon icon={faCommentSolid} size='2x' color={'black'} />}
+    />
   );
 };

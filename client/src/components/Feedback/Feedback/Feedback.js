@@ -1,11 +1,11 @@
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import StarRatings from 'react-star-ratings/build/star-ratings';
-import React, { useEffect, useState } from 'react';
-import { Like } from './Like';
-import { Comments } from './Comments';
-import { changeReviewUsersContentScore } from '../../api/store/RatingStore';
+import { useEffect, useState } from 'react';
+import { Like } from '../Like/Like';
+import { Comments } from '../Comments/Comments';
+import { changeReviewUsersContentScore } from '../../../api/store/RatingStore';
 import { useSelector } from 'react-redux';
-import '../../App.css';
+import './Feedback.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 
@@ -73,15 +73,10 @@ export const Feedback = (props) => {
   };
 
   return (
-    <div className='d-flex align-items-end justify-content-around, align-items-center'>
-      <span style={{ fontSize: '1.4rem' }}>
-        {review.usersReviewScore}
-        &nbsp;
-      </span>
+    <div className='feedback-container'>
+      <h2>{review.usersReviewScore}</h2>
       <Like review={props.review} updateReview={(newReview) => setReview(newReview)} />
-      <span>&nbsp;&nbsp;</span>
       <Comments />
-      <span>&nbsp;&nbsp;</span>
       <OverlayTrigger
         placement='top'
         delay={{ show: 150, hide: 200 }}
@@ -91,17 +86,15 @@ export const Feedback = (props) => {
           </Tooltip>
         }
       >
-        <div className='feedback-rating'>
-          <StarRatings
-            rating={rating}
-            starRatedColor='#ffd700'
-            starHoverColor='#ffd700'
-            numberOfStars={5}
-            starDimension='1.3rem'
-            changeRating={changeRating}
-            name='rating'
-          />
-        </div>
+        <StarRatings
+          rating={rating}
+          starRatedColor='#ffd700'
+          starHoverColor='#ffd700'
+          numberOfStars={5}
+          starDimension='1.3rem'
+          changeRating={changeRating}
+          name='rating'
+        />
       </OverlayTrigger>
     </div>
   );

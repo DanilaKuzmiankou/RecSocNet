@@ -1,0 +1,12 @@
+.tools-container-div {
+    display: flex;
+    align-items: center;
+}
+
+.tools-container {
+    background-color: var(--background-color)
+}
+
+.tools-container:hover {
+    background-color: var(--recommendations-menu-bg);
+}

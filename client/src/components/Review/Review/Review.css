@@ -1,0 +1,67 @@
+.review-body {
+    display: flex;
+    align-items: baseline;
+}
+
+.review-title-container {
+    display: flex;
+}
+
+.review-author-predicate {
+    font-size: 23px;
+    font-style: italic;
+}
+
+.review-author {
+    margin-left: 6px;
+    font-size: 26px;
+    font-style: italic;
+}
+
+.review-date {
+    margin-left: auto;
+    font-size: 23px;
+}
+
+.review-title {
+    font-size: 40px;
+}
+
+.review-feedback-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 0 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.review-tags {
+    font-size: 13px;
+    font-style: italic;
+}
+
+.review-category {
+    font-size: 15px;
+}
+
+@media screen and (min-width: 740px) {
+    .review-rating-container {
+        margin-left: auto;
+    }
+
+    .review-container {
+        padding: 15px;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .review-rating-container {
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .ql-editor {
+        padding: 10px 0 !important;
+    }
+}

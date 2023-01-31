@@ -1,0 +1,23 @@
+div.dropdown-menu.show {
+    background-color: var(--background-color);
+}
+
+a.dropdown-item {
+    color: var(--text-color);
+}
+
+.dropzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    outline: none;
+    border-style: dashed;
+    transition: border .24s ease-in-out;
+    text-align: center;
+    border: var(--dropzone-border);
+    background-color: var(--dropzone-background-color);
+    color: var(--dropzone-color);
+    margin-bottom: 20px;
+}

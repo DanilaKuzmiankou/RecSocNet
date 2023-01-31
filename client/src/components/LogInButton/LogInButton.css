@@ -1,0 +1,21 @@
+.big-log-in-button {
+    border-radius: 15px;
+    height: 100px;
+    width: 230px;
+    font-size: 30px;
+    margin-top: 10px;
+    user-select: none;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.log-in-button {
+    height: 35px;
+    width: 70px;
+    user-select: none;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 14px;
+}

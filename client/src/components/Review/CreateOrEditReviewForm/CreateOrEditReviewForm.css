@@ -1,0 +1,62 @@
+.form-control:not(active) {
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.form-control:focus {
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+.formik {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+input::placeholder {
+    color: var(--text-color);
+}
+
+.error {
+    border: 2px solid #FF6565;
+}
+
+.nav-link {
+    padding: 0 0 0 5px;
+}
+
+.custom-error-message {
+    color: #FF6565;
+    margin-top: 4px;
+    font-size: 18px;
+}
+
+.multiSelectContainer li {
+    background-color: var(--background-color);
+}
+
+.search-wrapper.searchWrapper {
+    border-radius: 0;
+    min-height: 55px;
+}
+
+.custom-multiselect {
+    min-height: 55px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.5);
+}
+
+.ql-editor {
+    padding: 0 8px !important;
+}
+
+#reviewForm label {
+    margin-bottom: 5px;
+}
+
+@media (max-width: 576px) {
+    .score-label {
+        margin-top: 10px;
+    }
+}

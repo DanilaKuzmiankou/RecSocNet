@@ -1,0 +1,12 @@
+.bootstrap-table-selected-row {
+    background-color: var(--table-selected-row-background);
+}
+
+.react-bootstrap-table-header {
+    font-size: 30px;
+}
+
+.react-bootstrap-table table {
+    table-layout: auto;
+    overflow-x: auto !important;
+}

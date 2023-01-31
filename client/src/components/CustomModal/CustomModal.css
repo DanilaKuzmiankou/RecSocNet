@@ -1,0 +1,5 @@
+.custom-modal {
+    border-bottom: var(--modal-border);
+    border-top: var(--modal-border);
+    background-color: var(--background-color)
+}

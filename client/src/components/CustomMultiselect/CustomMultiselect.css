@@ -1,0 +1,13 @@
+.custom-multiselect {
+    height: 35px;
+    min-height: 35px;
+}
+
+.search-wrapper {
+    height: 35px;
+    min-height: 35px !important;
+}
+
+.optionListContainer {
+    background-color: transparent;
+}

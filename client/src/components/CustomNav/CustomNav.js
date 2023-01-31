@@ -1,19 +1,8 @@
-import React, { useState } from 'react';
-import '../../App.css';
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  FormControl,
-  Nav,
-  Navbar,
-  OverlayTrigger,
-  Row,
-  Tooltip,
-} from 'react-bootstrap';
+import { useState } from 'react';
+import './CustomNav.css';
+import { Button, Form, FormControl, Navbar, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { createSearchParams, Link, useNavigate } from 'react-router-dom';
-import { LogInButton, NavBarToolsPanel, UserProfileDiminished } from '../index.components';
+import { LogInButton, NavbarToolsPanel, UserProfileDiminished } from '../index.components';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 
@@ -32,67 +21,39 @@ export const CustomNav = () => {
   };
 
   return (
-    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
-      <Container fluid>
+    <Navbar collapseOnSelect expand='md' bg='dark' variant='dark'>
+      <div className='custom-navbar'>
         <OverlayTrigger
           placement='bottom'
           delay={{ show: 250, hide: 400 }}
           overlay={<Tooltip id='tooltip-disabled'>{t('to_home')}</Tooltip>}
         >
-          <Link
-            style={{ fontSize: '23px' }}
-            to='/'
-            className=' justify-content-start navbar-home-button'
-          >
+          <Link style={{ fontSize: '23px' }} to='/' className='navbar-home-button'>
             {t('home')}
           </Link>
         </OverlayTrigger>
-
-        <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+        <Navbar.Toggle aria-controls='responsive-navbar-nav' className='navbar-togler' />
         <Navbar.Collapse id='responsive-navbar-nav'>
-          <Nav className='me-auto my-2 my-lg-0' style={{ maxHeight: '100px', gap: '1rem' }}>
-            {' '}
-          </Nav>
-
-          <div>
-            <Container className='p-0'>
-              <Row>
-                <Col
-                  style={{ display: 'flex', alignItems: 'center' }}
-                  lg={'auto'}
-                  sm={12}
-                  className='nav-elements-margin '
-                >
-                  <Form className='d-flex' onSubmit={search}>
-                    <FormControl
-                      style={{ fontSize: '15px' }}
-                      type='search'
-                      placeholder={t('search_reviews')}
-                      className='me-2 nav-search-bar'
-                      aria-label='Search'
-                      onChange={(event) => setSearchData(event.target.value)}
-                    />
-                    <Button style={{ fontSize: '15px' }} type='submit' variant='outline-success'>
-                      {t('search')}
-                    </Button>
-                  </Form>
-                </Col>
-                <Col
-                  style={{ display: 'flex', alignItems: 'center' }}
-                  lg={'auto'}
-                  sm={12}
-                  className='nav-elements-margin ps-0'
-                >
-                  {isAuthenticated ? <UserProfileDiminished /> : <LogInButton />}
-                </Col>
-                <Col lg={'auto'} sm={12}>
-                  <NavBarToolsPanel />
-                </Col>
-              </Row>
-            </Container>
+          <div className='navbar-content-container'>
+            <Form className='navbar-form' onSubmit={search}>
+              <FormControl
+                type='search'
+                placeholder={t('search_reviews')}
+                className='me-2 nav-search-bar'
+                aria-label='Search'
+                onChange={(event) => setSearchData(event.target.value)}
+              />
+              <Button className='nav-search-button' type='submit' variant='outline-success'>
+                {t('search')}
+              </Button>
+            </Form>
+            <div className='avatar-tools-container'>
+              {isAuthenticated ? <UserProfileDiminished /> : <LogInButton />}
+              <NavbarToolsPanel />
+            </div>
           </div>
         </Navbar.Collapse>
-      </Container>
+      </div>
     </Navbar>
   );
 };

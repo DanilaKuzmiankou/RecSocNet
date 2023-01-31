@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp as faThumbsUpSolid } from '@fortawesome/free-solid-svg-icons';
 import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 import Rating from 'react-rating';
-import { changeReviewLikeState } from '../../api/store/RatingStore';
+import { changeReviewLikeState } from '../../../api/store/RatingStore';
 import { useSelector } from 'react-redux';
 import { useAuth0 } from '@auth0/auth0-react';
 

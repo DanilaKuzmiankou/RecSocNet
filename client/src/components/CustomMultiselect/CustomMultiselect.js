@@ -1,5 +1,6 @@
 import { Multiselect } from 'multiselect-react-dropdown';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import './CustomMultiselect.css';
 import { getTags } from '../../api/store/ReviewStore';
 import { useTranslation } from 'react-i18next';
 
@@ -16,6 +17,7 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
       const tags = await getTags();
       setTags(tags);
     }
+
     fetchData();
   }, []);
 
@@ -69,19 +71,17 @@ export const CustomMultiselect = ({ field, form, ...props }) => {
   };
 
   return (
-    <div>
-      <Multiselect
-        isObject={false}
-        className='custom-multiselect'
-        selectedValues={field.value}
-        avoidHighlightFirstOption={true}
-        onKeyPressFn={onMultiselectKeyPress}
-        onRemove={onMultiselectRemove}
-        onSearch={onMultiselectSearch}
-        onSelect={onMultiselectSelect}
-        options={tags}
-        placeholder={t('enter_tags')}
-      />
-    </div>
+    <Multiselect
+      className='custom-multiselect'
+      isObject={false}
+      selectedValues={field.value}
+      avoidHighlightFirstOption={true}
+      onKeyPressFn={onMultiselectKeyPress}
+      onRemove={onMultiselectRemove}
+      onSearch={onMultiselectSearch}
+      onSelect={onMultiselectSelect}
+      options={tags}
+      placeholder={t('enter_tags')}
+    />
   );
 };

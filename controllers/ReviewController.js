@@ -1,7 +1,8 @@
-const ApiError = require("../error/ApiError");
-const { Review, User, ReviewImage, Rating, Tags } = require("../models/Models");
-const Sequelize = require("sequelize");
-const sequelize = require("sequelize");
+const ApiError = require('../error/ApiError');
+const { Review, User, ReviewImage, Rating, Tags } = require('../models/Models');
+const Sequelize = require('sequelize');
+const sequelize = require('sequelize');
+const { where } = require('sequelize');
 const op = Sequelize.Op;
 
 let reviewController = this;
@@ -14,7 +15,7 @@ class ReviewController {
   async addNewReview(req, res, next) {
     const { authId, review } = req.body;
     if (!authId || !review.authorScore || !review.category || !review.title) {
-      return next(ApiError.badRequest("Enter all required fields"));
+      return next(ApiError.badRequest('Enter all required fields'));
     }
     const user = await User.findOne({ where: { authId } });
     let createdReview = await Review.create({
@@ -23,7 +24,7 @@ class ReviewController {
       authorScore: review.authorScore,
       title: review.title,
       text: review.text,
-      userId: user.id,
+      userId: user.id
     });
     if (review.images && review.images.length > 0) {
       createdReview = await reviewController.addReviewImages(
@@ -50,10 +51,10 @@ class ReviewController {
       include: [
         {
           model: ReviewImage,
-          as: "images",
-          attributes: ["imageLink"],
-        },
-      ],
+          as: 'images',
+          attributes: ['imageLink']
+        }
+      ]
     });
     return createdReview;
   }
@@ -61,17 +62,17 @@ class ReviewController {
   async getAllAuthorReviews(req, res, next) {
     const { authId, userId } = req.body;
     if (!authId) {
-      return next(ApiError.badRequest("There is no authId!"));
+      return next(ApiError.badRequest('There is no authId!'));
     }
     const reviews = await Review.findAll({
       where: { userId },
       include: [
         {
           model: ReviewImage,
-          as: "images",
-          attributes: ["imageLink"],
-        },
-      ],
+          as: 'images',
+          attributes: ['imageLink']
+        }
+      ]
     });
     return res.json(reviews);
   }
@@ -84,29 +85,29 @@ class ReviewController {
       include: [
         {
           model: ReviewImage,
-          as: "images",
-          attributes: ["imageLink"],
+          as: 'images',
+          attributes: ['imageLink']
         },
         {
           model: User,
-          as: "user",
-          attributes: ["id", "name"],
+          as: 'user',
+          attributes: ['id', 'name']
         },
         {
           model: Rating,
-          as: "ratings",
-          attributes: ["reviewScore", "contentScore"],
+          as: 'ratings',
+          attributes: ['reviewScore', 'contentScore'],
           where: {
             userId: {
               [op.ne]: null,
-              [op.eq]: userId,
-            },
+              [op.eq]: userId
+            }
           },
-          required: false,
-        },
+          required: false
+        }
       ],
       limit: limit,
-      offset: offset,
+      offset: offset
     });
   }
 
@@ -114,7 +115,7 @@ class ReviewController {
     const { limit, offset, userId } = req.body;
     return res.json(
       await reviewController.getReviews(limit, offset, userId, {}, [
-        ["createdAt", "DESC"],
+        ['createdAt', 'DESC']
       ])
     );
   }
@@ -127,8 +128,8 @@ class ReviewController {
       userId,
       {},
       [
-        ["usersReviewScore", "DESC"],
-        ["createdAt", "DESC"],
+        ['usersReviewScore', 'DESC'],
+        ['createdAt', 'DESC']
       ]
     );
     return res.json(reviews);
@@ -142,36 +143,37 @@ class ReviewController {
       userId,
       {
         tags: {
-          [op.substring]: tag,
-        },
+          [op.substring]: tag
+        }
       },
-      [["createdAt", "DESC"]]
+      [['createdAt', 'DESC']]
     );
     res.json(reviews);
   }
 
   async findReviews(req, res, next) {
     let { limit, offset, searchedString, userId } = req.body;
-    searchedString = "'" + searchedString + "'";
-    const updateIndexes = `CREATE INDEX IF NOT EXISTS idx_fts_articles ON reviews
-             USING gin(make_tsvector(title, text, tags));
-            
-            CREATE INDEX IF NOT EXISTS idx_fts_users ON users
-            USING gin(make_tsvector(name));`;
-    await Review.sequelize.query(updateIndexes);
-    const whereQueryString = {
-      [op.and]: [
-        sequelize.literal(
-          `make_tsvector(title, text, tags, "user".name) @@ plainto_tsquery(${searchedString})`
-        ),
-      ],
-    };
     const reviews = await reviewController.getReviews(
       limit,
       offset,
       userId,
-      whereQueryString,
-      [["createdAt", "DESC"]]
+      {
+        [op.or]: [
+          {
+            title: sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', '%' + searchedString + '%')
+          },
+          {
+            text: sequelize.where(sequelize.fn('LOWER', sequelize.col('text')), 'LIKE', '%' + searchedString + '%')
+          },
+          {
+            category: sequelize.where(sequelize.fn('LOWER', sequelize.col('category')), 'LIKE', '%' + searchedString + '%')
+          },
+          {
+            tags: sequelize.where(sequelize.fn('LOWER', sequelize.col('tags')), 'LIKE', '%' + searchedString + '%')
+          }
+        ]
+      },
+      [['createdAt', 'DESC']]
     );
     return res.json(reviews);
   }
@@ -180,7 +182,7 @@ class ReviewController {
     const { review } = req.body;
     const oldReview = await Review.findOne({ where: { id: review.id } });
     let tagsToDelete = oldReview?.tags
-      ?.split(",")
+      ?.split(',')
       .filter((tag) => !review.tags.includes(tag));
     tagsToDelete = await reviewController.findTagsToDelete(
       tagsToDelete,
@@ -192,7 +194,7 @@ class ReviewController {
       text: review.text,
       tags: review.tags,
       category: review.category,
-      authorScore: review.authorScore,
+      authorScore: review.authorScore
     });
     await reviewController.addNewTags(review.tags);
     const newReview = await Review.findOne({
@@ -200,43 +202,43 @@ class ReviewController {
       include: [
         {
           model: ReviewImage,
-          as: "images",
-          attributes: ["imageLink"],
-        },
-      ],
+          as: 'images',
+          attributes: ['imageLink']
+        }
+      ]
     });
     return res.json(newReview);
   }
 
   async getTags(req, res, next) {
     let tagsFromDB = await Tags.findAll({
-      attributes: ["tag"],
+      attributes: ['tag']
     });
     tagsFromDB = tagsFromDB.map((item) => (item = item.tag));
     return res.json(tagsFromDB);
   }
 
   async addNewTags(rawTags) {
-    let tags = rawTags.split(",");
+    let tags = rawTags.split(',');
     const tagsFromDB = await reviewController.findEqualTags(tags);
     if (tagsFromDB.length > 0) {
       tags = tags.filter((tag) => !tagsFromDB.includes(tag));
     }
     for (const tag of tags) {
       await Tags.create({
-        tag,
+        tag
       });
     }
   }
 
   async findEqualTags(tags) {
     let tagsFromDB = await Tags.findAll({
-      attributes: ["tag"],
+      attributes: ['tag'],
       where: {
         tag: {
-          [op.in]: tags,
-        },
-      },
+          [op.in]: tags
+        }
+      }
     });
     if (tagsFromDB.length > 0) {
       tagsFromDB = tagsFromDB.map((item) => (item = item.tag));
@@ -249,9 +251,9 @@ class ReviewController {
       await Tags.destroy({
         where: {
           tag: {
-            [op.in]: tags,
-          },
-        },
+            [op.in]: tags
+          }
+        }
       });
     }
   }
@@ -259,27 +261,27 @@ class ReviewController {
   async deleteReview(req, res, next) {
     const { authId, id } = req.body;
     if (!authId) {
-      return next(ApiError.badRequest("There is no authId!"));
+      return next(ApiError.badRequest('There is no authId!'));
     }
     const review = await Review.findOne({ where: { id } });
     const tagsToDelete = await reviewController.findTagsToDelete(
-      review.tags.split(","),
+      review.tags.split(','),
       id
     );
     const user = await User.findOne({ where: { authId } });
     try {
       await ReviewImage.destroy({
-        where: { reviewId: id },
+        where: { reviewId: id }
       });
       await reviewController.deleteTags(tagsToDelete);
       await review.destroy();
       return res
         .status(200)
-        .json({ message: "Review was successfully deleted!" });
+        .json({ message: 'Review was successfully deleted!' });
     } catch (e) {
       return res
         .status(500)
-        .json({ message: "An error occurred while review deleting: ", e });
+        .json({ message: 'An error occurred while review deleting: ', e });
     }
   }
 
@@ -291,12 +293,12 @@ class ReviewController {
           const review = await Review.findOne({
             where: {
               tags: {
-                [op.like]: "%" + tag + "%",
+                [op.like]: '%' + tag + '%'
               },
               id: {
-                [op.ne]: id,
-              },
-            },
+                [op.ne]: id
+              }
+            }
           });
           if (!review) {
             tagsToDelete.push(tag);
@@ -311,15 +313,15 @@ class ReviewController {
     const { url } = req.body;
     try {
       await ReviewImage.destroy({
-        where: { imageLink: url },
+        where: { imageLink: url }
       });
       return res
         .status(200)
-        .json({ message: "Image was successfully deleted!" });
+        .json({ message: 'Image was successfully deleted!' });
     } catch (e) {
       return res
         .status(500)
-        .json({ message: "An error occurred while image deleting: ", e });
+        .json({ message: 'An error occurred while image deleting: ', e });
     }
   }
 
@@ -327,9 +329,9 @@ class ReviewController {
     const { url, reviewId } = req.body;
     await ReviewImage.create({
       imageLink: url,
-      reviewId: reviewId,
+      reviewId: reviewId
     });
-    return res.status(200).json({ message: "Image was successfully added!" });
+    return res.status(200).json({ message: 'Image was successfully added!' });
   }
 }
 

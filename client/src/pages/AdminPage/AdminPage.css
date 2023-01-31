@@ -1,0 +1,20 @@
+.admin-page-container {
+    background-image: var(--bg-main-background);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    list-style: none;
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

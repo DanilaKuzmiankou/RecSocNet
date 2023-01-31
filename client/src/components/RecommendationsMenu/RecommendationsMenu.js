@@ -1,5 +1,5 @@
+import './RecommendationsMenu.css';
 import { ListGroup } from 'react-bootstrap';
-import React from 'react';
 import Rating from 'react-rating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -26,29 +26,25 @@ export const RecommendationsMenu = (props) => {
     <ListGroup>
       <ListGroup.Item className='tools-container' action onClick={() => setClickedReview(true)}>
         <div className='tools-container-div'>
-          <div>
-            <Rating
-              start={0}
-              stop={1}
-              initialRating={isNewReviewsClicked}
-              emptySymbol={<FontAwesomeIcon icon={faCalendar} color={'black'} size='2x' />}
-              fullSymbol={<FontAwesomeIcon icon={faTimerSolid} size='2x' color={'black'} />}
-            />
-          </div>
+          <Rating
+            start={0}
+            stop={1}
+            initialRating={isNewReviewsClicked}
+            emptySymbol={<FontAwesomeIcon icon={faCalendar} color={'black'} size='2x' />}
+            fullSymbol={<FontAwesomeIcon icon={faTimerSolid} size='2x' color={'black'} />}
+          />
           <div style={{ marginLeft: '10px' }}>{t('newest')}</div>
         </div>
       </ListGroup.Item>
       <ListGroup.Item className='tools-container' action onClick={() => setClickedReview(false)}>
         <div className='tools-container-div'>
-          <div>
-            <Rating
-              start={0}
-              stop={1}
-              initialRating={isTopReviewsClicked}
-              emptySymbol={<FontAwesomeIcon icon={faHeart} color={'black'} size='2x' />}
-              fullSymbol={<FontAwesomeIcon icon={faHeartSolid} size='2x' color={'black'} />}
-            />
-          </div>
+          <Rating
+            start={0}
+            stop={1}
+            initialRating={isTopReviewsClicked}
+            emptySymbol={<FontAwesomeIcon icon={faHeart} color={'black'} size='2x' />}
+            fullSymbol={<FontAwesomeIcon icon={faHeartSolid} size='2x' color={'black'} />}
+          />
           <div style={{ marginLeft: '7px' }}>{t('most_liked')}</div>
         </div>
       </ListGroup.Item>

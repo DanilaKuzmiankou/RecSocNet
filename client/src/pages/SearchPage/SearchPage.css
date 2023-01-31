@@ -1,0 +1,17 @@
+.search-page-container {
+    background-image: var(--bg-main-background);
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.search-page-title {
+    font-size: 30px;
+}
+
+@media screen and (min-width: 750px) {
+    .search-page-title {
+        margin: 20px auto;
+    }
+}

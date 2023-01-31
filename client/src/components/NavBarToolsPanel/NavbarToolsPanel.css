@@ -1,0 +1,10 @@
+.navbar-tools-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.navbar-tools-column {
+    display: flex;
+    gap: 5px;
+}

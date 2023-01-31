@@ -1,8 +1,7 @@
-import React from 'react';
-import '../../App.css';
-import { UploadImage, LoadingComponent, CustomMultiselect } from '../index.components';
+import './CreateOrEditReviewForm.css';
+import { CustomMultiselect, LoadingComponent, UploadImage } from '../../index.components';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReviews, setSelectedReview } from '../../store/reducers/ReviewSlice';
+import { setReviews, setSelectedReview } from '../../../store/reducers/ReviewSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
@@ -14,9 +13,9 @@ import {
   saveEditedReview,
   saveNewReview,
   uploadImagesToFirebaseCloud,
-} from '../../api/store/ReviewStore';
-import { setIsLoading } from '../../store/reducers/LoadingSlice';
-import { modules, options } from '../../utils/Storage';
+} from '../../../api/store/ReviewStore';
+import { setIsLoading } from '../../../store/reducers/LoadingSlice';
+import { modules, options } from '../../../utils/Storage';
 import { useTranslation } from 'react-i18next';
 
 export const CreateOrEditReviewForm = (props) => {
@@ -84,7 +83,7 @@ export const CreateOrEditReviewForm = (props) => {
   };
 
   return (
-    <div>
+    <>
       {isLoading ? <LoadingComponent /> : null}
       <Formik
         innerRef={props.formRef}
@@ -121,7 +120,7 @@ export const CreateOrEditReviewForm = (props) => {
             <label htmlFor='title'>{t('title')}</label>
             <Field
               placeholder={t('enter_review_title')}
-              style={{ width: '100%' }}
+              style={{ width: '100%', height: '35px' }}
               name='title'
               type='text'
               className={`${touched.title && errors.title ? 'error' : null} formik`}
@@ -135,7 +134,7 @@ export const CreateOrEditReviewForm = (props) => {
                 </label>
                 <Field
                   className={`${touched.category && errors.category ? 'error' : null} formik`}
-                  style={{ width: '100%', height: '55px' }}
+                  style={{ width: '100%', height: '35px' }}
                   name='category'
                   as='select'
                 >
@@ -158,10 +157,12 @@ export const CreateOrEditReviewForm = (props) => {
               </Col>
 
               <Col xs={12} sm={2}>
-                <label htmlFor='authorScore'>{t('score')}</label>
+                <label className='score-label' htmlFor='authorScore'>
+                  {t('score')}
+                </label>
                 <Field
                   className={`${touched.authorScore && errors.authorScore ? 'error' : null} formik`}
-                  style={{ width: '100%', height: '55px' }}
+                  style={{ width: '100%', height: '35px', paddingRight: '10px' }}
                   name='authorScore'
                   type='number'
                   max='5'
@@ -170,7 +171,7 @@ export const CreateOrEditReviewForm = (props) => {
                 <ErrorMessage component='div' className='custom-error-message' name='authorScore' />
               </Col>
 
-              <label style={{ paddingTop: '15px' }} htmlFor='text'>
+              <label style={{ marginTop: '15px' }} htmlFor='text'>
                 {t('text')}
               </label>
               <Field name='text' type='text'>
@@ -188,12 +189,14 @@ export const CreateOrEditReviewForm = (props) => {
                 )}
               </Field>
 
-              <label htmlFor='images'>{t('pictures')}</label>
+              <label style={{ marginTop: '15px' }} htmlFor='images'>
+                {t('pictures')}
+              </label>
               <Field name='images' component={UploadImage} />
             </Row>
           </Form>
         )}
       </Formik>
-    </div>
+    </>
   );
 };

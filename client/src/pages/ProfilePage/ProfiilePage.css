@@ -1,0 +1,84 @@
+.profile-page-container {
+    background-image: var(--bg-main-background);
+    color: var(--text-color);
+}
+
+.centered-profile-page {
+    height: 45vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-title {
+    font-size: 29px;
+    padding: 10px 0 10px 30px;
+}
+
+@media (max-width: 600px) {
+    .profile-title {
+        padding: 10px 0;
+        text-align: center;
+    }
+}
+
+.profile-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-button {
+    margin-right: 0.5%;
+    border-radius: 15px;
+    min-height: 85px;
+    min-width: 200px;
+    font-size: 30px;
+    margin-top: 10px;
+}
+
+.button-with-shadow {
+    font-size: 13px;
+    box-shadow: 0 3px 0px #3c354a;
+    transition-duration: 0.5s;
+}
+
+.button-with-shadow:hover {
+    box-shadow: 0 1px 0px #3c354a;
+    background-color: #18b5a4;
+}
+
+.buttons-container {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 0;
+}
+
+.reviews-table-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (min-width: 400px) {
+    .reviews-table-container {
+        margin-left: auto;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .buttons-container {
+        flex-direction: row;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .reviews-table-button {
+        margin: 5px;
+    }
+}
+
+.profile-page-table-container {
+    overflow-x: auto !important;
+}

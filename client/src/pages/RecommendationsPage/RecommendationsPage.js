@@ -1,5 +1,6 @@
-import { Col, Container, Row } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
+import './RecommendationsPage.css';
+import '../../App.css';
+import { useEffect, useState } from 'react';
 import { setIsLoading } from '../../store/reducers/LoadingSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -36,11 +37,13 @@ export const RecommendationsPage = () => {
   useEffect(() => {
     dispatch(setIsLoading(true));
     document.body.setAttribute('data-theme', currentUserTheme);
+
     async function fetchData() {
       await fetchNewestReviews();
       await initTags();
       dispatch(setIsLoading(false));
     }
+
     fetchData();
   }, []);
 
@@ -162,54 +165,47 @@ export const RecommendationsPage = () => {
   };
 
   return (
-    <div className='recommendations-page-container no-select'>
+    <div className='page-container recommendations-page-container no-select'>
       {isLoading ? (
         <LoadingComponent />
       ) : (
-        <Container>
-          <Row>
-            <Col> </Col>
-            <Col sm={7}>
-              <InfiniteScroll
-                key={infiniteScrollKey}
-                dataLength={currentReviews.length}
-                next={fetchReviews}
-                hasMore={hasMoreReviews}
-                loader={<LoadingComponent />}
-                endMessage={
-                  <p style={{ textAlign: 'center' }}>
-                    <b>Yay! You have seen it all</b>
-                  </p>
-                }
-              >
-                {currentReviews.map((review, id) => (
-                  <div key={id} className='review-shortened-container'>
-                    <ReviewShortened key={id} currentReview={review} reviewId={id} />
-                  </div>
-                ))}
-              </InfiniteScroll>
-            </Col>
-            <Col>
-              <div style={{ position: 'sticky', top: '10px' }}>
-                <RecommendationsMenu
-                  refreshNewestReviews={refreshNewestReviews}
-                  refreshMostLikedReviews={refreshMostLikedReviews}
-                />
-                <div className='tags-cloud-container'>
-                  <TagCloud
-                    minSize={2}
-                    maxSize={5}
-                    shuffle={false}
-                    tags={tags}
-                    colorOptions={options}
-                    renderer={customRenderer}
-                    onClick={(tag) => findTagReviews(tag.value)}
-                  />
-                </div>
+        <>
+          <div className='recommendations-menu-container'>
+            <RecommendationsMenu
+              refreshNewestReviews={refreshNewestReviews}
+              refreshMostLikedReviews={refreshMostLikedReviews}
+            />
+            <div className='tags-cloud-container'>
+              <TagCloud
+                minSize={2}
+                maxSize={5}
+                shuffle={false}
+                tags={tags}
+                colorOptions={options}
+                renderer={customRenderer}
+                onClick={(tag) => findTagReviews(tag.value)}
+              />
+            </div>
+          </div>
+          <InfiniteScroll
+            key={infiniteScrollKey}
+            dataLength={currentReviews.length}
+            next={fetchReviews}
+            hasMore={hasMoreReviews}
+            loader={<LoadingComponent />}
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>There is no more reviews!</b>
+              </p>
+            }
+          >
+            {currentReviews.map((review, id) => (
+              <div key={id} className='review-shortened-container'>
+                <ReviewShortened key={id} currentReview={review} reviewId={id} />
               </div>
-            </Col>
-          </Row>
-        </Container>
+            ))}
+          </InfiniteScroll>
+        </>
       )}
     </div>
   );

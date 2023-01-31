@@ -1,5 +1,5 @@
-import { Col, Container, Image, Row } from 'react-bootstrap';
-import React from 'react';
+import './NavbarToolsPanel.css';
+import { Image } from 'react-bootstrap';
 import { changeLanguage } from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUserLanguage, setCurrentUserTheme } from '../../store/reducers/UserSlice';
@@ -9,7 +9,7 @@ import russiaFlag from '../../assets/pictures/russiaFlag.png';
 import sun from '../../assets/pictures/sun.png';
 import moon from '../../assets/pictures/moon.png';
 
-export const NavBarToolsPanel = () => {
+export const NavbarToolsPanel = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
 
@@ -46,47 +46,15 @@ export const NavBarToolsPanel = () => {
   };
 
   return (
-    <Container fluid className='p-0'>
-      <Row xs={6} sm={6}>
-        <Col md={'auto'} className='p-0 pe-2'>
-          <Image
-            src={unitedStatesFlag}
-            height={25}
-            width={25}
-            roundedCircle={true}
-            onClick={setEngLanguage}
-          />
-        </Col>
-        <Col md={'auto'} className='p-0'>
-          <Image
-            src={russiaFlag}
-            height={25}
-            width={25}
-            roundedCircle={true}
-            onClick={setRuLanguage}
-          />
-        </Col>
-      </Row>
-      <Row xs={6} sm={6}>
-        <Col md={'auto'} className='p-0 pe-2 pt-1'>
-          <Image
-            src={moon}
-            height={25}
-            width={25}
-            roundedCircle={true}
-            onClick={setDarkBackground}
-          />
-        </Col>
-        <Col md={'auto'} className='p-0 pe-1 pt-1'>
-          <Image
-            src={sun}
-            height={30}
-            width={30}
-            roundedCircle={true}
-            onClick={setLightBackground}
-          />
-        </Col>
-      </Row>
-    </Container>
+    <div className='navbar-tools-container'>
+      <div className='navbar-tools-column'>
+        <Image src={unitedStatesFlag} height={25} width={25} onClick={setEngLanguage} />
+        <Image src={russiaFlag} height={25} width={25} onClick={setRuLanguage} />
+      </div>
+      <div className='navbar-tools-column'>
+        <Image src={moon} height={25} width={25} onClick={setDarkBackground} />
+        <Image src={sun} height={25} width={25} onClick={setLightBackground} />
+      </div>
+    </div>
   );
 };
