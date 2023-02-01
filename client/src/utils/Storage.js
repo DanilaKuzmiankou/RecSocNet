@@ -22,7 +22,21 @@ export const modules = {
   ],
 };
 
-const categories = ['books', 'games', 'music', 'lifestyle'];
+const categories = [
+  'art',
+  'books',
+  'films',
+  'games',
+  'lifestyle',
+  'music',
+  'news',
+  'politics',
+  'self-education',
+  'society',
+  'sport',
+  'work',
+  'other',
+];
 
 export const options = categories.map((item) => {
   return (

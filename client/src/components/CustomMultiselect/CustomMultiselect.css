@@ -6,6 +6,7 @@
 .search-wrapper {
     height: 35px;
     min-height: 35px !important;
+    padding: 2px;
 }
 
 .optionListContainer {
