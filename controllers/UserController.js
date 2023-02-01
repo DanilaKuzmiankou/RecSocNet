@@ -48,7 +48,11 @@ class UserController {
     const user = await User.findOne({ where: { authId } });
     if (user) {
       await user.update({ theme });
+      return res
+        .status(200)
+        .json({ message: "Theme was successfully changed!" });
     }
+    return res.status(202).json({ message: "User was not found" });
   }
 
   async changeLanguage(req, res) {
@@ -56,7 +60,11 @@ class UserController {
     const user = await User.findOne({ where: { authId } });
     if (user) {
       await user.update({ language });
+      return res
+        .status(200)
+        .json({ message: "Language was successfully changed!" });
     }
+    return res.status(202).json({ message: "User was not found" });
   }
 
   async changeName(req, res, next) {

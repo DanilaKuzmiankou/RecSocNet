@@ -13,9 +13,12 @@
 }
 
 .review-author {
-    margin-left: 6px;
+    margin: 0px 6px 0px 6px;
     font-size: 26px;
     font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .review-date {
@@ -24,7 +27,19 @@
 }
 
 .review-title {
+    margin: 10px 0;
     font-size: 40px;
+
+}
+
+@media screen and (max-width: 520px) {
+    .review-title {
+        font-size: 20px;
+    }
+
+    .review-date {
+        font-size: 15px;
+    }
 }
 
 .review-feedback-container {
