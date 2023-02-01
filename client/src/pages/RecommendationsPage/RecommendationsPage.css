@@ -11,6 +11,10 @@
     margin: 0 auto 20px;
 }
 
+.scroll-container {
+    position: relative;
+}
+
 .tags-cloud-container {
     background-color: var(--background-color);
     border: var(--border-color) 1px solid;

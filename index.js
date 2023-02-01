@@ -10,26 +10,36 @@ const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
+const corsOptions = {
+  origin: true,
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
 }
 
-app.use(cors({ origin: true }));
-app.use(express.json());
-app.use("/api", router);
+app.use(cors(corsOptions))
+app.use(express.json())
+app.use('/api', router)
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
+  app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'), function(error) {
+      if (error) {
+        res.status(500).send(error)
+      }
+    })
+  })
+}
 
 const start = async () => {
   try {
-    await sequelize.authenticate();
-    await sequelize.sync();
-
-    app.listen(PORT);
+    await sequelize.authenticate()
+    await sequelize.sync()
+    app.listen(PORT)
+    console.log('Server started at port ' + PORT)
   } catch (e) {
-    console.log(e);
+    throw ApiError.serverError(e)
   }
-};
+}
 
 start();

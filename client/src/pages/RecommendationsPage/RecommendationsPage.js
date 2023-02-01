@@ -187,24 +187,33 @@ export const RecommendationsPage = () => {
               />
             </div>
           </div>
-          <InfiniteScroll
-            key={infiniteScrollKey}
-            dataLength={currentReviews.length}
-            next={fetchReviews}
-            hasMore={hasMoreReviews}
-            loader={<LoadingComponent />}
-            endMessage={
-              <p style={{ textAlign: 'center' }}>
-                <b>There is no more reviews!</b>
-              </p>
-            }
-          >
-            {currentReviews.map((review, id) => (
-              <div key={id} className='review-shortened-container'>
-                <ReviewShortened key={id} currentReview={review} reviewId={id} />
-              </div>
-            ))}
-          </InfiniteScroll>
+          <div className='scroll-container'>
+            <InfiniteScroll
+              key={infiniteScrollKey}
+              dataLength={currentReviews.length}
+              next={fetchReviews}
+              hasMore={hasMoreReviews}
+              loader={<LoadingComponent />}
+              endMessage={
+                <p
+                  style={{
+                    textAlign: 'center',
+                    position: 'absolute',
+                    left: '50%',
+                    transform: 'translate(-50%)',
+                  }}
+                >
+                  <b>There is no more reviews!</b>
+                </p>
+              }
+            >
+              {currentReviews.map((review, id) => (
+                <div key={id} className='review-shortened-container'>
+                  <ReviewShortened key={id} currentReview={review} reviewId={id} />
+                </div>
+              ))}
+            </InfiniteScroll>
+          </div>
         </>
       )}
     </div>

@@ -8,10 +8,5 @@
 
 .search-page-title {
     font-size: 30px;
-}
-
-@media screen and (min-width: 750px) {
-    .search-page-title {
-        margin: 20px auto;
-    }
+    margin: 20px auto;
 }

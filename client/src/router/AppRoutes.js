@@ -6,7 +6,6 @@ import {
   RecommendationsPage,
   SearchPage,
 } from '../pages/index.pages';
-import React from 'react';
 
 export const AppRoutes = () => (
   <Routes>
