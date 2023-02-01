@@ -1,18 +1,17 @@
-import React from 'react';
 import { AppRoutes } from './router/AppRoutes';
 import { CustomNav, LoadingComponent } from './components/index.components';
-import { useRegisterNewUser } from './auth/useRegisterNewUser';
+import { useAuth } from './auth/useAuth';
 
 const App = () => {
-  const { isLoadingCompleted } = useRegisterNewUser();
+  const { isLoadingCompleted } = useAuth();
 
   return (
     <div>
       {isLoadingCompleted ? (
-        <div>
+        <>
           <CustomNav />
           <AppRoutes />
-        </div>
+        </>
       ) : (
         <LoadingComponent />
       )}

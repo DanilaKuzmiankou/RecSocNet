@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import i18next, { changeLanguage } from 'i18next';
 
-export const useRegisterNewUser = () => {
+export const useAuth = () => {
   const dispatch = useDispatch();
   const { user, getAccessTokenSilently, isAuthenticated, isLoading } = useAuth0();
   const [isLoadingCompleted, setIsLoadingCompleted] = useState(false);
@@ -34,6 +34,8 @@ export const useRegisterNewUser = () => {
   const authUser = async () => {
     const token = await getAccessTokenSilently();
     const language = i18next.language || 'en';
+    document.body.style.fontFamily =
+      language === 'ru' ? 'Avenir, Arial, serif' : document.body.fontfamily;
     await registerNewUser(token, user.sub, user.name, user.picture, language);
     const currentUser = await getUserByAuthId(token, user.sub);
     dispatch(setCurrentUserTheme(currentUser.theme));

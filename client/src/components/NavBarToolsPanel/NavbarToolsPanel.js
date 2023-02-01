@@ -15,10 +15,12 @@ export const NavbarToolsPanel = () => {
 
   const setEngLanguage = () => {
     setLanguage('en');
+    document.body.style.fontFamily = 'JosefinSansMedium, Arial, serif';
   };
 
   const setRuLanguage = () => {
     setLanguage('ru');
+    document.body.style.fontFamily = 'Avenir, Arial, serif';
   };
 
   const setLanguage = (language) => {

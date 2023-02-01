@@ -2,6 +2,7 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    transition: background .7s ease-in-out, color.7s ease-in-out;
 }
 
 ul[class],
@@ -60,7 +61,6 @@ select {
     }
 }
 
-html,
 body {
     height: 100%;
     line-height: 1;
@@ -128,6 +128,11 @@ body[data-theme="dark-theme"] {
 @font-face {
     font-family: 'JosefinSansMedium';
     src: local('JosefinSans'), url(assets/fonts/JosefinSans-Medium.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: Avenir;
+    src: url(assets/fonts/AvenirRegular.ttf) format('truetype');
 }
 
 * {
