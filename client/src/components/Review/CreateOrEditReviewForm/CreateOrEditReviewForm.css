@@ -48,7 +48,7 @@ input::placeholder {
 }
 
 .ql-editor {
-    padding: 0 8px !important;
+    min-height: 200px !important;
 }
 
 #reviewForm label {
